@@ -1,5 +1,5 @@
 # DArt
 
-## Author
+## Authors
 Giordano Dionisi 
 Michele Spina
