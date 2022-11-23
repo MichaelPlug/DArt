@@ -23,7 +23,6 @@ contract DArt {
     //of the smart contract that it can do some special actions
     address public creator;
 
-
     //this is a mapping between museums and artworks related to them
     mapping (address => uint) public museumsArtworks;
 
@@ -79,19 +78,13 @@ contract DArt {
 
     //called by a smart contract, given a specificc address
     func museumCreation(address museum){
-        //we verify that the address is really the creator
-        if (msg.sender != creator){
-            //otherwise we end up, an error we have
+        // veryf the sender is the creator/owner of the smart contract and that there is a pendig reques to register the wallet
+        if ((msg.sender == creator && registeredWallets[museum].address != 0x0){
+            // change the status of the museum to verified
+            registeredWallets[museum].verified = true;
+         else {
             revert();
         }
-        //we loop all the elements of the pending museums to find
-        //really the specific museum that we want
-        if (registeredWallets[museum].address != 0x0){
-            //we change the status of the museum to verified
-            registeredWallets[museum].verified = true;
-        } else [
-            revert();
-        ]
         //if the museum does not exist and we are the creator, then we create
         //a list (each museum has associated a list of artworks) of hashes
         bytes32 list[];
