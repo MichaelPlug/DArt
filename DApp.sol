@@ -5,11 +5,10 @@ pragma solidity >=0.7.0 < 0.9.0;
 contract DArt {
 
     /*
-    struct artworks
     {
         string name;
         string artist;
-        string additional_notes;
+        string additionalNotes;
     }
     */
 
@@ -20,10 +19,10 @@ contract DArt {
 
     //we have the pending requests for the museums to accept them, by means
     //of the creator
-    address pending_requests_museum;
+    address pendingRequestsMuseum;
 
     //this is a mapping between museums and artworks related to them
-    mapping (address => uint) public museums_artworks;
+    mapping (address => uint) public museumsArtworks;
 
     //this is a list that contains all the museums registered to our
     // infrastructure
@@ -41,7 +40,7 @@ contract DArt {
 
     //called by a museum, to add an artwork in blockchain (MAYBE TO DO
     //WITH PENDING REQUESTS TO VERIFY REALLY THE PRESENCE OF THE ARTWORK)
-    artwork_creation(string artwork)
+    artworkCreation(string artwork)
     {
         
         //declare a variable very large to store an hash, namely the hash
@@ -52,23 +51,23 @@ contract DArt {
         hash = keccak256(artwork)
 
         //declare a temporary list
-        bytes32 temp_list[];
+        bytes32 tempList[];
 
         //we extract the list (the value) associated to this specific
         //key of the mapping, so
-        temp_list = museum_artworks[msg.sender];
+        tempList = museumArtworks[msg.sender];
 
         //we add to this extracted list the specific artwork
-        temp_list.push(artwork);
+        tempList.push(artwork);
 
         //we add this new artwork (string or hash) to the list
-        museum_artworks[msg.sender] = temp_list;
+        museumArtworks[msg.sender] = tempList;
 
 
     }
 
     //called by a museum that wants to enter in the blockchain
-    museum_request_creation()
+    museumRequestCreation()
     {
 
         //we loop for all the museums
@@ -87,13 +86,13 @@ contract DArt {
         }
         
         //we add the address of the museum to the list of pendings
-        pending_requests_museum.push(msg.sender);
+        pendingRequestsMuseum.push(msg.sender);
 
     }
 
 
     //called by a smart contract, given a specificc address
-    museum_creation(address museum)
+    museumCreation(address museum)
     {
 
         //we verify that the address is really the creator
@@ -108,7 +107,7 @@ contract DArt {
         for (uint i; i < pending_requests_museum.length; i++) {
             
             //if it is already exist in our App
-            if (pending_requests_museum[i] == museum) {
+            if (pendingRequestsMuseum[i] == museum) {
 
                 //then we return, because we have an error, in fact the
                 //museum already exists   
@@ -123,52 +122,51 @@ contract DArt {
         bytes32 list[];
 
         //we add the specific element (empty hash) to this list
-        museum_artworks[museum] = list;
+        museumArtworks[museum] = list;
 
 
     }
 
 
-    artwork_transferring(artwork, recipient)
+    artworkTransferring(artwork, recipient)
     {
         
 
 
     }
 
-    artwork_request()
+    artworkRequest()
     {
         
     }
 
-    artwork_request-dismiss()
+    artworkRequestDismiss()
     {
         
     }
 
-    property_passage()
+    propertyPassage()
     {
         
     }
 
-    request_property()
+    requestProperty()
     {
         
     }
 
-    put_exhibition()
+    putExhibition()
     {
         
     }
 
-    put_warehouse()
+    putWarehouse()
     {
         
     }
 
-    begin_restoration()
+    beginRestoration()
     {
         
     }
-
 }
