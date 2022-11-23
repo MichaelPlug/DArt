@@ -5,29 +5,30 @@ pragma solidity >=0.7.0 < 0.9.0;
 contract DArt {
 
     //we have a struct to store the data about artworks
-    struct artwork {
+    struct Artwork {
         string name;
         string artist;
         string year;
         string additionalNotes;
     }
 
+    struct Wallet{
+        address wallet;
+        string name;
+        string additionalNotes;
+        bool verified;
+    }
+
     //this is the address of the creator MAYBE PRIVATE, namely the owner
     //of the smart contract that it can do some special actions
     address public creator;
 
-    //we have the pending requests for the museums to accept them, by means
-    //of the creator
-    //address pendingRequestsMuseum[];
-    // NOTA: usare un mapping dovrebbe avere un costo computazionale minore
-    mapping (address => bool) public isPendingMuseum;
-    
+
     //this is a mapping between museums and artworks related to them
     mapping (address => uint) public museumsArtworks;
 
-    //this is a list that contains all the museums registered to our
-    // infrastructure
-    address museums[];
+    //this is a list that contains all the ids registered (true) or pending to be it (false) to DArt
+    mapping (address => verifiedWallet) public registeredWallets;
 
     //the first time that we call che smart contract we need to save which is the
     //creator, because it can do after some important actions
@@ -38,7 +39,7 @@ contract DArt {
 
     //called by a museum, to add an artwork in blockchain (MAYBE TO DO
     //WITH PENDING REQUESTS TO VERIFY REALLY THE PRESENCE OF THE ARTWORK)
-    func artworkCreation(string artwork){
+    func createArtwork(string artwork){
         //declare a variable very large to store an hash, namely the hash
         //that represents the artwork (MAYBE NOT USEFUL TO USE THE HASH)
         bytes32 hash;
@@ -55,18 +56,13 @@ contract DArt {
         museumArtworks[msg.sender] = tempList;
     }
 
+//mettiamo noi o l'utente queste informazioni? se lo fa l'utente significa che potrebbe richiamare la funzione e resettarle?
     //called by a museum that wants to enter in the blockchain
-    func museumRequestCreation(){
-        //we loop for all the museums
-        for (uint i; i < museums.length; i++){ 
-            //we see if the specific museum was already been inserted
-            if (msg.sender == museums[i]){
-                //in this latter case we have an error
-                revert()
-            }
+    func museumRequestCreation(string name, string additionalNotes){
+        if registeredWallets[msg.sender].registered == false{
+            wallet = Wallet(msg.sender, name, additionalNotes, false);
+            registeredwallets[msg.sender] = wallet;
         }
-        //we add the address of the museum to the list of pendings
-        pendingRequestsMuseum.push(msg.sender, true);
     }
 
 
@@ -75,18 +71,16 @@ contract DArt {
         //we verify that the address is really the creator
         if (msg.sender != creator){
             //otherwise we end up, an error we have
-            revert()
+            revert();
         }
         //we loop all the elements of the pending museums to find
         //really the specific museum that we want
-        for (uint i; i < pendingRequestsMuseum.length; i++) {   
-            //if it is already exist in our App
-            if (pendingRequestsMuseum[i] == museum) {
-                //then we revert because we have an error, in fact the
-                //museum already exists   
-                revert()
-            }
-        }
+        if (registeredWallets[museum].address != 0x0){
+            //we change the status of the museum to verified
+            registeredWallets[museum].verified = true;
+        } else [
+            revert();
+        ]
         //if the museum does not exist and we are the creator, then we create
         //a list (each museum has associated a list of artworks) of hashes
         bytes32 list[];
@@ -116,6 +110,6 @@ contract DArt {
     func putWarehouse(){ 
     }
 
-    func beginRestoration(){
+    funcbeginRestoration(){
     }
 }
