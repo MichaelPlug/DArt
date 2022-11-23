@@ -79,7 +79,7 @@ contract DArt {
             {
 
                 //in this latter case we have an error
-                return
+                revert()
 
             }
 
@@ -99,7 +99,7 @@ contract DArt {
         if (msg.sender != creator)
         {
             //otherwise we end up, an error we have
-            return
+            revert()
         }
 
         //we loop all the elements of the pending museums to find
@@ -109,9 +109,9 @@ contract DArt {
             //if it is already exist in our App
             if (pendingRequestsMuseum[i] == museum) {
 
-                //then we return, because we have an error, in fact the
+                //then we revert(), because we have an error, in fact the
                 //museum already exists   
-                return
+                revert()
             
             }
 
