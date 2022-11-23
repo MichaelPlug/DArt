@@ -1,5 +1,4 @@
 # DArt
 
 ## Authors
-Giordano Dionisi 
-Michele Spina
+Giordano Dionisi & Michele Spina
