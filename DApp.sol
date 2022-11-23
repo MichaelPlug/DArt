@@ -104,7 +104,7 @@ contract DArt {
 
         //we loop all the elements of the pending museums to find
         //really the specific museum that we want
-        for (uint i; i < pending_requests_museum.length; i++) {
+        for (uint i; i < pendingRequestsMuseum.length; i++) {
             
             //if it is already exist in our App
             if (pendingRequestsMuseum[i] == museum) {
