@@ -38,7 +38,7 @@ contract DArt {
 
     //called by a museum, to add an artwork in blockchain (MAYBE TO DO
     //WITH PENDING REQUESTS TO VERIFY REALLY THE PRESENCE OF THE ARTWORK)
-    artworkCreation(string artwork){
+    func artworkCreation(string artwork){
         //declare a variable very large to store an hash, namely the hash
         //that represents the artwork (MAYBE NOT USEFUL TO USE THE HASH)
         bytes32 hash;
@@ -56,7 +56,7 @@ contract DArt {
     }
 
     //called by a museum that wants to enter in the blockchain
-    museumRequestCreation(){
+    func museumRequestCreation(){
         //we loop for all the museums
         for (uint i; i < museums.length; i++){ 
             //we see if the specific museum was already been inserted
@@ -71,7 +71,7 @@ contract DArt {
 
 
     //called by a smart contract, given a specificc address
-    museumCreation(address museum){
+    func museumCreation(address museum){
         //we verify that the address is really the creator
         if (msg.sender != creator){
             //otherwise we end up, an error we have
@@ -95,27 +95,27 @@ contract DArt {
     }
 
 
-    artworkTransferring(artwork, recipient){
+    func artworkTransferring(artwork, recipient){
     }
 
-    artworkRequest(){   
+    func artworkRequest(){   
     }
 
-    artworkRequestDismiss(){    
+    func artworkRequestDismiss(){    
     }
 
-    propertyPassage(){   
+    func propertyPassage(){   
     }
 
-    requestProperty(){  
+    func requestProperty(){  
     }
 
-    putExhibition(){  
+    func putExhibition(){  
     }
 
-    putWarehouse(){ 
+    func putWarehouse(){ 
     }
 
-    beginRestoration(){
+    func beginRestoration(){
     }
 }
