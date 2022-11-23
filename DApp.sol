@@ -39,7 +39,18 @@ contract DArt {
 
     //called by a museum, to add an artwork in blockchain (MAYBE TO DO
     //WITH PENDING REQUESTS TO VERIFY REALLY THE PRESENCE OF THE ARTWORK)
-    func createArtwork(string artwork){
+    func mintArtworkNFT(string artwork){
+        if registeredWallets[msg.sender].verified == true{
+            //we add the artwork to the mapping
+            /*
+            TODO: all this stuff have to be recoded and we have to decide if use one mapping from address to 
+            a list of artworks or a mapping from any artwork to walletts, or both of them
+            */
+            newArtwork = Artwork(artwork);
+            museumsArtworks[msg.sender] = newArtwork;
+        }
+
+
         //declare a variable very large to store an hash, namely the hash
         //that represents the artwork (MAYBE NOT USEFUL TO USE THE HASH)
         bytes32 hash;
