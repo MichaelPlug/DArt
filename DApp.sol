@@ -5,9 +5,10 @@ pragma solidity >=0.7.0 < 0.9.0;
 contract DArt {
 
     /*
-    {
+    struct artwork {
         string name;
         string artist;
+        string year;
         string additionalNotes;
     }
     */
@@ -109,7 +110,7 @@ contract DArt {
             //if it is already exist in our App
             if (pendingRequestsMuseum[i] == museum) {
 
-                //then we revert(), because we have an error, in fact the
+                //then we revert because we have an error, in fact the
                 //museum already exists   
                 revert()
             
