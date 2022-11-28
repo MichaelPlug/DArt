@@ -198,7 +198,8 @@ contract DArt {
     //with this function we want transfer an artwork from a sender (msg.sender) to a recipient one
     function artwork_transferring(bytes32 artwork, address recipient)
     {
-        
+        assert(museums[recipient].verified && museum[msg.sender].verified);
+        /*
         int find = find_element_list(museums, recipient)
         
         if (find == -1) {
@@ -215,7 +216,7 @@ contract DArt {
             return;
             
         }
-        
+        */
 
         //we declare something for an hash
         bytes32 hash;
