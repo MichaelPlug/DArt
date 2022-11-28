@@ -132,13 +132,8 @@ contract DArt {
         
     }
 
-    
     //TERMINATION OF THE UTILITY FUNCTIONS
-
-    
-    
-    
-    
+  
     //called by a museum, to add an artwork in blockchain (MAYBE TO DO
     //WITH PENDING REQUESTS TO VERIFY REALLY THE PRESENCE OF THE ARTWORK)
     func mintArtworkNFT(string artwork) external {
@@ -151,8 +146,6 @@ contract DArt {
             newArtwork = Artwork(artwork);
             museumsArtworks[msg.sender] = newArtwork;
         }
-
-
         //declare a variable very large to store an hash, namely the hash
         //that represents the artwork (MAYBE NOT USEFUL TO USE THE HASH)
         bytes32 hash;
@@ -197,27 +190,9 @@ contract DArt {
     }
         
     //with this function we want transfer an artwork from a sender (msg.sender) to a recipient one
-    function artwork_transferring(bytes32 artwork, address recipient)
+    function transferArtwork(bytes32 artwork, address recipient)
     {
         assert(museums[recipient].verified && museum[msg.sender].verified);
-        /*
-        int find = find_element_list(museums, recipient)
-        
-        if (find == -1) {
-         
-            return;
-            
-        }
-        
-        int find = find_element_list(museums, msg.sender)
-        
-        if (find == -1) {
-            
-            //we don't need to "revert" because we haven't done anything
-            return;
-            
-        }
-        */
 
         //we declare something for an hash
         bytes32 hash;
