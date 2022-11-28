@@ -141,7 +141,7 @@ contract DArt {
     
     //called by a museum, to add an artwork in blockchain (MAYBE TO DO
     //WITH PENDING REQUESTS TO VERIFY REALLY THE PRESENCE OF THE ARTWORK)
-    func mintArtworkNFT(string artwork){
+    func mintArtworkNFT(string artwork) external {
         if registeredWallets[msg.sender].verified == true{
             //we add the artwork to the mapping
             /*
