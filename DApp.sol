@@ -185,6 +185,7 @@ contract DArt {
         if ((msg.sender == creator && registeredWallets[museum].address != 0x0){
             // change the status of the museum to verified
             registeredWallets[museum].verified = true;
+        }
          else {
             revert();
         }
