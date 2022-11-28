@@ -164,7 +164,7 @@ contract DArt {
 
 //mettiamo noi o l'utente queste informazioni? se lo fa l'utente significa che potrebbe richiamare la funzione e resettarle?
     //called by a museum that wants to enter in the blockchain
-    func museumRequestCreation(string name, string additionalNotes){
+    func museumRequestCreation(string name, string additionalNotes) external {
         if registeredWallets[msg.sender].registered == false{
             wallet = Wallet(msg.sender, name, additionalNotes, false);
             registeredwallets[msg.sender] = wallet;
@@ -173,7 +173,7 @@ contract DArt {
 
 
     //called by a smart contract, given a specificc address
-    func museumCreation(address museum){
+    func museumCreation(address museum) external {
         // veryf the sender is the creator/owner of the smart contract and that there is a pendig reques to register the wallet
         if ((msg.sender == creator && registeredWallets[museum].address != 0x0){
             // change the status of the museum to verified
@@ -190,8 +190,7 @@ contract DArt {
     }
         
     //with this function we want transfer an artwork from a sender (msg.sender) to a recipient one
-    function transferArtwork(bytes32 artwork, address recipient)
-    {
+    function transferArtwork(bytes32 artwork, address recipient) external {
         assert(museums[recipient].verified && museum[msg.sender].verified);
 
         //we declare something for an hash
@@ -243,6 +242,6 @@ contract DArt {
     func putWarehouse(){ 
     }
 
-    funcbeginRestoration(){
+    func beginRestoration(){
     }
 }
