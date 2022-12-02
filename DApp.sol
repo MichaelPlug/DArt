@@ -6,10 +6,8 @@ contract DArt {
 
     //we have a struct to store the data about artworks
     struct Artwork {
-        string name;
-        string artist;
-        string year;
-        string additionalNotes;
+        bytes32 name;
+        bytes32 id;
     }
 
     // A struct that collect informations about the wallet that operate with the contact
@@ -27,10 +25,12 @@ contract DArt {
         bytes32 hashedName;
     }
 
+    // This enum indicates the type of actor associated to a registered wallet
     enum Actor {
         MUSEUM,
         GALLERY,
-        PRIVATECOLLECT
+        PRIVATECOLLECTOR,
+        ARTIST
     }
 
     enum Operation {
@@ -51,6 +51,8 @@ contract DArt {
     mapping (address => Wallet) public registeredWallets;
 
     mapping (address => Exibtion) public museumExibtions;
+
+    mapping (bytes32 => Artwork) public RegisterdArtworks;
 
     //the first time that we call che smart contract we need to save which is the
     //creator, because it can do after some important actions
@@ -159,6 +161,7 @@ contract DArt {
   */
     //called by a museum, to add an artwork in blockchain (MAYBE TO DO
     //WITH PENDING REQUESTS TO VERIFY REALLY THE PRESENCE OF THE ARTWORK)
+    //TODO: we have to add some elements as input
     function mintArtworkNFT(string artwork) external {
         if (registeredWallets[msg.sender].verified){
             //we add the artwork to the mapping
@@ -167,7 +170,7 @@ contract DArt {
             a list of artworks or a mapping from any artwork to walletts, or both of them
             */
             newArtwork = Artwork(artwork);
-            museumsArtworks[msg.sender] = newArtwork;
+            museumsArtworks[msg.sender].push(newArtwork);
         }
         //declare a variable very large to store an hash, namely the hash
         //that represents the artwork (MAYBE NOT USEFUL TO USE THE HASH)
@@ -259,7 +262,8 @@ contract DArt {
     function requestProperty(){  
     }
 
-    function putExhibition(){  
+    function putExhibition(){ 
+
     }
 
     function putWarehouse(){ 
