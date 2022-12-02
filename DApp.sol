@@ -27,7 +27,7 @@ contract DArt {
     mapping (address => uint) public museumsArtworks;
 
     //this is a list that contains all the ids registered (true) or pending to be it (false) to DArt
-    mapping (address => verifiedWallet) public registeredWallets;
+    mapping (address => Wallet) public registeredWallets;
 
     //the first time that we call che smart contract we need to save which is the
     //creator, because it can do after some important actions
@@ -41,7 +41,7 @@ contract DArt {
     
     
     //this is an utility function to search, into an array of bytes32 (so of hashes) a specific element (hash element) and if it is found then we return the index, otherwise we return -1 (not found element)
-    function search_in_array(bytes32 array, bytes32 element) returns (int) {
+    function search_in_array(bytes32 array, bytes32 element) view returns (int) {
         
         //we loop for all the array that we have
         for (uint i; i < array.lenght; i++) {
@@ -117,7 +117,7 @@ contract DArt {
     }
 
     
-    function find_element_list(address list, address recipient) returns (int){
+    function find_element_list(address list, address recipient) view returns (int){
      
         for (uint i; i< list.length; i++){
          
@@ -136,7 +136,7 @@ contract DArt {
   
     //called by a museum, to add an artwork in blockchain (MAYBE TO DO
     //WITH PENDING REQUESTS TO VERIFY REALLY THE PRESENCE OF THE ARTWORK)
-    func mintArtworkNFT(string artwork) external {
+    function mintArtworkNFT(string artwork) external {
         if registeredWallets[msg.sender].verified == true{
             //we add the artwork to the mapping
             /*
@@ -164,7 +164,7 @@ contract DArt {
 
 //mettiamo noi o l'utente queste informazioni? se lo fa l'utente significa che potrebbe richiamare la funzione e resettarle?
     //called by a museum that wants to enter in the blockchain
-    func museumRequestCreation(string name, string additionalNotes) external {
+    function museumRequestCreation(string name, string additionalNotes) external {
         if registeredWallets[msg.sender].registered == false{
             wallet = Wallet(msg.sender, name, additionalNotes, false);
             registeredwallets[msg.sender] = wallet;
@@ -173,7 +173,7 @@ contract DArt {
 
 
     //called by a smart contract, given a specificc address
-    func museumCreation(address museum) external {
+    function museumCreation(address museum) external {
         // veryf the sender is the creator/owner of the smart contract and that there is a pendig reques to register the wallet
         if ((msg.sender == creator && registeredWallets[museum].address != 0x0){
             // change the status of the museum to verified
@@ -236,10 +236,10 @@ contract DArt {
     func requestProperty(){  
     }
 
-    func putExhibition(){  
+    function putExhibition(){  
     }
 
-    func putWarehouse(){ 
+    function putWarehouse(){ 
     }
 
     func beginRestoration(){
