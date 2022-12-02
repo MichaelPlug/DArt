@@ -12,11 +12,32 @@ contract DArt {
         string additionalNotes;
     }
 
+    // A struct that collect informations about the wallet that operate with the contact
     struct Wallet{
         address wallet;
         string name;
         string additionalNotes;
         bool verified;
+        Actor role;
+    }
+
+    // A struct to collect information about exibitions
+    struct Exibition {
+        bytes32 id;
+        bytes32 hashedName;
+    }
+
+    enum Actor {
+        MUSEUM,
+        GALLERY,
+        PRIVATECOLLECT
+    }
+
+    enum Operation {
+        RESTAURATION,
+        DAMAGE,
+        MOVING, 
+        UPDATE
     }
 
     //this is the address of the creator MAYBE PRIVATE, namely the owner
@@ -29,6 +50,8 @@ contract DArt {
     //this is a list that contains all the ids registered (true) or pending to be it (false) to DArt
     mapping (address => Wallet) public registeredWallets;
 
+    mapping (address => Exibtion) public museumExibtions;
+
     //the first time that we call che smart contract we need to save which is the
     //creator, because it can do after some important actions
     constructor(){
@@ -39,7 +62,7 @@ contract DArt {
     
     //UTILITY FUNCTIONS
     
-    
+    /*
     //this is an utility function to search, into an array of bytes32 (so of hashes) a specific element (hash element) and if it is found then we return the index, otherwise we return -1 (not found element)
     function search_in_array(bytes32 array, bytes32 element) view returns (int) {
         
@@ -133,11 +156,11 @@ contract DArt {
     }
 
     //TERMINATION OF THE UTILITY FUNCTIONS
-  
+  */
     //called by a museum, to add an artwork in blockchain (MAYBE TO DO
     //WITH PENDING REQUESTS TO VERIFY REALLY THE PRESENCE OF THE ARTWORK)
     function mintArtworkNFT(string artwork) external {
-        if registeredWallets[msg.sender].verified == true{
+        if (registeredWallets[msg.sender].verified){
             //we add the artwork to the mapping
             /*
             TODO: all this stuff have to be recoded and we have to decide if use one mapping from address to 
@@ -150,9 +173,9 @@ contract DArt {
         //that represents the artwork (MAYBE NOT USEFUL TO USE THE HASH)
         bytes32 hash;
         //we compute the hash of the corresponding string, so
-        hash = sha256(artwork)
+        hash = sha256(artwork);
         //declare a temporary list
-        bytes32 tempList[];
+        bytes32[] tempList;
         //we extract the list (the value) associated to this specific
         //key of the mapping, so
         tempList = museumArtworks[msg.sender];
@@ -165,7 +188,7 @@ contract DArt {
 //mettiamo noi o l'utente queste informazioni? se lo fa l'utente significa che potrebbe richiamare la funzione e resettarle?
     //called by a museum that wants to enter in the blockchain
     function museumRequestCreation(string name, string additionalNotes) external {
-        if registeredWallets[msg.sender].registered == false{
+        if (registeredWallets[msg.sender].registered == false){
             wallet = Wallet(msg.sender, name, additionalNotes, false);
             registeredwallets[msg.sender] = wallet;
         }
@@ -175,7 +198,7 @@ contract DArt {
     //called by a smart contract, given a specificc address
     function museumCreation(address museum) external {
         // veryf the sender is the creator/owner of the smart contract and that there is a pendig reques to register the wallet
-        if ((msg.sender == creator && registeredWallets[museum].address != 0x0){
+        if (msg.sender == creator && registeredWallets[museum].address != 0x0){
             // change the status of the museum to verified
             registeredWallets[museum].verified = true;
         }
