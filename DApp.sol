@@ -197,7 +197,7 @@ contract DArt {
         bytes32 hash;
 
         //we compute the hash of the corresponding string, so
-        hash = keccak256(artwork)
+        hash = sha256(artwork)
         
         //we take the list of all the artworks for the specific museum
         bytes32 list_artworks;
@@ -224,16 +224,16 @@ contract DArt {
         
     }
 
-    func artworkRequest(){   
+    function artworkRequest(){   
     }
 
-    func artworkRequestDismiss(){    
+    function artworkRequestDismiss(){    
     }
 
-    func propertyPassage(){   
+    function propertyPassage(){   
     }
 
-    func requestProperty(){  
+    function requestProperty(){  
     }
 
     function putExhibition(){  
@@ -242,6 +242,6 @@ contract DArt {
     function putWarehouse(){ 
     }
 
-    func beginRestoration(){
+    function beginRestoration(){
     }
 }
