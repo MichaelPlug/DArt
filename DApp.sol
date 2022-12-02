@@ -132,16 +132,11 @@ contract DArt {
         
     }
 
-    
     //TERMINATION OF THE UTILITY FUNCTIONS
-
-    
-    
-    
-    
+  
     //called by a museum, to add an artwork in blockchain (MAYBE TO DO
     //WITH PENDING REQUESTS TO VERIFY REALLY THE PRESENCE OF THE ARTWORK)
-    func mintArtworkNFT(string artwork){
+    func mintArtworkNFT(string artwork) external {
         if registeredWallets[msg.sender].verified == true{
             //we add the artwork to the mapping
             /*
@@ -151,8 +146,6 @@ contract DArt {
             newArtwork = Artwork(artwork);
             museumsArtworks[msg.sender] = newArtwork;
         }
-
-
         //declare a variable very large to store an hash, namely the hash
         //that represents the artwork (MAYBE NOT USEFUL TO USE THE HASH)
         bytes32 hash;
@@ -171,7 +164,7 @@ contract DArt {
 
 //mettiamo noi o l'utente queste informazioni? se lo fa l'utente significa che potrebbe richiamare la funzione e resettarle?
     //called by a museum that wants to enter in the blockchain
-    func museumRequestCreation(string name, string additionalNotes){
+    func museumRequestCreation(string name, string additionalNotes) external {
         if registeredWallets[msg.sender].registered == false{
             wallet = Wallet(msg.sender, name, additionalNotes, false);
             registeredwallets[msg.sender] = wallet;
@@ -180,11 +173,12 @@ contract DArt {
 
 
     //called by a smart contract, given a specificc address
-    func museumCreation(address museum){
+    func museumCreation(address museum) external {
         // veryf the sender is the creator/owner of the smart contract and that there is a pendig reques to register the wallet
         if ((msg.sender == creator && registeredWallets[museum].address != 0x0){
             // change the status of the museum to verified
             registeredWallets[museum].verified = true;
+        }
          else {
             revert();
         }
@@ -196,26 +190,8 @@ contract DArt {
     }
         
     //with this function we want transfer an artwork from a sender (msg.sender) to a recipient one
-    function artwork_transferring(bytes32 artwork, address recipient)
-    {
-        
-        int find = find_element_list(museums, recipient)
-        
-        if (find == -1) {
-         
-            return;
-            
-        }
-        
-        int find = find_element_list(museums, msg.sender)
-        
-        if (find == -1) {
-            
-            //we don't need to "revert" because we haven't done anything
-            return;
-            
-        }
-        
+    function transferArtwork(bytes32 artwork, address recipient) external {
+        assert(museums[recipient].verified && museum[msg.sender].verified);
 
         //we declare something for an hash
         bytes32 hash;
@@ -266,6 +242,6 @@ contract DArt {
     func putWarehouse(){ 
     }
 
-    funcbeginRestoration(){
+    func beginRestoration(){
     }
 }
