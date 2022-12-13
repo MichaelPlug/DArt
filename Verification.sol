@@ -86,6 +86,5 @@ contract Verification {
         else {
             return keccak256(abi.encodePacked(name)) == registeredWallets[museum].hashedName;
         }
-
     }
 }
