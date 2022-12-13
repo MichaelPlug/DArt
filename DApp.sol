@@ -176,7 +176,7 @@ contract DArt {
         //that represents the artwork (MAYBE NOT USEFUL TO USE THE HASH)
         bytes32 hash;
         //we compute the hash of the corresponding string, so
-        hash = sha256(artwork);
+        hash = keccak256(artwork);
         //declare a temporary list
         bytes32[] tempList;
         //we extract the list (the value) associated to this specific
@@ -223,7 +223,7 @@ contract DArt {
         bytes32 hash;
 
         //we compute the hash of the corresponding string, so
-        hash = sha256(artwork)
+        hash = keccak256(artwork)
         
         //we take the list of all the artworks for the specific museum
         bytes32 list_artworks;
