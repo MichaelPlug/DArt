@@ -13,8 +13,8 @@ contract DArt {
     // A struct that collect informations about the wallet that operate with the contact
     struct Wallet{
         address wallet;
-        string name;
-        string additionalNotes;
+        bytes32 id;
+        bytes32 hashedName;
         bool verified;
         Actor role;
     }
@@ -23,6 +23,7 @@ contract DArt {
     struct Exibition {
         bytes32 id;
         bytes32 hashedName;
+        bool isOpen;
     }
 
     // This enum indicates the type of actor associated to a registered wallet
@@ -33,10 +34,13 @@ contract DArt {
         ARTIST
     }
 
+    // This enum indicates the type of operation applied to and update of an artwork
     enum Operation {
+        PREVENTION,
+        PROTECTIOIN,
+        MAINTAINANCE,
         RESTAURATION,
         DAMAGE,
-        MOVING, 
         UPDATE
     }
 
@@ -61,104 +65,6 @@ contract DArt {
         creator = msg.sender;
     }
 
-    
-    //UTILITY FUNCTIONS
-    
-    /*
-    //this is an utility function to search, into an array of bytes32 (so of hashes) a specific element (hash element) and if it is found then we return the index, otherwise we return -1 (not found element)
-    function search_in_array(bytes32 array, bytes32 element) view returns (int) {
-        
-        //we loop for all the array that we have
-        for (uint i; i < array.lenght; i++) {
-            
-            //if we have found the specific element that we need to find
-            if (element == array[i]) {
-                    
-                //then we return the specific index that it's needed
-                return i;
-            }
-            
-        }
-        
-        //if we don't find anything, then we return an error code, so -1
-        return -1;
-        
-    }
-    
-    //we delete a specific element (specified by means of an bytes32, NOT index) maintaining the total order of the array that we need to modify
-    function delete_element_array_maintaining_order(bytes32 array, bytes32 artwork) returns(uint[]) {
-        
-        
-        //we search the specific element that we need
-        int index = search_in_array(list_artworks, artwork)
-        
-        //if the specific artwork isn't been found then we roll back evertything, maybe also with an error message
-        if (index == -1) {
-        
-            //return a simple error code (we return it like as an array, because the function returns array of elements
-            return [-1];
-            
-        }
-        
-        //we now loop for all the array from the specified index (the idea is to move all the elements that are after the index position of the array for a position before, obtaining a shifting of all elements, from the index position, to left, so the last position remaining empty and we will remmove this last position -> We do this, otherwise only with the delete operation we will leave a position without values, so a gap, that we will not want and we will preserve the order, so for this reason we don't move only the last element of the array)
-        for (uint i = index; i<array.length-1; i++){
-        
-            //so we shift all the elements from the index position to left
-            array[i] = array[i+1];
-        
-        }
-        
-        //then we delete the last element of the array
-        delete array[array.length-1];
-        
-        //we decrease the length of the array, because we have removed the last element, exactly
-        array.length--;
-        
-        //we have operated on a local copy of the array, so we need to return the right array modified now
-        return array;
-            
-    }
-    
-    
-    //we add a specific element (hashed artwork) to a dictionary (museums_artworks) for a specific recipient address (recipient museum)
-    //the recipient address needs to exist
-    function add_element_to_dictionary_list(address recipient, bytes32 artwork, bytes32 museums_artworks) returns (address -> bytes32){
-    
-        //declare a temporary list
-        bytes32 temp_list[];
-
-        //we extract the list (the value) associated to this specific
-        //key of the mapping, so
-        temp_list = museum_artworks[recipient];
-
-        //we add to this extracted list the specific artwork
-        temp_list.push(artwork);
-
-        //we add this new artwork (string or hash) to the list
-        museums_artworks[recipient] = temp_list;
-        
-        return museums_artworks
-        
-    }
-
-    
-    function find_element_list(address list, address recipient) view returns (int){
-     
-        for (uint i; i< list.length; i++){
-         
-            if (element == list[i]){
-             
-                return i;
-                
-            }
-        }
-        
-        return -1;
-        
-    }
-
-    //TERMINATION OF THE UTILITY FUNCTIONS
-  */
     //called by a museum, to add an artwork in blockchain (MAYBE TO DO
     //WITH PENDING REQUESTS TO VERIFY REALLY THE PRESENCE OF THE ARTWORK)
     //TODO: we have to add some elements as input
