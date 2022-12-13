@@ -4,6 +4,12 @@ pragma solidity >=0.7.0 < 0.9.0;
 //we have objects to work with
 contract DArt {
 
+    /* DUBBI:
+    Come gestiamo con le nostre strutture dati gli storici? per esempio lo storio delle OPERATIONs.
+    Inoltre gli artwork potrebbero avere lo stesso nome, quindi non è univoco, quindi non possiamo usare solo quello
+    per hashare, usiamo la data? L'artista? O l'original minter address?
+    */
+
     //we have a struct to store the data about artworks
     struct Artwork {
         bytes32 name;
@@ -76,7 +82,11 @@ contract DArt {
         //we add this new artwork (string or hash) to the list
         museumArtworks[msg.sender] = tempList;
     }
+
+    function mintExibitionNFT() external {
         
+    }
+/*
     //with this function we want transfer an artwork from a sender (msg.sender) to a recipient one
     function transferArtwork(bytes32 artwork, address recipient) external {
         assert(museums[recipient].verified && museum[msg.sender].verified);
@@ -110,6 +120,7 @@ contract DArt {
         //we add the specific artwork to the specific recipient dictionary (it exists for the first check, practically)
         add_element_to_dictionary_list(recipient, artwork, museums_artworks);
     }
+*/
 
     function updateArtwork(bytes32 artwork, bytes32 newArtwork) external {
         assert(museums[msg.sender].verified);
@@ -159,7 +170,7 @@ contract DArt {
     function putExhibition(){ 
     }
 
-    function putWarehouse(){ 
+    function putWarehouse(){
     }
 
     function allowAccessToArtwork(address target, bytes32 artwork) external {
@@ -174,5 +185,6 @@ contract DArt {
     }
 
     function beginRestoration(){
+
     }
 }
