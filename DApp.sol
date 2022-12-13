@@ -10,6 +10,8 @@ contract DArt {
     per hashare, usiamo la data? L'artista? O l'original minter address?
 
     E se invece dovessimo dire solo lo stato attuale di un artwork?
+
+    Ripassa gli event
     */
 
     //we have a struct to store the data about artworks
