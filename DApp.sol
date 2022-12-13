@@ -8,20 +8,26 @@ contract DArt {
     Come gestiamo con le nostre strutture dati gli storici? per esempio lo storio delle OPERATIONs.
     Inoltre gli artwork potrebbero avere lo stesso nome, quindi non è univoco, quindi non possiamo usare solo quello
     per hashare, usiamo la data? L'artista? O l'original minter address?
+
+    E se invece dovessimo dire solo lo stato attuale di un artwork?
     */
 
     //we have a struct to store the data about artworks
     struct Artwork {
         bytes32 name;
         bytes32 id;
+        address minter; //the address of the museum that minted the artwork
         address holder;
         address owner;
+        exposedAt Exibition; // Da vedere come gestire lo storico delle esposizioni
+        status Operation; // Da vedere come gestire lo storico delle operazioni
     }
 
     // A struct to collect information about exibitions
     struct Exibition {
         bytes32 id;
         bytes32 hashedName;
+        address organizer;
         bool isOn; 
     }
 
@@ -57,7 +63,7 @@ contract DArt {
     //called by a museum, to add an artwork in blockchain (MAYBE TO DO
     //WITH PENDING REQUESTS TO VERIFY REALLY THE PRESENCE OF THE ARTWORK)
     //TODO: we have to add some elements as input
-    function mintArtworkNFT(string artwork) external {
+    function mintArtworkNFT(string name, string author, string ) external {
         if (registeredWallets[msg.sender].verified){
             //we add the artwork to the mapping
             /*
