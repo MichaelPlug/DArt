@@ -64,29 +64,14 @@ contract DArt {
     //WITH PENDING REQUESTS TO VERIFY REALLY THE PRESENCE OF THE ARTWORK)
     //TODO: we have to add some elements as input
     function mintArtworkNFT(string name, string author, string ) external {
-        if (registeredWallets[msg.sender].verified){
-            //we add the artwork to the mapping
-            /*
-            TODO: all this stuff have to be recoded and we have to decide if use one mapping from address to 
-            a list of artworks or a mapping from any artwork to walletts, or both of them
-            */
-            newArtwork = Artwork(artwork);
-            museumsArtworks[msg.sender].push(newArtwork);
-        }
-        //declare a variable very large to store an hash, namely the hash
-        //that represents the artwork (MAYBE NOT USEFUL TO USE THE HASH)
-        bytes32 hash;
-        //we compute the hash of the corresponding string, so
-        hash = keccak256(artwork);
-        //declare a temporary list
-        bytes32[] tempList;
-        //we extract the list (the value) associated to this specific
-        //key of the mapping, so
-        tempList = museumArtworks[msg.sender];
-        //we add to this extracted list the specific artwork
-        tempList.push(artwork);
-        //we add this new artwork (string or hash) to the list
-        museumArtworks[msg.sender] = tempList;
+        assert(registeredWallets[msg.sender].verified);
+        //we add the artwork to the mapping
+        /*
+        TODO: all this stuff have to be recoded and we have to decide if use one mapping from address to 
+        a list of artworks or a mapping from any artwork to walletts, or both of them
+        */
+        newArtwork = Artwork(artwork);
+        museumsArtworks[msg.sender].push(newArtwork);
     }
 
     function mintExibitionNFT() external {
