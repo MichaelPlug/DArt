@@ -19,8 +19,8 @@ contract DArt {
         address minter; //the address of the museum that minted the artwork
         address holder;
         address owner;
-        exposedAt Exibition; // Da vedere come gestire lo storico delle esposizioni
-        status Operation; // Da vedere come gestire lo storico delle operazioni
+        Exibition exposedAt; // Da vedere come gestire lo storico delle esposizioni
+        Operation status; // Da vedere come gestire lo storico delle operazioni
     }
 
     // A struct to collect information about exibitions
@@ -63,8 +63,10 @@ contract DArt {
     //called by a museum, to add an artwork in blockchain (MAYBE TO DO
     //WITH PENDING REQUESTS TO VERIFY REALLY THE PRESENCE OF THE ARTWORK)
     //TODO: we have to add some elements as input
-    function mintArtworkNFT(string name, string author, string ) external {
+    function mintArtworkNFT(string name) external {
         assert(registeredWallets[msg.sender].verified);
+        kek = keccak256(abi.encodePacked(name, msg.sender));
+        assert(RegisterdArtworks[])
         //we add the artwork to the mapping
         /*
         TODO: all this stuff have to be recoded and we have to decide if use one mapping from address to 
