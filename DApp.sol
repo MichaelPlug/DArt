@@ -8,13 +8,15 @@ contract DArt {
     struct Artwork {
         bytes32 name;
         bytes32 id;
+        address holder;
+        address owner;
     }
 
     // A struct to collect information about exibitions
     struct Exibition {
         bytes32 id;
         bytes32 hashedName;
-        bool isOn; // pessimo nome :((((((
+        bool isOn; 
     }
 
     // This enum indicates the type of operation applied to and update of an artwork
@@ -34,6 +36,7 @@ contract DArt {
     //this is a mapping between museums and artworks related to them
     mapping (address => uint) public museumsArtworks;
 
+    //this is a mapping between museums and exibitions related to them
     mapping (address => Exibtion) public museumExibtions;
 
     mapping (bytes32 => Artwork) public RegisterdArtworks;
@@ -147,17 +150,27 @@ contract DArt {
     function artworkRequestDismiss(){    
     }
 
-    function propertyPassage(){ 1\q     1
+    function propertyPassage(){
     }
 
     function requestProperty(){  
-
     }
 
     function putExhibition(){ 
     }
 
     function putWarehouse(){ 
+    }
+
+    function allowAccessToArtwork(address target, bytes32 artwork) external {
+        assert(museums[target].verified);
+        assert(RegisterdArtworks[artwork].holder == msg.sender);
+        RegisterdArtworks[artwork].owner == targert;
+    }
+
+    function revokeAccessToArtwork(bytes32 artwork) external {
+        assert(RegisterdArtworks[artwork].holder == msg.sender);
+        RegisterdArtworks[artwork].owner == 0x0;
     }
 
     function beginRestoration(){
