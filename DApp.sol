@@ -14,7 +14,7 @@ contract DArt {
     struct Exibition {
         bytes32 id;
         bytes32 hashedName;
-        bool isOpen; // pessimo nome :((((((
+        bool isOn; // pessimo nome :((((((
     }
 
     // This enum indicates the type of operation applied to and update of an artwork
@@ -106,7 +106,39 @@ contract DArt {
         
         //we add the specific artwork to the specific recipient dictionary (it exists for the first check, practically)
         add_element_to_dictionary_list(recipient, artwork, museums_artworks);
+    }
+
+    function updateArtwork(bytes32 artwork, bytes32 newArtwork) external {
+        assert(museums[msg.sender].verified);
+
+        //we declare something for an hash
+        bytes32 hash;
+
+        //we compute the hash of the corresponding string, so
+        hash = keccak256(artwork)
         
+        //we take the list of all the artworks for the specific museum
+        bytes32 list_artworks;
+        
+        //all the artworks for the specific museum are taken
+        list_artworks = museums_artworks[msg.sender]
+        
+        //we take the modified array, exactly
+        uint[] result = delete_element_array_maintaining_order(list_artworks, artwork) 
+        
+        //if we have an error returned (so the artwork doesn't exist in the specific museum)
+        if (result == [-1]) {
+        
+            //element not found in the specific museum (array associated for the museum) -> in fact we cannot transfer something that doesn't exist
+            return;
+            
+        }
+        
+        //we need to update the list associated to the specific museum that needs to give the specific artwork, so
+        museum_artworks[msg.sender] = result;
+        
+        //we add the specific artwork to the specific recipient dictionary (it exists for the first check, practically)
+        add_element_to_dictionary_list(msg.sender, newArtwork, museums_artworks);
     }
 
     function artworkRequest(){   
@@ -115,8 +147,7 @@ contract DArt {
     function artworkRequestDismiss(){    
     }
 
-    function propertyPassage(){ 
-
+    function propertyPassage(){ 1\q     1
     }
 
     function requestProperty(){  
