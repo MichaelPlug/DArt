@@ -60,6 +60,7 @@ contract Verification {
         return registeredWallets[museum].verified;
     }
 
+    // Get the role of a wallet if it is registered in the blockchain as an verified actor
     function getRole(address museum) external view returns(Actors) {
         if (registeredWallets[museum].verified == false){
             revert();
@@ -70,6 +71,7 @@ contract Verification {
         }
     }
 
+    // Get the hashed name of a wallet if it is registered in the blockchain as an verified actor
     function getHashedName(address museum) external view returns(bytes32) {
         if (registeredWallets[museum].verified == false){
             revert();
@@ -79,6 +81,7 @@ contract Verification {
         }
     }
 
+    // Verify if a name is the same of the hashed name of a wallet if it is registered in the blockchain as an verified actor
     function verifyHashedName(string calldata name, address museum) external view returns(bool) {
         if (registeredWallets[museum].verified == false){
             revert();
