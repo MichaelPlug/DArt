@@ -3,32 +3,33 @@ pragma solidity >=0.7.0 < 0.9.0;
 
 //we have objects to work with
 contract DArt {
+    address public minter;
+    mapping (address => uint) public balance;
+    uint public constant PRICE = 2 * 1e15; 
+    // uint public constant PRICE = 2 finney; 
+    // finney is no longer a supported denomination since Solidity v.0.7.0
 
-    unit public constant PRICE = 2 * 1e15;
-
-    // This a dictonary, any address is mappet do a integer, the amout of this integer is the amount of how much HelloToken this addess has got
-    mapping(address => uint) public balance;
-    
-    constructor(){
-
-    }
-    // questa funzione serve per creare un nuovo token
-    function mint(){
-        // Take the value of the transactin, put it in your pocket, and "give back" super-precius HelloToken
-        balance[msc.sender] += msg.value / PRICE;
-        // All the amount of the value is goint to the contract wallet
+    constructor() {
+        minter = msg.sender;
     }
 
-    function burn(uint amount){
+    function mint() public payable {
+        require(msg.value >= PRICE, "Not enough value for a token!");
+        balance[msg.sender] += msg.value / PRICE;
+        // Guess guess, where does the remainder of the msg.value end?
+    }
+
+    function burn(uint amount) public payable returns (bool) {
+        require(balance[msg.sender] >= amount, "Not enough tokens!");
         // Take the amount of HelloToken from the sender and give back the amount of ether
         balance[msg.sender] -= amount;
+        return true
         // Send the amount of ether to the sender
-        msg.sender.transfer(amount * PRICE);
-    }
+        }    }
 
-    function transfer(uint amount, address target){
-        // Take the amount of HelloToken from the sender and give it to the receiver
+    function transfer(uint amount, address to) public returns (bool){
+        require(balance[msg.sender] >= amount, "Not enough tokens!");
         balance[msg.sender] -= amount;
-        balance[msg.receiver] += amount;
+        balance[to] += amount;
     }
 }
