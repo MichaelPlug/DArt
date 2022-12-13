@@ -10,28 +10,11 @@ contract DArt {
         bytes32 id;
     }
 
-    // A struct that collect informations about the wallet that operate with the contact
-    struct Wallet{
-        address wallet;
-        bytes32 id;
-        bytes32 hashedName;
-        bool verified;
-        Actor role;
-    }
-
     // A struct to collect information about exibitions
     struct Exibition {
         bytes32 id;
         bytes32 hashedName;
-        bool isOpen;
-    }
-
-    // This enum indicates the type of actor associated to a registered wallet
-    enum Actor {
-        MUSEUM,
-        GALLERY,
-        PRIVATECOLLECTOR,
-        ARTIST
+        bool isOpen; // pessimo nome :((((((
     }
 
     // This enum indicates the type of operation applied to and update of an artwork
@@ -50,9 +33,6 @@ contract DArt {
 
     //this is a mapping between museums and artworks related to them
     mapping (address => uint) public museumsArtworks;
-
-    //this is a list that contains all the ids registered (true) or pending to be it (false) to DArt
-    mapping (address => Wallet) public registeredWallets;
 
     mapping (address => Exibtion) public museumExibtions;
 
@@ -92,33 +72,6 @@ contract DArt {
         tempList.push(artwork);
         //we add this new artwork (string or hash) to the list
         museumArtworks[msg.sender] = tempList;
-    }
-
-//mettiamo noi o l'utente queste informazioni? se lo fa l'utente significa che potrebbe richiamare la funzione e resettarle?
-    //called by a museum that wants to enter in the blockchain
-    function museumRequestCreation(string name, string additionalNotes) external {
-        if (registeredWallets[msg.sender].registered == false){
-            wallet = Wallet(msg.sender, name, additionalNotes, false);
-            registeredwallets[msg.sender] = wallet;
-        }
-    }
-
-
-    //called by a smart contract, given a specificc address
-    function museumCreation(address museum) external {
-        // veryf the sender is the creator/owner of the smart contract and that there is a pendig reques to register the wallet
-        if (msg.sender == creator && registeredWallets[museum].address != 0x0){
-            // change the status of the museum to verified
-            registeredWallets[museum].verified = true;
-        }
-         else {
-            revert();
-        }
-        //if the museum does not exist and we are the creator, then we create
-        //a list (each museum has associated a list of artworks) of hashes
-        bytes32 list[];
-        //we add the specific element (empty hash) to this list
-        museumArtworks[museum] = list;
     }
         
     //with this function we want transfer an artwork from a sender (msg.sender) to a recipient one
@@ -162,14 +115,15 @@ contract DArt {
     function artworkRequestDismiss(){    
     }
 
-    function propertyPassage(){   
+    function propertyPassage(){ 
+
     }
 
     function requestProperty(){  
+
     }
 
     function putExhibition(){ 
-
     }
 
     function putWarehouse(){ 
