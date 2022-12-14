@@ -67,6 +67,10 @@ contract DArt {
         creator = msg.sender;
     }
 
+    /**
+        @notice a pure faction to hash a string and the address of the caller, used to create univoque ids
+        @param text the string that have to be hashed
+     */
     function hashTextAndAddress(string text) internal pure returns(bytes32) {
         return keccak256(abi.encodePacked(name, msg.sender));
     }
