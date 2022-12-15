@@ -14,9 +14,10 @@ contract Verification {
     // This enum indicates the type of actor associated to a registered wallet
     enum Actors {
         MUSEUM,
-        PUBLICAUTHORITY,
+        PUBLIC_AUTHORITY,
         GALLERY,
-        PRIVATECOLLECTOR,
+        PRIVATE_COLLECTOR,
+        PROTECTION_LAB,
         ARTIST
     }
 
@@ -37,9 +38,9 @@ contract Verification {
     //mettiamo noi o l'utente queste informazioni? se lo fa l'utente significa che potrebbe richiamare la funzione e resettarle?
     //called by a museum that wants to enter in the blockchain
     /**
-    @notice
-    @param name
-    @param role
+        @notice the sender create a request of verification, minting an IDNFT with verification variable as false
+        @param name
+        @param role
      */
     function museumRequestCreation(string calldata name, Actors role) external {
         if (registeredWallets[msg.sender].verified == false){
