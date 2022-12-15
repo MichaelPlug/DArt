@@ -3,7 +3,7 @@ pragma solidity >=0.7.0 < 0.9.0;
 
 contract Verification {
 
-    // A struct that collect informations about the wallet that operate with the contact
+    /// @notice A collection of informations about a wallet that operate with the contact
     struct Wallet{
         //we have to hash also the address?
         bytes32 hashedName;
@@ -20,7 +20,7 @@ contract Verification {
         ARTIST
     }
 
-        //this is the address of the creator MAYBE PRIVATE, namely the owner
+    //this is the address of the creator MAYBE PRIVATE, namely the owner
     //of the smart contract that it can do some special actions
     address public creator;
 
@@ -34,8 +34,13 @@ contract Verification {
         creator = msg.sender;
     }
 
-//mettiamo noi o l'utente queste informazioni? se lo fa l'utente significa che potrebbe richiamare la funzione e resettarle?
+    //mettiamo noi o l'utente queste informazioni? se lo fa l'utente significa che potrebbe richiamare la funzione e resettarle?
     //called by a museum that wants to enter in the blockchain
+    /**
+    @notice
+    @param name
+    @param role
+     */
     function museumRequestCreation(string calldata name, Actors role) external {
         if (registeredWallets[msg.sender].verified == false){
             bytes32 hashedname = keccak256(abi.encodePacked(name));
@@ -60,6 +65,7 @@ contract Verification {
         return registeredWallets[museum].verified;
     }
 
+    // Get the role of a wallet if it is registered in the blockchain as an verified actor
     function getRole(address museum) external view returns(Actors) {
         if (registeredWallets[museum].verified == false){
             revert();
@@ -70,6 +76,7 @@ contract Verification {
         }
     }
 
+    // Get the hashed name of a wallet if it is registered in the blockchain as an verified actor
     function getHashedName(address museum) external view returns(bytes32) {
         if (registeredWallets[museum].verified == false){
             revert();
@@ -79,6 +86,7 @@ contract Verification {
         }
     }
 
+    // Verify if a name is the same of the hashed name of a wallet if it is registered in the blockchain as an verified actor
     function verifyHashedName(string calldata name, address museum) external view returns(bool) {
         if (registeredWallets[museum].verified == false){
             revert();
@@ -87,4 +95,5 @@ contract Verification {
             return keccak256(abi.encodePacked(name)) == registeredWallets[museum].hashedName;
         }
     }
+
 }

@@ -1,0 +1,22 @@
+[
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "shable",
+				"type": "string"
+			}
+		],
+		"name": "shaThree",
+		"outputs": [
+			{
+				"internalType": "bytes32",
+				"name": "sha",
+				"type": "bytes32"
+			}
+		],
+		"stateMutability": "pure",
+		"type": "function"
+	}
+]
+
