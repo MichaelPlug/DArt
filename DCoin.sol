@@ -2,7 +2,7 @@
 pragma solidity >=0.7.0 < 0.9.0;
 
 //we have objects to work with
-contract DArt {
+contract DCoin {
     address public minter;
     mapping (address => uint) public balance;
     uint public constant PRICE = 2 * 1e15; 
