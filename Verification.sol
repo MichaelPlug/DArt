@@ -39,13 +39,12 @@ contract Verification {
     //called by a museum that wants to enter in the blockchain
     /**
         @notice the sender create a request of verification, minting an IDNFT with verification variable as false
-        @param name
-        @param role
+        @param hashedName the hashed name of the requesting actor
+        @param role the type of the actor
      */
-    function museumRequestCreation(string calldata name, Actors role) external {
+    function museumRequestCreation(bytes32 hashedName, Actors role) external {
         if (registeredWallets[msg.sender].verified == false){
-            bytes32 hashedname = keccak256(abi.encodePacked(name));
-            registeredWallets[msg.sender] = Wallet(hashedname, false, role);
+            registeredWallets[msg.sender] = Wallet(hashedName, false, role);
         }
     }
 
@@ -88,13 +87,16 @@ contract Verification {
     }
 
     // Verify if a name is the same of the hashed name of a wallet if it is registered in the blockchain as an verified actor
-    function verifyHashedName(string calldata name, address museum) external view returns(bool) {
+    function verifyHashedName(bytes32 hasheName, address museum) external view returns(bool) {
         if (registeredWallets[museum].verified == false){
             revert();
         }
         else {
-            return keccak256(abi.encodePacked(name)) == registeredWallets[museum].hashedName;
+            return hasheName == registeredWallets[museum].hashedName;
         }
     }
 
+    function hashString(string calldata name) external pure returns(bytes32) {
+        return keccak256(abi.encodePacked(name));
+    }
 }
