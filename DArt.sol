@@ -83,7 +83,7 @@ contract DArt {
 
     /**
         @notice a pure faction to hash a string and the address of the caller, used to create univoque ids
-        @param text the string that have to be hashed
+        @param hashedName the hashed string that have to be hashed with the msg.sender
      */
     function hashTextAndAddress(bytes32 hashedName) internal pure returns(bytes32) {
         return keccak256(abi.encodePacked(hashedName, msg.sender));
@@ -93,7 +93,7 @@ contract DArt {
     //called by a museum, to add an artwork in blockchain (MAYBE TO DO
     /**
         @notice mint an Artwork NFT. The id of the NFT is the hash of its name and the minter address.
-        @param name the name of the artwork hashed using keccak256
+        @param hashedName name of the artwork hashed using keccak256
      */    
     function mintArtworkNFT(bytes32 hashedName) external {
         assert(registeredWallets[msg.sender].verified, "Sender's wallet is not verifed");
@@ -142,11 +142,6 @@ contract DArt {
     function requestProperty(){  
     }
 
-    function putExhibition(){ 
-    }
-
-    function putWarehouse(){
-    }
     */
 
     function allowAccessToArtwork(address target, bytes32 artwork) external {
@@ -162,6 +157,6 @@ contract DArt {
 
     function donateAWorkOfArt(bytes32 artwork, address _to) external{
         assert(registeredArtworks[artwork].property == msg.sender, "You are not the owner of the selected artowork");
-        (registeredArtworks[artwork].property == _to;
+        registeredArtworks[artwork].property == _to;
     }
 }
