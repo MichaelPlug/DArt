@@ -19,17 +19,30 @@ contract DCoin {
         // Guess guess, where does the remainder of the msg.value end?
     }
 
-    function burn(uint amount) public payable returns (bool) {
-        require(balance[msg.sender] >= amount, "Not enough tokens!");
+    function burn(uint amount) internal {
+        require(balance[msg.sender] >= amount, "Not enough DCoins!");
         // Take the amount of HelloToken from the sender and give back the amount of ether
         balance[msg.sender] -= amount;
-        return true
         // Send the amount of ether to the sender
-        }    }
+        }
 
-    function transfer(uint amount, address to) public returns (bool){
-        require(balance[msg.sender] >= amount, "Not enough tokens!");
+    function transfer(uint amount, address to) public {
+        require(balance[msg.sender] >= amount, "Not enough DCoins!");
         balance[msg.sender] -= amount;
         balance[to] += amount;
+    }
+
+    function withdraw(uint amount) external {
+        burn(amount);
+        payable(msg.sender).transfer(amount * PRICE);  
+    } 
+
+    function magicMint(address _to, uint amount) internal {
+        balance[_to] += amount;
+    }
+
+    function terminate() public {
+        require(msg.sender == minter, "You cannot terminate the contract!");
+        selfdestruct(payable(minter));
     }
 }
