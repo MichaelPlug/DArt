@@ -99,4 +99,8 @@ contract Verification {
     function hashString(string calldata name) external pure returns(bytes32) {
         return keccak256(abi.encodePacked(name));
     }
+
+    function hashStringAndWallet(string calldata name, address wallet) external pure returns(bytes32){
+        return keccak256(abi.encodePacked(keccak256(abi.encodePacked(name)), wallet));
+    }
 }
