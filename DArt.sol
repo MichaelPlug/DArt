@@ -161,4 +161,8 @@ contract DArt {
         assert(registeredArtworks[artwork].property == msg.sender, "You are not the owner of the selected artowork");
         registeredArtworks[artwork].property == _to;
     }
+
+    function getProperty(bytes32 artwork) external view returns(address){
+        return registeredArtworks[artwork].property
+    }
 }

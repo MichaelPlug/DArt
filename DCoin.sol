@@ -10,8 +10,8 @@ contract DCoin {
     // uint public constant PRICE = 2 finney; 
     // finney is no longer a supported denomination since Solidity v.0.7.0
 
-    address public constant patronSmartcontract; 
-    address public constant mainSmartcontract; 
+    address public patronSmartcontract; 
+    address public mainSmartcontract; 
 
     constructor() {
         minter = msg.sender;
@@ -19,8 +19,8 @@ contract DCoin {
 
     function setContrats(address main, address patron) external {
         assert(minter == msg.sender);
-        main = mainSmartcontract
-        patron = patronSmartcontract;
+        mainSmartcontract = main;
+        patronSmartcontract = patron;
     }
 
     function mint() public payable {
@@ -30,7 +30,7 @@ contract DCoin {
     }
 
     function burn(uint amount, address wallet, bool pending) external {
-        assert(msg.sender == patronSmartcontract || msg.sender == mainSmartcontract)
+        assert(msg.sender == patronSmartcontract || msg.sender == mainSmartcontract);
         require(balance[wallet] >= amount, "Not enough DCoins!");
         // Take the amount of HelloToken from the sender and give back the amount of ether
         balance[wallet] -= amount;
@@ -62,8 +62,8 @@ contract DCoin {
         selfdestruct(payable(minter));
     }
 
-    function withdrawETH(uint amountWei){
-        assert(msg.sender == minter, "You're not the minter of the smartcontract");
+    function withdrawETH() external {
+        require(msg.sender == minter,  "You're not the minter of the smartcontract");
         payable(minter).transfer(burned * PRICE);
         burned = 0;
     }

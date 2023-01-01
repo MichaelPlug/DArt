@@ -17,7 +17,7 @@ contract Verification {
         GALLERY,
         PRIVATE_COLLECTOR,
         ARTIST,
-        PROTECTION_LAB,
+        PROTECTION_LAB
     }
 
     //this is the address of the creator MAYBE PRIVATE, namely the owner
