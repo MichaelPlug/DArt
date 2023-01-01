@@ -42,7 +42,6 @@ contract DArt {
     
     // This enum indicates the type of operation applied to and update of an artwork
     enum ProtectionActivities {
-        NONE,
         PREVENTION,
         PROTECTIOIN,
         MAINTAINANCE,
@@ -105,7 +104,8 @@ contract DArt {
         @param hashedName name of the artwork hashed using keccak256
      */    
     function mintArtworkNFT(bytes32 hashedName) external {
-        checkWallet();
+        role = verificationSmartcontract.call(abi.encodingWithSignature("getRole(address)",msg.sender));
+        assert(role < 4);
         //assert(registeredWallets[msg.sender].verified, "Sender's wallet is not verifed");
         kek = hashTextAndAddress(name);
         require(registeredArtworks[kek].minter == 0x0, "A collision during hashing occurred");
@@ -124,9 +124,10 @@ contract DArt {
         @param status indicates the status of the creare exibition, if it's on or not
      */
     function mintExibitionNFT(bytes32 hashedName, bool status) external {
-        checkWallet()
+        role = verificationSmartcontract.call(abi.encodingWithSignature("getRole(address)",msg.sender));
+        assert(role < 2);
         kek = hashTextAndAddress(hashedName);
-        require(registeredArtworks[kek].minter == 0x0);
+        assert(registeredArtworks[kek].minter == 0x0);
         payService();
         registerdExibitions[kek] = Exibition(hashedName, address, status);
     }
@@ -134,14 +135,15 @@ contract DArt {
     function createActivity(bytes artworkID, ProtectionActivities oftype, bytes32 extrainfo) external{
         artwork = registeredArtworks[artworkID];
         role = verificationSmartcontract.call(abi.encodingWithSignature("getRole(address)",msg.sender));
-        assert(role == Actore.PROTECTION_LAB);
+        assert(role == 4);
         assert(artwork.possession == msg.sender ,  
             "You do not have the necessary permissions to create an Activity about this artwork");
         
         artowork.status = Activity(msg.sender, block.timestamp, oftype, extrainfo);     
         //TODO: Save all the activities
-        require(oftype != ProtectionActivities.NONE);
         payService();
+        if (oftype != ProtectionActivities.UPDATE && oftype != ProtectionActivities.DAMAGE);
+        patronSmartcontract.call(abi.encodingWithSignature("moveFunds(address,bytes32",msg.sender, artworkID));
     }
 
     function allowAccessToArtwork(address target, bytes32 artwork) external {

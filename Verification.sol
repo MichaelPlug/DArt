@@ -14,11 +14,10 @@ contract Verification {
     // This enum indicates the type of actor associated to a registered wallet
     enum Actors {
         MUSEUM,
-        PUBLIC_AUTHORITY,
         GALLERY,
         PRIVATE_COLLECTOR,
+        ARTIST,
         PROTECTION_LAB,
-        ARTIST
     }
 
     //this is the address of the creator MAYBE PRIVATE, namely the owner
