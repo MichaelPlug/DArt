@@ -1,10 +1,6 @@
 //for compability reasons, we work only with these versions
 pragma solidity >=0.7.0 < 0.9.0;
 
-import "Verification.sol";
-import "DCoin.sol";
-import "Patron.sol";
-
 //we have objects to work with
 contract DArt {
 
@@ -14,6 +10,7 @@ contract DArt {
 
     /*
         TODO inserisci i pagamenti per i servizi
+        Fai event
     */
  
     event ProtectionActivityStarted(Artwork indexed artwork);
@@ -61,23 +58,21 @@ contract DArt {
     mapping (bytes32 => Artwork) public registeredArtworks;
     mapping (bytes32 => Exibition) public registerdExibitions;
 
-    uint private price;
+    uint private price = 1;
 
-    /*
     address public constant dcoinSmartcontract;
     address public constant verificatioSmartcontract; 
     address public constant patronSmartcontract; 
-    */
 
     //the first time that we call che smart contract we need to save which is the
     //creator, because it can do after some important actions
-    constructor(){
+    constructor(address dcoin, address verification, address patron){
         //so we save the address of the creator, one time and forever
-        /*
+        
         dcoin = dcoinSmartcontract;
         verification = verificatioSmartcontract;
         patron = patronSmartcontract;
-        */
+        
         creator = msg.sender;
     }
 
@@ -89,6 +84,20 @@ contract DArt {
         return keccak256(abi.encodePacked(hashedName, msg.sender));
     }
 
+    function checkWallet() internal {
+        assert(
+            verificationSmartcontract.call(aby.encodingWithSignature("isVerified(address)",msg.sender)),
+            "Sender's wallet is not verifed");
+    }
+
+    function payService() internal {
+        dcoinSmartcontract.call(aby.encodingWithSignature("burn(uint,address,bool)",price,msg.sender,false));
+    }
+
+    function setPrice(uint newprice) external{
+        assert(msg.sender == creator);
+        price = newprice
+    }
 
     //called by a museum, to add an artwork in blockchain (MAYBE TO DO
     /**
@@ -96,9 +105,11 @@ contract DArt {
         @param hashedName name of the artwork hashed using keccak256
      */    
     function mintArtworkNFT(bytes32 hashedName) external {
-        assert(registeredWallets[msg.sender].verified, "Sender's wallet is not verifed");
+        checkWallet();
+        //assert(registeredWallets[msg.sender].verified, "Sender's wallet is not verifed");
         kek = hashTextAndAddress(name);
-        require(registeredArtworks[kek].minter == 0x0);
+        require(registeredArtworks[kek].minter == 0x0, "A collision during hashing occurred");
+        payService();
         //we add the artwork to the mapping
         /*
         TODO: all this stuff have to be recoded and we have to decide if use one mapping from address to 
@@ -113,36 +124,25 @@ contract DArt {
         @param status indicates the status of the creare exibition, if it's on or not
      */
     function mintExibitionNFT(bytes32 hashedName, bool status) external {
-        assert(registeredWallets[msg.sender].verified, "Sender's wallet is not verifed");
+        checkWallet()
         kek = hashTextAndAddress(hashedName);
         require(registeredArtworks[kek].minter == 0x0);
+        payService();
         registerdExibitions[kek] = Exibition(hashedName, address, status);
     }
 
     function createActivity(bytes artworkID, ProtectionActivities oftype, bytes32 extrainfo) external{
         artwork = registeredArtworks[artworkID];
-        assert(artwork.property == msg.sender || artwork.possession == msg.sender, 
-            "You do not have the necessary permissions to access the artwork");
+        role = verificationSmartcontract.call(abi.encodingWithSignature("getRole(address)",msg.sender));
+        assert(role == Actore.PROTECTION_LAB);
+        assert(artwork.possession == msg.sender ,  
+            "You do not have the necessary permissions to create an Activity about this artwork");
+        
         artowork.status = Activity(msg.sender, block.timestamp, oftype, extrainfo);     
         //TODO: Save all the activities
         require(oftype != ProtectionActivities.NONE);
-        ProtectionActivityStarted(artwork);
+        payService();
     }
-
-    /*
-    function artworkRequest(){   
-    }
-
-    function artworkRequestDismiss(){    
-    }
-
-    function propertyPassage(){
-    }
-
-    function requestProperty(){  
-    }
-
-    */
 
     function allowAccessToArtwork(address target, bytes32 artwork) external {
         assert(museums[target].verified);
@@ -155,7 +155,7 @@ contract DArt {
         registeredArtworks[artwork].possession == 0x0;
     }
 
-    function donateAWorkOfArt(bytes32 artwork, address _to) external{
+    function donateWorkOfArt(bytes32 artwork, address _to) external{
         assert(registeredArtworks[artwork].property == msg.sender, "You are not the owner of the selected artowork");
         registeredArtworks[artwork].property == _to;
     }

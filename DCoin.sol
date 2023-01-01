@@ -6,11 +6,21 @@ contract DCoin {
     address public minter;
     mapping (address => uint) public balance;
     uint public constant PRICE = 2 * 1e15; 
+    uint public burned = 0;
     // uint public constant PRICE = 2 finney; 
     // finney is no longer a supported denomination since Solidity v.0.7.0
 
+    address public constant patronSmartcontract; 
+    address public constant mainSmartcontract; 
+
     constructor() {
         minter = msg.sender;
+    }
+
+    function setContrats(address main, address patron) external {
+        assert(minter == msg.sender);
+        main = mainSmartcontract
+        patron = patronSmartcontract;
     }
 
     function mint() public payable {
@@ -19,30 +29,42 @@ contract DCoin {
         // Guess guess, where does the remainder of the msg.value end?
     }
 
-    function burn(uint amount) internal {
-        require(balance[msg.sender] >= amount, "Not enough DCoins!");
+    function burn(uint amount, address wallet, bool pending) external {
+        assert(msg.sender == patronSmartcontract || msg.sender == mainSmartcontract)
+        require(balance[wallet] >= amount, "Not enough DCoins!");
         // Take the amount of HelloToken from the sender and give back the amount of ether
-        balance[msg.sender] -= amount;
+        balance[wallet] -= amount;
+        if(!pending) {
+            burned += amount;
+            } 
         // Send the amount of ether to the sender
-        }
+    }
 
-    function transfer(uint amount, address to) public {
+    function transfer(uint amount, address to) external {
         require(balance[msg.sender] >= amount, "Not enough DCoins!");
         balance[msg.sender] -= amount;
         balance[to] += amount;
     }
 
-    function withdraw(uint amount) external {
-        burn(amount);
-        payable(msg.sender).transfer(amount * PRICE);  
-    } 
-
-    function magicMint(address _to, uint amount) internal {
+    function magicMint(address _to, uint amount) external {
+        require(msg.sender == patronSmartcontract);
         balance[_to] += amount;
     }
+
+    function withdraw(uint amount) external {
+        require(balance[msg.sender] >= amount, "Not enough DCoins!");
+        balance[msg.sender] -= amount;
+        payable(msg.sender).transfer(amount * PRICE);  
+    } 
 
     function terminate() public {
         require(msg.sender == minter, "You cannot terminate the contract!");
         selfdestruct(payable(minter));
+    }
+
+    function withdrawETH(uint amountWei){
+        assert(msg.sender == minter, "You're not the minter of the smartcontract");
+        payable(minter).transfer(burned * PRICE);
+        burned = 0;
     }
 }
