@@ -1,6 +1,8 @@
 //for compability reasons, we work only with these versions
 pragma solidity >=0.7.0 < 0.9.0;
 
+//error Unauthorized(address caller);
+
 //we have objects to work with
 contract DCoin {
     address public minter;
@@ -13,13 +15,13 @@ contract DCoin {
     address public patronSmartcontract; 
     address public mainSmartcontract; 
 
-    constructor() {
+    constructor(address main) {
         minter = msg.sender;
+        mainSmartcontract = main;
     }
 
-    function setContrats(address main, address patron) external {
+    function setContrats(address patron) external {
         assert(minter == msg.sender);
-        mainSmartcontract = main;
         patronSmartcontract = patron;
     }
 

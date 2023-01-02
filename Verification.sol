@@ -1,6 +1,8 @@
 //for compability reasons, we work only with these versions
 pragma solidity >=0.7.0 < 0.9.0;
 
+//error Unauthorized(address caller);
+
 contract Verification {
 
     /// @notice A collection of informations about a wallet that operate with the contact
@@ -65,13 +67,13 @@ contract Verification {
     }
 
     // Get the role of a wallet if it is registered in the blockchain as an verified actor
-    function getRole(address museum) external view returns(Actors role) {
+    function getRole(address museum) external view returns(uint role) {
         if (registeredWallets[museum].verified == false){
             revert();
         }
         else {
 
-            return registeredWallets[museum].role;
+            return uint(registeredWallets[museum].role);
         }
     }
 
