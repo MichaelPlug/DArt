@@ -12,6 +12,9 @@
 
 <p> Buy Tokens: </p>
 
+<button class="enableEthereumButton">Enable Ethereum</button>
+<h2>Account: <span class="showAccount"></span></h2>
+
 <form onsubmit="play(); updateDisplayedInformation(); return false;" id="playform">
 <fieldset>
     <legend>Buy !!</legend>
@@ -51,4 +54,9 @@
 </form>
 
 </body>
+<script src="dist/js/jquery.min.js"></script>
+<script src="dist/js/bootstrap.min.js"></script>
+<script src="dist/js/web3.min.js"></script>
+<!-- To make our code tidier, we separate the JS script from the HTML file -->
+<script src="Buy_Tokens.js"></script>
 </html>
