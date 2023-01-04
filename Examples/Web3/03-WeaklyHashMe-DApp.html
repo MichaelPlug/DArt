@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+	<meta charset="utf-8">
+	<head>
+		<title>Our third application using Web3!</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+	</head>
+	<body>
+		<main class="container">
+			<header>
+				<h1>Hash my name!</h1>
+			</header>
+			<section>
+				<p>Sha your name</p>
+				<form onSubmit="hashMyName(); return false;"
+						id="nameform">
+					<div>
+						<label for="mynameinput">Hello! My name is </label>
+						<input type="text" name="myname" id="mynameinput"/>
+						<button type="submit">Hash me!</button>
+					</div>
+				</form>
+			</section>
+			<section>
+				<p>The custom digest of your name is:
+					<code id="digest">Fill in the form
+						<a href="#nameform">above</a></code>
+				</p>
+			</section>
+			<section>
+				<p>So far, the number of requests amouted to:
+					<strong id="count">Call me and you will see</strong></p>
+			</section>
+		</main>
+	</body>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/web3.min.js"></script>
+	<script>
+	  // Prevents forms to submit, ever
+		$("form").submit(function(e){e.preventDefault();});
+    var requestsCount = 0
+		// Function to be called to fill in the element having "shaname" as its ID
+		function hashMyName() {
+			if (! $('#mynameinput').val()) {
+				console.log("No name provided for hashing");
+				return false;
+			}
+			var givenName = $('#mynameinput').val();
+			// Logging on console
+			console.log("The provided name is: " + givenName);
+			// Conversion to hexadecimal num from ASCII encoding, via web3 built-in f.
+			var hexName = web3.utils.toHex(givenName);
+			console.log("The hexadecimal version of it is: " + hexName);
+			// Conversion to decimal from hexadecimal, via web3 built-in function
+			var numericName = web3.utils.hexToNumberString(hexName);
+
+			contract.methods.hashIt(numericName).call().then(function(result) { // A promise in action
+          console.log("hashIt returned: " + result);
+          $('#digest').html(result);
+      })
+      // Notice that call(…) has no side effect on the real contract, whereas send(…) does have a side-effect on the contract state
+      contract.methods.hashIt(numericName).send({from:senderAddress}).on('confirmation', function(confirmationNumber, receipt){
+          console.log("Tx received: " + confirmationNumber);
+          console.log(receipt);
+          updateRequestsCount();
+      })
+		}
+		// Function to be called to update the visualised counter of requests
+		function updateRequestsCount() {
+      contract.methods.count().call().then(function(result) {
+          console.log("Requests count: " + result);
+          $('#count').html(result);
+      })
+		}
+
+	  // Initialisation of Web3
+		if (typeof web3 !== 'undefined') {
+		  web3 = new Web3(web3.currentProvider);
+		} else {
+		  // set the provider you want from Web3.providers
+		  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
+		}
+
+		// Set contract ABI
+		var contractAbi =
+			[
+				{
+					"inputs": [],
+					"name": "count",
+					"outputs": [
+						{
+							"internalType": "uint256",
+							"name": "",
+							"type": "uint256"
+						}
+					],
+					"stateMutability": "view",
+					"type": "function"
+				},
+				{
+					"inputs": [
+						{
+							"internalType": "uint256",
+							"name": "k",
+							"type": "uint256"
+						}
+					],
+					"name": "hashIt",
+					"outputs": [
+						{
+							"internalType": "bytes1",
+							"name": "h",
+							"type": "bytes1"
+						}
+					],
+					"stateMutability": "nonpayable",
+					"type": "function"
+				},
+				{
+					"inputs": [],
+					"name": "m",
+					"outputs": [
+						{
+							"internalType": "uint8",
+							"name": "",
+							"type": "uint8"
+						}
+					],
+					"stateMutability": "view",
+					"type": "function"
+				},
+				{
+					"inputs": [
+						{
+							"internalType": "uint256",
+							"name": "k",
+							"type": "uint256"
+						}
+					],
+					"name": "modIt",
+					"outputs": [
+						{
+							"internalType": "uint8",
+							"name": "",
+							"type": "uint8"
+						}
+					],
+					"stateMutability": "pure",
+					"type": "function"
+				},
+				{
+					"inputs": [
+						{
+							"internalType": "uint8",
+							"name": "w",
+							"type": "uint8"
+						}
+					],
+					"name": "sumIt",
+					"outputs": [
+						{
+							"internalType": "uint8",
+							"name": "",
+							"type": "uint8"
+						}
+					],
+					"stateMutability": "pure",
+					"type": "function"
+				},
+				{
+					"inputs": [],
+					"name": "v",
+					"outputs": [
+						{
+							"internalType": "uint8",
+							"name": "",
+							"type": "uint8"
+						}
+					],
+					"stateMutability": "view",
+					"type": "function"
+				}
+			]
+		// Insert your contract ABI there
+
+		// ---------------------------------------------------------------------------
+		// Set contract address. Copy-paste it from the Remix IDE
+		var contractAddress = '0xAA4b5C3A3340419Fa8CAf782e6446B63031d1028';
+		// Insert your contract address there
+
+	  // ---------------------------------------------------------------------------
+		// Set the address from which transactions are sent
+		var senderAddress = '0xE6D3ACFD43184f731d031FA169eB15c040700b9b';
+	  // Insert your account address there
+
+		// ---------------------------------------------------------------------------
+	  // Set the contract
+		var contract = new web3.eth.Contract(contractAbi, contractAddress);
+
+	</script>
+</html>

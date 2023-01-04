@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Accept Creator </title>
+  <meta charset="UTF-8">
+</head>
+<body>
+
+<h1>Accept Creator</h1>
+
+<button class="enableEthereumButton">Enable Ethereum</button>
+<h2>Account: <span class="showAccount"></span></h2>
+
+<form onsubmit="test1(); return false;" >
+  <label for="fname">Name:</label><br>
+  <input type="text" id="fname" name="fname" placeholder="Galleria degli Uffizi" required><br>
+  <label for="lname">Role:</label><br>
+  <input type="text" id="lname" name="lname" placeholder="Museum, ..." required><br><br>
+  
+  <input type="submit" value="Submit">
+</form>
+
+</body>
+<script src="dist/js/jquery.min.js"></script>
+<script src="dist/js/bootstrap.min.js"></script>
+<script src="dist/js/web3.min.js"></script>
+<!-- To make our code tidier, we separate the JS script from the HTML file -->
+<script src="Accept_Registration.js"></script>
+</html>

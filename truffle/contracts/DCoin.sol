@@ -7,7 +7,7 @@ pragma solidity >=0.7.0 < 0.9.0;
 contract DCoin {
     address public minter;
     mapping (address => uint) public balance;
-    uint public constant PRICE = 2 * 1e15; 
+    uint public constant PRICE = 2* 1e15; 
     uint public burned = 0;
     // uint public constant PRICE = 2 finney; 
     // finney is no longer a supported denomination since Solidity v.0.7.0

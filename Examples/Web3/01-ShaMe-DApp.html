@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+	<meta charset="utf-8">
+	<head>
+		<title>Our first application using Web3!</title>
+		<!-- fancy styling of the page -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+	</head>
+	<body>
+		<main class="container">
+			<header>
+				<h1>ShaMe!</h1>
+			</header>
+			<section>
+				<p>The SHA-3 digest of your name is:
+					<code id="shaname">Loading…</code>
+				</p>
+			</section>
+		</main>
+	</body>
+	<!-- Javascript libraries (to ease life) -->
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<!--  Our connection to the blockchain -->
+  <script src="js/web3.min.js"></script>
+	<!--  Comment the line above and uncomment the lime below to switch to web3.js
+   			v. 0.2.0 -->
+	<!--	<script src="js/web3-020.min.js"></script>  -->
+	<!--
+			  Custom script
+	-->
+	<script>
+	// Function to be called to fill in the element having "shaname" as its ID
+	function shaMyName() {
+		// OLD syntax is being used here
+		// $('#shaname').html( // Overwrite the inner content of the node
+			// This one worked till web3.js v. 0.2.0. Not any more!
+			// contract.shaThree("Claudio")); // Replace this with your name
+			// current syntax below (notice the promise in action)
+    contract.methods.shaThree("795152").call().then(function(result) { // A promise in action
+        $("#shaname").html(result);
+    });
+		// Notice that call(…) has no side effect on the real contract, whereas send(…) does have a side-effect on the contract state
+	}
+
+  // Initialisation of Web3
+	if (typeof web3 !== 'undefined') {
+	  web3 = new Web3(web3.currentProvider);
+	} else {
+	  // set the provider you want from Web3.providers
+	  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
+	}
+
+  // ---------------------------------------------------------------------------
+	// Set the contract ABI. Copy-paste it from the Remix IDE
+	var contractAbi = [
+		{
+			"inputs": [
+				{
+					"internalType": "string",
+					"name": "shable",
+					"type": "string"
+				}
+			],
+			"name": "shaThree",
+			"outputs": [
+				{
+					"internalType": "bytes32",
+					"name": "sha",
+					"type": "bytes32"
+				}
+			],
+			"stateMutability": "pure",
+			"type": "function"
+		}
+	];
+	// Insert your contract ABI there
+
+  // ---------------------------------------------------------------------------
+	// Set contract address. Copy-paste it from the Remix IDE
+	var contractAddress = '0x63Be1b23A8dD32d580DC48032b4532e3E1470cA2';
+	// Insert your contract address there
+
+  // ---------------------------------------------------------------------------
+	// Set the address from which transactions are sent
+	// OLD syntax is being used here: we take the first in the series of
+	// the default ones from Ganache
+	// web3.eth.defaultAccount = web3.eth.accounts[0];
+	// current syntax below
+	var senderAddress = '0xbb7546d93B33f8dF650e39e4A606CF16CD655372';
+  // Insert your account address there
+
+  // ---------------------------------------------------------------------------
+  // Set the contract
+	var contract =
+	// OLD syntax is being used here
+	// web3.eth.contract(contractAbi).at(contractAddress);
+	// current syntax below
+	new web3.eth.Contract(contractAbi, contractAddress);
+
+	// Call the function above
+	shaMyName();
+
+	</script>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Buy Tokens </title>
+  <meta charset="UTF-8">
+</head>
+<body>
+
+<h1>DCoin</h1>
+
+<p> Amount of DCoins: </p>
+
+<p> Buy Tokens: </p>
+
+<button class="enableEthereumButton">Enable Ethereum</button>
+<h2>Account: <span class="showAccount"></span></h2>
+
+<form onsubmit="buy(); return false;" id="playform">
+<fieldset>
+    <legend>Buy !!</legend>
+    <label for="amountinput">Amount to Buy: </label>
+    <input type="number" name="amount" id="toketobuy" required="required" placeholder="1" min="1"/>
+    <br/>
+    <button type="submit">Buy!</button>
+</fieldset>
+</form>
+
+
+<p> Sell Tokens: </p>
+
+<form onsubmit="play(); updateDisplayedInformation(); return false;" id="playform">
+<fieldset>
+    <legend>Sell !!</legend>
+    <label for="amountinput">Amount to Sell: </label>
+    <input type="number" name="amount" id="guessinput" required="required" placeholder="1" min="1"/>
+    <br/>
+    <button type="submit">Sell!</button>
+</fieldset>
+</form>
+
+<p> Transfer Tokens: </p>
+
+<form onsubmit="play(); updateDisplayedInformation(); return false;" id="playform">
+<fieldset>
+    <legend>Transfer !!</legend>
+    <label for="amountinput">Amount to Transfer: </label>
+    <input type="number" name="amount" id="guessinput" required="required" placeholder="1" min="1"/>
+    <br/>
+    <label for="to_address">Address to Transfer DCoins: </label>
+    <input type="text" name="to" id="guessinput" required="required"/>
+    <br/>
+    <button type="submit">Send!</button>
+</fieldset>
+</form>
+
+</body>
+<script src="dist/js/jquery.min.js"></script>
+<script src="dist/js/bootstrap.min.js"></script>
+<script src="dist/js/web3.min.js"></script>
+<!-- To make our code tidier, we separate the JS script from the HTML file -->
+<script src="Buy_Tokens.js"></script>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="utf-8">
+  <head>
+    <title>BitMathGame</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <main class="container">
+      <section id="playingthegame">
+        <form onsubmit="play(); return false;" id="playform">
+          <fieldset>
+            <legend>Try and win</legend>
+            <label for="guessinput" />
+            <!-- Notice the "required" attribute -->
+            <input type="number" name="guess" id="guessinput"
+                required="required"/>
+            <button type="submit">Check!</button>
+          </fieldset>
+        </form>
+      </section>
+    </main>
+  </body>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/web3.min.js"></script>
+  <script>
+    // Prevent forms from submitting and reloading the page
+    $("form").submit(function(e){e.preventDefault();});
+
+    // Initialisation of Web3
+    if (typeof web3 !== 'undefined') {
+      web3 = new Web3(web3.currentProvider);
+    } else {
+      // Set the provider you want from Web3.providers
+      // Use the WebSocketProvider to enable events subscription.
+      web3 = new Web3(new Web3.providers.WebsocketProvider(
+               "ws://localhost:7545"));
+    }
+
+    // Set contract ABI
+    var contractAbi = [
+      {
+        "inputs": [
+          {
+            "internalType": "uint8",
+            "name": "seed",
+            "type": "uint8"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "minter",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "reward",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "minterBalance",
+            "type": "uint256"
+          }
+        ],
+        "name": "Mint",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "player",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint8",
+            "name": "guess",
+            "type": "uint8"
+          }
+        ],
+        "name": "NextTime",
+        "type": "event"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint8",
+            "name": "guess",
+            "type": "uint8"
+          }
+        ],
+        "name": "play",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "winner",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "guess",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "reward",
+            "type": "uint256"
+          }
+        ],
+        "name": "Win",
+        "type": "event"
+      },
+      {
+        "inputs": [],
+        "name": "attempts",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "name": "balance",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "minter",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "problem",
+        "outputs": [
+          {
+            "internalType": "uint8",
+            "name": "",
+            "type": "uint8"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      }
+    ]
+    // Insert your contract ABI there
+
+    // Set the contract address
+    var contractAddress = '0xF319A3595b02d29C2217F08243c1b9f63E8d3098';
+    // Insert your contract address there
+
+    // Set the address from which transactions are sent
+    var senderAddress = '0xbb7546d93B33f8dF650e39e4A606CF16CD655372';
+    // Insert your contract address there
+
+    // Set the contract
+    var contract = new web3.eth.Contract(contractAbi, contractAddress);
+
+    // Subscribe to all events emitted by the contract
+    contract.events.allEvents(
+      function(error, event){ // A "function object". Explained here: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions#The_function_expression_(function_expression)
+        if (error) {
+          // Useful one: it made me understand that WebSocketProvider was needed
+          console.log(error);
+        } else {
+          console.log(event);
+        }
+    });
+
+    // Function to be called to play
+    function play() {
+      var givenGuess = $('#guessinput').val();
+      // Check that the value is a positive integer
+      if (givenGuess < 1) {
+        alert("The given guess should be higher than 0");
+        return false;
+      }
+      // Add the log entry on the console
+      console.log("Provided guess is: " + givenGuess);
+      // A promise in action
+      contract.methods.play(givenGuess).call().then(function(result) {
+          console.log("Guess sent: " + givenGuess);
+      })
+      /* Notice that call(…) has no side effect on the real contract,
+         whereas send(…) does have a side-effect on the contract state */
+      contract.methods.play(givenGuess).send({from:senderAddress}).on('receipt',
+          function(receipt){
+              console.log("Tx Hash: " + receipt.transactionHash);
+      });
+
+      return false;
+    }
+  </script>
+</html>

@@ -1,5 +1,17 @@
 {
-  "devDependencies": {
-    "lite-server": "^2.6.1"
-  }
+    "name": "DArt",
+    "version": "3.0.0",
+    "description": "Blockchain applied to cultura heritage",
+    "scripts": {
+        "dev": "lite-server",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Michele Spina",
+    "license": "ISC",
+    "devDependencies": {
+        "lite-server": "^2.6.1"
+    },
+    "dependencies": {
+        "web3": "^1.8.1"
+    }
 }
