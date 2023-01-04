@@ -81,13 +81,38 @@ function buy(){
 	// Add the log entry on the console
 	console.log("Buying " + tokentobuy + " dcoins");
 
-	contract.methods.mint().call({from:senderAddress, gas: 120000, value: 5000000000000}).then(function(result) { // A promise in action
+	contract.methods.mint().call({from:senderAddress, gas: 120000, value: 50000000000000000}).then(function(result) { // A promise in action
       console.log("Guess buy: " + mint);
   })
   // Notice that call(…) has no side effect on the real contract, whereas send(…) does have a side-effect on the contract state
-  contract.methods.mint().send({from:senderAddress, gas: 120000, value: 5000000000000}).on('receipt', function(receipt){
+  contract.methods.mint().send({from:senderAddress, gas: 120000, value: 50000000000000000}).on('receipt', function(receipt){
       console.log("Hash?: " + receipt.transactionHash);
   });
 
 	return false;
 }
+
+function sell(){};
+
+function transfer(){
+  
+  var tokentotransfer = $('#toketotransfer').val();
+
+  var receiver_address = $('#receiver_address').val()
+  if (tokentotransfer < 1) {
+    alert("The amount of tokens to transfer should be higher than 0");
+    return false;
+  }
+	// Add the log entry on the console
+	console.log("Transferring " + tokentotransfer + " DCoins to: " + receiver_address);
+
+	contract.methods.transfer(tokentotransfer, receiver_address).call({from:senderAddress, gas: 2000000, value: 5000000000000}).then(function(result) { // A promise in action
+      console.log("Guess buy: " + mint);
+  })
+  // Notice that call(…) has no side effect on the real contract, whereas send(…) does have a side-effect on the contract state
+  contract.methods.transfer(10, senderAddress).send({from:senderAddress, gas: 120000, value: 5000000000000}).on('receipt', function(receipt){
+      console.log("Hash?: " + receipt.transactionHash);
+  });
+
+	return false;
+};

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+	<meta charset="utf-8">
+	<head>
+		<title>Our first application using Web3!</title>
+		<!-- fancy styling of the page -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+	</head>
+	<body>
+		<main class="container">
+			<header>
+				<h1>ShaMe!</h1>
+			</header>
+			<section>
+				<p>The SHA-3 digest of your name is:
+					<code id="shaname">Loading…</code>
+				</p>
+			</section>
+		</main>
+	</body>
+	<!-- Javascript libraries (to ease life) -->
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<!-- Our connection to the blockchain -->
+<!--	<script src="js/web3.min.js"></script> -->
+	<script src="js/web3-020.min.js"></script>
+	<!-- Custom script -->
+	<script>
+	// Function to be called to fill in the element having "shaname" as its ID
+	function shaMyName() {
+		$('#shaname').html( // Overwrite the inner content of the node
+			// This one worked till web3.js v. 0.2.0. Not any more!
+			contract.shaThree("Claudio")); // Replace this with your name
+	}
+
+  // Initialisation of Web3
+	if (typeof web3 !== 'undefined') {
+	  web3 = new Web3(web3.currentProvider);
+	} else {
+	  // set the provider you want from Web3.providers
+	  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
+	}
+
+	// Set the contract ABI. Copy-paste it from the Remix IDE
+	var contractAbi = [
+		{
+			"inputs": [
+				{
+					"internalType": "string",
+					"name": "shable",
+					"type": "string"
+				}
+			],
+			"name": "shaThree",
+			"outputs": [
+				{
+					"internalType": "bytes32",
+					"name": "sha",
+					"type": "bytes32"
+				}
+			],
+			"stateMutability": "pure",
+			"type": "function"
+		}
+	];
+	// Insert your contract ABI there
+
+	// Set contract address. Copy-paste it from the Remix IDE
+	var contractAddress = '0x27F8CFFfdD1EB648569604c083943c8B990ae940';
+	// Insert your contract address there
+
+	// Set the account (we take the first in the series)
+	// OLD syntax is being used here
+	web3.eth.defaultAccount = web3.eth.accounts[0];
+
+  // Set the contract
+	var contract =
+		// OLD syntax is being used here
+		web3.eth.contract(contractAbi).at(contractAddress);
+
+	// Call the function above
+	shaMyName();
+
+	</script>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="utf-8">
+  <head>
+    <title>BitMathGame</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <main class="container">
+      <!-- Some preliminary information added to embellish the page -->
+      <header><h1>The bit-math puzzle</h1></header>
+      <section id="playingthegame">
+        <header>
+          <h2>Play the bit-math game and win!</h2>
+          <p>With this game, we want to show how
+            <em>application tokens work</em>.
+            The tip is:
+            <code id="problem">the problem number</code>.
+            <!-- see the JS function checkProblem() -->
+          </p>
+          <p>
+            <strong>Hint:</strong>
+            <em>No, giving it as the input won't work.</em>
+          </p>
+        </header>
+        <form onsubmit="play(); checkBalance(); checkProblem(); return false;"
+          id="playform">
+          <fieldset>
+            <legend>Try and win</legend>
+            <label for="guessinput" />
+            <!-- Notice that "required" imposes a value to be inserted! -->
+            <input type="number" name="guess" id="guessinput"
+                required="required"
+                placeholder="127"
+                min="1" max="255"/>
+            <!-- "min" and "max" limit the range of possible inputs -->
+            <!-- "placeholder" is a suggestion -->
+            <button type="submit">Check!</button>
+          </fieldset>
+        </form>
+      </section>
+      <footer>
+        <header><h2>Status</h2></header>
+        <p>Your account address is:
+          <code id="myaccountaddress">n</code>.
+          <!-- see the JS function displayAccountAddress() -->
+        </p>
+        <p>Your current balance in BitMathCoins is:
+          <strong id="mybalance">x</strong>.
+          <!-- see the JS function checkBalance() -->
+        </p>
+        <p>Your current balance in Wei is:
+          <strong id="myweibalance">x</strong>.
+          <!-- see the JS function checkBalance() -->
+        </p>
+      </footer>
+    </main>
+  </body>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/web3.min.js"></script>
+  <script>
+    // Prevent forms from submitting and reloading the page
+    $("form").submit(function(e){e.preventDefault();});
+
+    // Initialisation of Web3
+    if (typeof web3 !== 'undefined') {
+      web3 = new Web3(web3.currentProvider);
+    } else {
+      // Set the provider you want from Web3.providers
+      // Use the WebSocketProvider to enable events subscription.
+      web3 = new Web3(new Web3.providers.WebsocketProvider("ws://localhost:7545"));
+    }
+
+    // Set contract ABI
+    var contractAbi = [
+      {
+        "inputs": [
+          {
+            "internalType": "uint8",
+            "name": "seed",
+            "type": "uint8"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "minter",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "reward",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "minterBalance",
+            "type": "uint256"
+          }
+        ],
+        "name": "Mint",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "player",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint8",
+            "name": "guess",
+            "type": "uint8"
+          }
+        ],
+        "name": "NextTime",
+        "type": "event"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint8",
+            "name": "guess",
+            "type": "uint8"
+          }
+        ],
+        "name": "play",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "winner",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "guess",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "reward",
+            "type": "uint256"
+          }
+        ],
+        "name": "Win",
+        "type": "event"
+      },
+      {
+        "inputs": [],
+        "name": "attempts",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "name": "balance",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "minter",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "problem",
+        "outputs": [
+          {
+            "internalType": "uint8",
+            "name": "",
+            "type": "uint8"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      }
+    ]
+    // Insert your contract ABI there
+
+    // Set the contract address
+    var contractAddress = '0xF319A3595b02d29C2217F08243c1b9f63E8d3098';
+    // Insert your contract address there
+
+    // Set the address from which transactions are sent
+    var senderAddress = '0xbb7546d93B33f8dF650e39e4A606CF16CD655372';
+    // Insert your contract address there
+
+    // Set the contract
+    var contract = new web3.eth.Contract(contractAbi, contractAddress);
+
+    // Subscribe to all events by the contract
+    contract.events.allEvents(
+      callback=function(error, event){ // A "function object". Explained here: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions#The_function_expression_(function_expression)
+        console.log(event);
+    });
+
+
+    // Function to be called to play
+    function play() {
+      var givenGuess = $('#guessinput').val();
+      // Check that the value is a positive integer
+      if (givenGuess < 1) {
+        alert("The given guess should be higher than 0");
+        return false;
+      }
+      // Add the log entry on the console
+      console.log("Provided guess is: " + givenGuess);
+
+      contract.methods.play(givenGuess).call().then(function(result) {
+          console.log("Guess sent: " + givenGuess);
+      })
+      // call(…) has no side effect on the real contract, send(…) does
+      contract.methods.play(givenGuess).send({from:senderAddress}).on('receipt',
+        function(receipt){
+          console.log("Tx Hash: " + receipt.transactionHash);
+        });
+
+      return false;
+    }
+
+    // Updates the problem
+    function checkProblem() {
+      contract.methods.problem().call().then(function(result) {
+          $("#problem").html(result);
+      });
+      // This is a view on the current state. No send(…) needed then
+    }
+
+    // Updates the balance
+    function checkBalance() {
+      contract.methods.balance(senderAddress).call().then(function(result) {
+          $("#mybalance").html(result);
+      });
+      // This is a view on the current state. No send(…) needed then
+      web3.eth.getBalance(senderAddress).then(function(result) {
+        $("#myweibalance").html(result);
+      });
+    }
+
+    // Displays the account address
+    function displayAccountAddress() {
+      $("#myaccountaddress").html(
+        senderAddress
+      );
+    }
+
+    // Update the problem with the current value
+    checkProblem();
+    // Update the balance in BitMathCoins with the current value
+    checkBalance();
+    // Display the account address
+    displayAccountAddress();
+
+  </script>
+</html>
