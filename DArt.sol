@@ -1,12 +1,10 @@
 //for compability reasons, we work only with these versions
 pragma solidity >=0.7.0 < 0.9.0;
 
+
 import "./Verification.sol";
 import "./Patron.sol";
 import "./DCoin.sol";
-
-
-error Unauthorized(address caller);
 
 
 //we have objects to work with
@@ -66,6 +64,8 @@ contract DArt {
     address public constant verificatioSmartcontract; 
     address public constant patronSmartcontract;
     */
+
+    //         mainSmartcontract.call(abi.encodeWithSignature("setCostOfServices(uint[3])", [1,2,3]));
 
     Verification public verification;
     DCoin public dcoin;

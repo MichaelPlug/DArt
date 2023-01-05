@@ -21,7 +21,7 @@ contract DCoin {
         minter = msg.sender;
     }
 
-    function setContrats(address patron, address main, address verification) external {
+    function setContrats(address main, address verification, address patron) external {
         assert(minter == msg.sender);
         patronSmartcontract = patron;
         mainSmartcontract = main;
