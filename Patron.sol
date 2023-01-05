@@ -19,7 +19,7 @@ contract Patron {
     DArt public mainSmartcontract; 
     
 
-    constructor(DArt main, DCoin dcoin){
+    constructor(){
      //   verification = verificatioSmartcontract;  
         //mainSmartcontract = main ;
         //dcoinSmartcontract = dcoin;
