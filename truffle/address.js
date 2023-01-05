@@ -21,15 +21,6 @@ async function initialise() {
     // Use the WebSocketProvider to enable events subscription.
 	  web3 = new Web3(new Web3.providers.WebsocketProvider("ws://localhost:7545"));
 	}
-	
-	const ethereumButton = document.querySelector('.enableEthereumButton');
-
-  ethereumButton.addEventListener('click', () => {
-    //Will Start the metamask extension
-    console.log("clicked")
-    ethereum.request({ method: 'eth_requestAccounts' });
-  });
-
 
  
 	// Set the address from which transactions are sent
@@ -41,17 +32,21 @@ async function initialise() {
   if (accounts == '') {
     console.log("You Are Not Connected To MetaMask: Please Connect Clicking The Button");
     
-    $("#myaccountaddress").html("You Are Not Connected To MetaMask: Please Connect Clicking The Button and Press F5");
-    $("#clickable").html("You Are Not Connected To MetaMask: Please Connect Clicking The Button and Press F5");
+  }
+  else {
+  
+    console.log("okay");
+    displayAccountAddress();
+    
   }
   
+  
   // Update the information displayed
-  displayAccountAddress();
+  
 }
 
 // Displays the account address
 function displayAccountAddress() {
 	$("#myaccountaddress").html(senderAddress);
-  $("#clickable").html(senderAddress);
 }
 

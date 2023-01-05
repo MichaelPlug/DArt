@@ -1,7 +1,7 @@
 $("form").submit(function(e){e.preventDefault();});
 
 // Set the contract address
-var contractAddress = '0xF6Ff13dB1A84ee4822c125b4945FC075B12b3259';
+var contractAddress = '0xF6Ff13dB1A84ee4822c125b4945FC075B12b3259'; // Di Michele
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSON = "./json/DCoin.json"
 // Set the sending address
@@ -9,11 +9,13 @@ var senderAddress = '0x0';
 // Set contract ABI and the contract
 var contract = null;
 
+var balance = 0;
+
 $(window).on('load', function() {
   initialise(contractAddress);
 });
 
-console.log(window.ethereum)
+console.log(window.ethereum);
 
 if (typeof window.ethereum !== 'undefined') {
   console.log('MetaMask is installed!');
@@ -68,6 +70,8 @@ async function initialise(contractAddress) {
       }
       console.log(event);
   });
+
+  showBalance();
 }
 
 function buy(){
@@ -80,23 +84,53 @@ function buy(){
 	}
 	// Add the log entry on the console
 	console.log("Buying " + tokentobuy + " dcoins");
-
-	contract.methods.mint().call({from:senderAddress, gas: 120000, value: 50000000000000000}).then(function(result) { // A promise in action
-      console.log("Guess buy: " + mint);
-  })
-  // Notice that call(…) has no side effect on the real contract, whereas send(…) does have a side-effect on the contract state
-  contract.methods.mint().send({from:senderAddress, gas: 120000, value: 50000000000000000}).on('receipt', function(receipt){
+  const cost = tokentobuy*2*(10**15);
+  console.log(cost);
+	contract.methods.mint().call({from:senderAddress, gas: 120000, value: cost}).then(function(result) { // A promise in action
+      //console.log("Guess buy: " + mint);
+    // Notice that call(…) has no side effect on the real contract, whereas send(…) does have a side-effect on the contract state
+    contract.methods.mint().send({from:senderAddress, gas: 120000, value: cost}).on('receipt', function(receipt){
       console.log("Hash?: " + receipt.transactionHash);
-  });
-
+      showBalance();
+    });
+  })
 	return false;
 }
 
-function sell(){};
+function sell(){
+  console.log(contract)
+  var tokentosell = $('#toketosell').val();
+  console.log("Hai " + balance + " e vendi " + tokentosell);
+  console.log(tokentosell > balance);
+  if (tokentosell < 1) {
+    alert("The amount of tokens to sell should be higher than 0");
+    return false;
+  }
+  if (tokentosell > balance){
+    alert("You don't have enough DCoin, check your balance");
+    return false;
+  }
+  contract.methods.balance(senderAddress).call(tokentosell).then(function(res) {
+    console.log("Guess sell: " + tokentosell);
+  });
+
+	// Add the log entry on the console
+	console.log("Selling " + tokentosell + " dcoins");
+
+	contract.methods.withdraw(tokentosell).call({from:senderAddress}).then(function(result) { // A promise in action
+    console.log("Guess buy: " + sell);
+    // Notice that call(…) has no side effect on the real contract, whereas send(…) does have a side-effect on the contract state
+    contract.methods.withdraw(tokentosell).send({from:senderAddress}).on('receipt', function(receipt){
+      console.log("Hash?: " + receipt.transactionHash);
+      showBalance();
+    });
+  })
+	return false;
+};
 
 function transfer(){
   
-  var tokentotransfer = $('#toketotransfer').val();
+  var tokentotransfer = $('#tokentotrans').val();
 
   var receiver_address = $('#receiver_address').val()
   if (tokentotransfer < 1) {
@@ -106,13 +140,25 @@ function transfer(){
 	// Add the log entry on the console
 	console.log("Transferring " + tokentotransfer + " DCoins to: " + receiver_address);
 
-	contract.methods.transfer(tokentotransfer, receiver_address).call({from:senderAddress, gas: 2000000, value: 5000000000000}).then(function(result) { // A promise in action
-      console.log("Guess buy: " + mint);
-  })
-  // Notice that call(…) has no side effect on the real contract, whereas send(…) does have a side-effect on the contract state
-  contract.methods.transfer(10, senderAddress).send({from:senderAddress, gas: 120000, value: 5000000000000}).on('receipt', function(receipt){
+	contract.methods.transfer(tokentotransfer, receiver_address).call({from:senderAddress}).then(function(result) { // A promise in action
+    console.log("Guess buy: " + transfer);
+    // Notice that call(…) has no side effect on the real contract, whereas send(…) does have a side-effect on the contract state
+    contract.methods.transfer(tokentotransfer, receiver_address).send({from:senderAddress}).on('receipt', function(receipt){
       console.log("Hash?: " + receipt.transactionHash);
-  });
+      showBalance();
+    });
+  })
+
+
 
 	return false;
 };
+
+function showBalance(){ 
+  console.log("Loading your balance");
+  contract.methods.balance(senderAddress).call().then(function(res) {
+    document.getElementById("balance").innerHTML = "Your balance is " + res + " DCoins";
+    balance = res;
+  });
+  return false;
+}

@@ -6,24 +6,39 @@
 </head>
 <body>
 
-<h1>Accept Creator</h1>
+  <h1>Accept Creator</h1>
 
-<button class="enableEthereumButton">Enable Ethereum</button>
-<h2>Account: <span class="showAccount"></span></h2>
+  <h2>Account: <span class="showAccount"></span></h2>
 
-<form onsubmit="test1(); return false;" >
-  <label for="fname">Name:</label><br>
-  <input type="text" id="fname" name="fname" placeholder="Galleria degli Uffizi" required><br>
-  <label for="lname">Role:</label><br>
-  <input type="text" id="lname" name="lname" placeholder="Museum, ..." required><br><br>
-  
-  <input type="submit" value="Submit">
-</form>
+  All the informations can be retrieved by the documentations found in mail-box or taken in other forms by means of our office
 
-</body>
-<script src="dist/js/jquery.min.js"></script>
-<script src="dist/js/bootstrap.min.js"></script>
-<script src="dist/js/web3.min.js"></script>
-<!-- To make our code tidier, we separate the JS script from the HTML file -->
-<script src="Accept_Registration.js"></script>
+  <form onsubmit="submit_for_verification(); return false;" >
+    <label for="fname">Name:</label><br>
+    <input type="text" id="name_id" name="fname" placeholder="Galleria degli Uffizi" required><br>
+    
+    <label for="pet-select">Choose Your Role:</label>
+    <br/>
+    <select name="pets" id="role_id" required>
+        <option value="">--Please choose an option--</option>
+        <option value="MUSEUM">Museum</option>
+        <option value="GALLERY">Private Gallery</option>
+        <option value="PRIVATE_COLLECTOR">Private Collector</option>
+        <option value="ARTIST">Artist</option>
+        <option value="PROTECTION_LAB">Protection Lab</option>
+    </select>
+    <br/>
+    <br/>
+    <input type="submit" value="Submit">
+  </form>
+
+  <script src="dist/js/jquery.min.js"></script>
+  <script src="dist/js/bootstrap.min.js"></script>
+  <script src="dist/js/web3.min.js"></script>
+  <!-- To make our code tidier, we separate the JS script from the HTML file -->
+  <script src="Accept_Registration.js"></script>
+
+  </body>
+
+
+
 </html>
