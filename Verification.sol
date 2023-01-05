@@ -40,9 +40,9 @@ contract Verification {
         creator = msg.sender;
     }
 
-    function setContracts(address dcoinad) external{
+    function setContracts(DCoin dcoinad) external{
         require(msg.sender == creator, "Only the creator can set the contracts");
-        dcoin = DCoin(dcoinad);
+        dcoin = dcoinad;
     }
         
 

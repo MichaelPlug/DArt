@@ -27,10 +27,10 @@ contract Patron {
     }
 
 
-    function setContrats(address main, address dcoin) external {
+    function setContrats(DArt main, DCoin dcoin) external {
         assert(msg.sender == minter);
-        mainSmartcontract = DArt(main);
-        dcoinSmartcontract = DCoin(dcoin);
+        mainSmartcontract = main;
+        dcoinSmartcontract = dcoin;
     }
 
     function crowfunding(bytes32 artwork, uint amount) external {

@@ -86,11 +86,11 @@ contract DArt {
         //dcoin.setContrats(address(Patron(address(patron))));
     }
 
-    function setContracts(address dcoinad, address verificationad, address patronad) external{
+    function setContracts(DCoin dcoinad, Verification verificationad, Patron patronad) external{
         require(msg.sender == creator, "Only the creator can set the contracts");
-        dcoin = DCoin(dcoinad);
-        verification = Verification(verificationad);
-        patron = Patron(patronad);
+        dcoin = dcoinad;
+        verification = verificationad;
+        patron = patronad;
     }
 
     /**
