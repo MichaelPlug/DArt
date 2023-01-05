@@ -1,7 +1,7 @@
 $("form").submit(function(e){e.preventDefault();});
 
 // Set the contract address
-var contractAddress = '0xF6Ff13dB1A84ee4822c125b4945FC075B12b3259'; // Di Michele
+var contractAddress = '0xEe7e963DdDE9a14B13a65188c288b222498FaBd3'; // Di Michele
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSON = "./json/DCoin.json"
 // Set the sending address
@@ -62,6 +62,9 @@ async function initialise(contractAddress) {
 	senderAddress = accounts[0]
 	console.log("Sender address set: " + senderAddress)
 
+  
+  $("#myaccountaddress").html(senderAddress);
+  
 	// Subscribe to all events by the contract
 	contract.events.allEvents(
 	callback=function(error, event){ // A "function object". Explained here: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions#The_function_expression_(function_expression)
@@ -157,7 +160,7 @@ function transfer(){
 function showBalance(){ 
   console.log("Loading your balance");
   contract.methods.balance(senderAddress).call().then(function(res) {
-    document.getElementById("balance").innerHTML = "Your balance is " + res + " DCoins";
+    document.getElementById("balance").innerHTML = "<h5><b><i>Your balance is " + res + " DCoins</b></i></h5>";
     balance = res;
   });
   return false;
