@@ -5,12 +5,6 @@ import "./Verification.sol";
 import "./Patron.sol";
 import "./DCoin.sol";
 
-// import {symbol1 as alias, symbol2} from "filename";
-/*
-import {isVerified, getRole as func, func} from "./Verification.sol";
-import {Unauthorized, add as func, Point} from "./DCoin.sol";
-import {Unauthorized, add as func, Point} from "./Patron.sol";
-*/
 
 error Unauthorized(address caller);
 
@@ -18,12 +12,7 @@ error Unauthorized(address caller);
 //we have objects to work with
 contract DArt {
 
-    /* DUBBI:
-    Ripassa gli event
-    */
-
-    /*
-        TODO inserisci i pagamenti per i servizi
+   /*
         Fai event
     */
  
@@ -72,18 +61,15 @@ contract DArt {
     mapping (bytes32 => Exibition) public registerdExibitions;
     mapping (bytes32 => Activity) public registerdActivities;
 
-
-    uint private price = 1;
-
     /*
     address public constant dcoinSmartcontract;
     address public constant verificatioSmartcontract; 
     address public constant patronSmartcontract;
     */
 
-    Verification public verification = new Verification();   
-    DCoin public dcoin = new DCoin(address(this));
-    Patron public patron = new Patron(this, dcoin);   
+    Verification public verification;
+    DCoin public dcoin;
+    Patron public patron;   
   
 
 
@@ -97,7 +83,14 @@ contract DArt {
         patron = patronSmartcontract;
         */
         creator = msg.sender;
-        dcoin.setContrats(address(Patron(address(patron))));
+        //dcoin.setContrats(address(Patron(address(patron))));
+    }
+
+    function setContracts(address dcoinad, address verificationad, address patronad) external{
+        require(msg.sender == creator, "Only the creator can set the contracts");
+        dcoin = DCoin(dcoinad);
+        verification = Verification(verificationad);
+        patron = Patron(patronad);
     }
 
     /**
@@ -109,21 +102,11 @@ contract DArt {
         return keccak256(abi.encodePacked(hashedName, msg.sender));
     }
 
-    function checkWallet() internal {
+    function checkWallet() internal view {
         assert(verification.isVerified(msg.sender));
         /*assert(
             verificationSmartcontract.call(aby.encodingWithSignature("isVerified(address)",msg.sender)),
             "Sender's wallet is not verifed");*/
-    }
-
-    function payService() internal {
-        dcoin.burn(price, msg.sender, false);   
-        //dcoinSmartcontract.call(aby.encodingWithSignature("burn(uint,address,bool)",price,msg.sender,false));
-    }
-
-    function setPrice(uint newprice) external{
-        assert(msg.sender == creator);
-        price = newprice;
     }
 
     //called by a museum, to add an artwork in blockchain (MAYBE TO DO
@@ -138,7 +121,7 @@ contract DArt {
         //assert(registeredWallets[msg.sender].verified, "Sender's wallet is not verifed");
         bytes32 kek = hashTextAndAddress(hashedName);
         require(registeredArtworks[kek].minter == address(0x0), "A collision during hashing occurred");
-        payService();
+        dcoin.burn(0, msg.sender, false);   
         //we add the artwork to the mapping
         /*
         TODO: all this stuff have to be recoded and we have to decide if use one mapping from address to 
@@ -158,11 +141,28 @@ contract DArt {
         assert(role < 2);
         bytes32 kek = hashTextAndAddress(hashedName);
         assert(registeredArtworks[kek].minter == address(0x0));
-        payService();
+        dcoin.burn(1, msg.sender, false);   
         registerdExibitions[kek] = Exibition(hashedName, msg.sender, status);
     }
 
-    function createActivity(bytes32 artworkID, ProtectionActivities oftype, bytes32 extrainfo) external{
+    function endExibition(bytes32 exibitionID) external {
+        require(registerdExibitions[exibitionID].organizer == msg.sender, "You do not have the necessary permissions to end this exibition");
+        registerdExibitions[exibitionID].isOn = false;
+    }
+
+    function exposeArtwork(bytes32 artworkID, bytes32 exibitionID) external {
+        require(registeredArtworks[artworkID].minter == msg.sender, "You do not have the necessary permissions to expose this artwork");
+        require(registerdExibitions[exibitionID].isOn, "The exibition is not on");
+        require(registerdExibitions[exibitionID].organizer == msg.sender, "The exibition is not on");
+        registeredArtworks[artworkID].exposedAt = exibitionID;
+    }
+
+    function removeArtworkFromExibition(bytes32 artworkID) external {
+        require(registeredArtworks[artworkID].possession == msg.sender, "You do not have the necessary permissions to remove this artwork");
+        registeredArtworks[artworkID].exposedAt = bytes32(0x0);
+    }
+
+    function mintActivity(bytes32 artworkID, ProtectionActivities oftype, bytes32 extrainfo) external{
         uint role = verification.getRole(msg.sender);
         //role = verificationSmartcontract.call(abi.encodingWithSignature("getRole(address)",msg.sender));
         assert(role == 4);
@@ -170,31 +170,34 @@ contract DArt {
         bytes32 kek = keccak256(abi.encodePacked(msg.sender, block.timestamp));
         registeredArtworks[artworkID].status =   kek;
         registerdActivities[kek] = Activity(msg.sender, block.timestamp, oftype, extrainfo);  
-        //TODO: Save all the activities
-        payService();
+        dcoin.burn(2, msg.sender, false);   
         if (oftype != ProtectionActivities.UPDATE && oftype != ProtectionActivities.DAMAGE){
         patron.moveFunds(msg.sender, artworkID);
         }
-        //patronSmartcontract.call(abi.encodingWithSignature("moveFunds(address,bytes32",msg.sender, artworkID));
     }
 
     function allowAccessToArtwork(address target, bytes32 artwork) external {
         //assert(museums[target].verified);
         assert(registeredArtworks[artwork].property == msg.sender);
-        registeredArtworks[artwork].possession == target;
+        registeredArtworks[artwork].possession = target;
     }
 
     function revokeAccessToArtwork(bytes32 artwork) external {
         assert(registeredArtworks[artwork].property == msg.sender);
-        registeredArtworks[artwork].possession == address(0x0);
+        registeredArtworks[artwork].possession = address(0x0);
     }
 
     function donateWorkOfArt(bytes32 artwork, address _to) external{
         require(registeredArtworks[artwork].property == msg.sender, "You are not the owner of the selected artowork");
-        registeredArtworks[artwork].property == _to;
+        registeredArtworks[artwork].property = _to;
     }
 
     function getProperty(bytes32 artwork) external view returns(address){
         return registeredArtworks[artwork].property;
+    }
+
+    function terminate() public {
+        require(msg.sender == creator, "You cannot terminate the contract!");
+        selfdestruct(payable(creator));
     }
 }

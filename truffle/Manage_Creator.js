@@ -12,6 +12,10 @@ var contractJSONMain = "./json/DArt.json"
 var contractAddressDCoin = '0xF6Ff13dB1A84ee4822c125b4945FC075B12b3259'; // Di Michele
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSONDCoin = "./json/DCoin.json"
+// Set the contract address
+var contractAddressVerification = '0x521405d831d3E9c42Ec226acd5B6C5023637060d'; // Di Michele
+// Set the relative URI of the contract’s skeleton (with ABI)
+var contractJSONVerification = "./json/Verification.json"
 // Set the sending address
 var senderAddress = '0x0';
 // Set contract ABI and the contract
@@ -23,7 +27,7 @@ var contractDCoin = null;
 var balance = 0;
 
 $(window).on('load', function() {
-  initialise(contractAddressPatron,contractAddressMain,contractAddressDCoin);
+  initialise(contractAddressPatron,contractAddressMain,contractAddressDCoin,contractAddressVerification);
 });
 
 console.log(window.ethereum);
@@ -31,13 +35,6 @@ console.log(window.ethereum);
 if (typeof window.ethereum !== 'undefined') {
   console.log('MetaMask is installed!');
 }
-const ethereumButton = document.querySelector('.enableEthereumButton');
-
-ethereumButton.addEventListener('click', () => {
-  //Will Start the metamask extension
-  console.log("clicked")
-  ethereum.request({ method: 'eth_requestAccounts' });
-});
 
 
 // Asynchronous function (to work with modules loaded on the go)
@@ -97,6 +94,21 @@ async function initialise(contractAddressPatron,contractAddressMain, contractAdd
     return false;
   }
 
+        // Load the ABI. We await the loading is done through "await"
+  // More on the await operator: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await
+  await $.getJSON(contractJSONVerification,
+    function( contractData ) { // Use of IIFEs: https://developer.mozilla.org/en-US/docs/Glossary/IIFE
+      // console.log(contractAbi);
+      contractVerification = new web3.eth.Contract(contractData.abi, contractAddressVerification);
+    }
+  ).catch((error) => { console.error(error); });
+  // Arrow funcction expression at work. For further info: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
+
+  if (!contractVerification) {
+    console.error("No contract loaded.");
+    return false;
+  }
+
 	// Set the address from which transactions are sent
 	accounts = await web3.eth.getAccounts();
 	// console.log(accounts[0])
@@ -112,30 +124,42 @@ async function initialise(contractAddressPatron,contractAddressMain, contractAdd
       console.log(event);
   });
 
-  showBalance();
 }
 
-function searchArtwork(){
-  var artwork = $('#artworkid').val();
-  console.log("Loading your artwork");
+function museumCreation(){
 
-  contractMain.methods.verifiedArtworks(artwork).call({from:senderAddress, gas: 120000, value: cost}).then(function(result) { // A promise in action
-    //console.log("Guess buy: " + mint);
-  // Notice that call(…) has no side effect on the real contract, whereas send(…) does have a side-effect on the contract state
-      contractMain.methods.mint().send({from:senderAddress, gas: 120000, value: cost}).on('receipt', function(receipt){
-        console.log("Hash?: " + receipt.transactionHash);
-        showBalance();
-      });
+  var museumAddress = $('#museumAddress').val();
+  console.log(contractVerification);
+  console.log(senderAddress);
+  contractVerification.methods.museumCreation(museumAddress).call({from:senderAddress}).then(function(res) {
+    contractVerification.methods.museumCreation(museumAddress).send({from:senderAddress}).on('receipt', function(receipt){
+      console.log("Museum created");
+    })  ;
   });
   return false;
 };
 
-function showBalance(){ 
-  console.log("Loading your balance");
+function withdraw(){
   console.log(contractDCoin);
-  contractDCoin.methods.balance(senderAddress).call().then(function(res) {
-    document.getElementById("balance").innerHTML = "Your balance is " + res + " DCoins";
-    balance = res;
+  contractDCoin.methods.burned().call().then(function(res) {
+    if (res >= 0) {
+      contractDCoin.methods.withdrawETH().call({from:senderAddress}).then(function(res) {
+        contractDCoin.methods.withdrawETH().send({from:senderAddress}).on('receipt', function(receipt){
+            console.log("Burned coins withdrawn");
+        });
+      });
+  };
   });
   return false;
 };
+
+function terminate(){
+  console.log(contractDCoin);
+  contractDCoin.methods.terminate().call({from:senderAddress}).then(function(res) {
+    contractDCoin.methods.withdrawETH().send({from:senderAddress}).on('receipt', function(receipt){
+      console.log("Burned coins withdrawn");
+    });
+  });
+  return false;
+};
+

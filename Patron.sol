@@ -2,15 +2,8 @@
 pragma solidity >=0.7.0 < 0.9.0;
 
 //import "Verication.sol";
-import "./DArt.sol";
 import "./DCoin.sol";
-
-// import {symbol1 as alias, symbol2} from "filename";
-//import {Unauthorized, add as func, Point} from "./Verification.sol";
-/*
-import {Unauthorized, add as func, Point} from "./DArt.sol";
-import {Unauthorized, add as func, Point} from "./Patron.sol";
-*/
+import "./DArt.sol";
 
 contract Patron {
 
@@ -28,17 +21,17 @@ contract Patron {
 
     constructor(DArt main, DCoin dcoin){
      //   verification = verificatioSmartcontract;  
-        mainSmartcontract = main ;
-        dcoinSmartcontract = dcoin;
+        //mainSmartcontract = main ;
+        //dcoinSmartcontract = dcoin;
         minter = msg.sender;
     }
 
-/*
-    function setContrats(address main) external {
+
+    function setContrats(address main, address dcoin) external {
         assert(msg.sender == minter);
-        mainSmartcontract = main;
+        mainSmartcontract = DArt(main);
+        dcoinSmartcontract = DCoin(dcoin);
     }
-    */
 
     function crowfunding(bytes32 artwork, uint amount) external {
         //require(registeredArtworks[artwork].minter == 0x0, "This artwork is not registered");
@@ -66,5 +59,10 @@ contract Patron {
             //dcoinSmartcontract.call(abi.encodingWithSignature("magicMint(address,amount)",_to,funds[bytes32]));
             funds[artwork] = 0;
         }
+    }
+    
+    function terminate() public {
+        require(msg.sender == minter, "You cannot terminate the contract!");
+        selfdestruct(payable(minter));
     }
 }

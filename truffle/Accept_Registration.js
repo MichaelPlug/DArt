@@ -1,7 +1,8 @@
 $("form").submit(function(e){e.preventDefault();});
 
 // Set the contract address
-var contractAddress = '0x4f30966b63B30abB2bf78Da3A645609cc5f1D5ad';
+//var contractAddress = '0x4f30966b63B30abB2bf78Da3A645609cc5f1D5ad'; // Giordano
+var contractAddress = '0x521405d831d3E9c42Ec226acd5B6C5023637060d'; // Michele
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSON = "build/contracts/Verification.json"
 // Set the sending address

@@ -9,20 +9,28 @@ contract DCoin {
     mapping (address => uint) public balance;
     uint public constant PRICE = 2 * 1e15; 
     uint public burned = 0;
+    uint[3] public costOfServices = [1, 1, 1];
     // uint public constant PRICE = 2 finney; 
     // finney is no longer a supported denomination since Solidity v.0.7.0
 
     address public patronSmartcontract; 
     address public mainSmartcontract; 
+    address public verificationSmartcontract;
 
-    constructor(address main) {
+    constructor() {
         minter = msg.sender;
-        mainSmartcontract = main;
     }
 
-    function setContrats(address patron) external {
+    function setContrats(address patron, address main, address verification) external {
         assert(minter == msg.sender);
         patronSmartcontract = patron;
+        mainSmartcontract = main;
+        verificationSmartcontract = verification;
+    }
+
+    function  setCostOfServices(uint[3] memory cost) external {
+        assert(minter == msg.sender);
+        costOfServices = cost;
     }
 
     function mint() public payable {
@@ -31,8 +39,9 @@ contract DCoin {
         // Guess guess, where does the remainder of the msg.value end?
     }
 
-    function burn(uint amount, address wallet, bool pending) external {
-        assert(msg.sender == patronSmartcontract || msg.sender == mainSmartcontract);
+    function burn(uint costType, address wallet, bool pending) external {
+        assert(msg.sender == patronSmartcontract || msg.sender == mainSmartcontract || msg.sender == verificationSmartcontract);
+        uint amount = costOfServices[costType];
         require(balance[wallet] >= amount, "Not enough DCoins!");
         // Take the amount of HelloToken from the sender and give back the amount of ether
         balance[wallet] -= amount;
