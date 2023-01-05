@@ -1,12 +1,6 @@
 //for compability reasons, we work only with these versions
 pragma solidity >=0.7.0 < 0.9.0;
 
-
-import "./Verification.sol";
-import "./Patron.sol";
-import "./DCoin.sol";
-
-
 //we have objects to work with
 contract DArt {
 
@@ -67,9 +61,9 @@ contract DArt {
 
     //         mainSmartcontract.call(abi.encodeWithSignature("setCostOfServices(uint[3])", [1,2,3]));
 
-    Verification public verification;
-    DCoin public dcoin;
-    Patron public patron;   
+    address public verification;
+    address public dcoin;
+    address public patron;   
   
 
 
@@ -86,7 +80,7 @@ contract DArt {
         //dcoin.setContrats(address(Patron(address(patron))));
     }
 
-    function setContracts(DCoin dcoinad, Verification verificationad, Patron patronad) external{
+    function setContracts(address dcoinad, address verificationad, address patronad) external{
         require(msg.sender == creator, "Only the creator can set the contracts");
         dcoin = dcoinad;
         verification = verificationad;
@@ -102,8 +96,16 @@ contract DArt {
         return keccak256(abi.encodePacked(hashedName, msg.sender));
     }
 
-    function checkWallet() internal view {
-        assert(verification.isVerified(msg.sender));
+    function checkWallet() internal {
+        //(bool success, bytes memory data) = verification.call(abi.encodeWithSignature("isVerified(address)",msg.sender));
+        (bool success, bytes memory result) = verification.call(
+            abi.encodeWithSignature("isVerified(address)", msg.sender)
+        );
+        require(success, "Verification failed");
+        (bool isVerifed) = abi.decode(result, (bool));
+        require(isVerifed, "Sender's wallet is not verifed");
+        
+        //assert(verification.isVerified(msg.sender));
         /*assert(
             verificationSmartcontract.call(aby.encodingWithSignature("isVerified(address)",msg.sender)),
             "Sender's wallet is not verifed");*/
@@ -115,13 +117,22 @@ contract DArt {
         @param hashedName name of the artwork hashed using keccak256
      */    
     function mintArtworkNFT(bytes32 hashedName) external {
-        uint role = verification.getRole(msg.sender);
+        (bool success, bytes memory result) = verification.call(
+            abi.encodeWithSignature("getRole(address)", msg.sender)
+        );
+        require(success, "Verification failed");
+        (uint role) = abi.decode(result, (uint));
+        //uint role = verification.getRole(msg.sender);
         //role = verificationSmartcontract.call(abi.encodingWithSignature("getRole(address)",msg.sender));
         assert(role < 4);
         //assert(registeredWallets[msg.sender].verified, "Sender's wallet is not verifed");
         bytes32 kek = hashTextAndAddress(hashedName);
         require(registeredArtworks[kek].minter == address(0x0), "A collision during hashing occurred");
-        dcoin.burn(0, msg.sender, false);   
+        (bool success_b, ) = dcoin.call(
+            abi.encodeWithSignature("burn(uint, address)", 0, msg.sender)
+        );
+        require(success_b, "Dcoin failed");
+        //dcoin.burn(0, msg.sender, false);   
         //we add the artwork to the mapping
         /*
         TODO: all this stuff have to be recoded and we have to decide if use one mapping from address to 
@@ -137,12 +148,18 @@ contract DArt {
      */
     function mintExibitionNFT(bytes32 hashedName, bool status) external {
         //role = verificationSmartcontract.call(abi.encodingWithSignature("getRole(address)",msg.sender));
-        uint role = verification.getRole(msg.sender);
+        (bool success, bytes memory result) = verification.call(
+            abi.encodeWithSignature("getRole(address)", msg.sender)
+        );
+        require(success, "Verification failed");
+        (uint role) = abi.decode(result, (uint));
         assert(role < 2);
         bytes32 kek = hashTextAndAddress(hashedName);
         assert(registeredArtworks[kek].minter == address(0x0));
-        dcoin.burn(1, msg.sender, false);   
-        registerdExibitions[kek] = Exibition(hashedName, msg.sender, status);
+        (bool success_b, ) = dcoin.call(
+            abi.encodeWithSignature("burn(uint, address)", 1, msg.sender)
+        );
+        require(success_b, "Dcoin failed");        registerdExibitions[kek] = Exibition(hashedName, msg.sender, status);
     }
 
     function endExibition(bytes32 exibitionID) external {
@@ -163,16 +180,26 @@ contract DArt {
     }
 
     function mintActivity(bytes32 artworkID, ProtectionActivities oftype, bytes32 extrainfo) external{
-        uint role = verification.getRole(msg.sender);
+        (bool success, bytes memory result) = verification.call(
+            abi.encodeWithSignature("getRole(address)", msg.sender)
+        );
+        require(success, "Verification failed");
+        (uint role) = abi.decode(result, (uint));
         //role = verificationSmartcontract.call(abi.encodingWithSignature("getRole(address)",msg.sender));
         assert(role == 4);
         require(registeredArtworks[artworkID].possession == msg.sender,  "You do not have the necessary permissions to create an Activity about this artwork");
         bytes32 kek = keccak256(abi.encodePacked(msg.sender, block.timestamp));
         registeredArtworks[artworkID].status =   kek;
         registerdActivities[kek] = Activity(msg.sender, block.timestamp, oftype, extrainfo);  
-        dcoin.burn(2, msg.sender, false);   
+        (bool success_b, ) = dcoin.call(
+            abi.encodeWithSignature("burn(uint, address)", 2, msg.sender)
+        );
+        require(success_b, "Dcoin failed");
         if (oftype != ProtectionActivities.UPDATE && oftype != ProtectionActivities.DAMAGE){
-        patron.moveFunds(msg.sender, artworkID);
+            (bool success_c, ) = patron.call(
+                abi.encodeWithSignature("moveFunds(address, bytes32)", msg.sender, artworkID)
+            );
+            require(success_c, "Patron failed");
         }
     }
 

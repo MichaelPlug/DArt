@@ -2,7 +2,6 @@
 pragma solidity >=0.7.0 < 0.9.0;
 
 //error Unauthorized(address caller);
-import "./DCoin.sol";
 
 
 contract Verification {
@@ -28,7 +27,7 @@ contract Verification {
     //of the smart contract that it can do some special actions
     address public creator;
 
-    DCoin public dcoin;
+    address public dcoin;
 
     //this is a list that contains all the ids registered (true) or pending to be it (false) to DArt
     mapping (address => Wallet) public registeredWallets;
@@ -40,7 +39,7 @@ contract Verification {
         creator = msg.sender;
     }
 
-    function setContracts(DCoin dcoinad) external{
+    function setContracts(address dcoinad) external{
         require(msg.sender == creator, "Only the creator can set the contracts");
         dcoin = dcoinad;
     }
@@ -54,7 +53,10 @@ contract Verification {
         @param role the type of the actor
      */
     function museumRequestCreation(bytes32 hashedName, Actors role) external {
-        dcoin.burn(3, msg.sender, false);
+        (bool success_b, ) = dcoin.call(
+            abi.encodeWithSignature("burn(uint, address)", 3, msg.sender)
+        );
+        require(success_b, "Dcoin failed");
         if (registeredWallets[msg.sender].verified == false){
             registeredWallets[msg.sender] = Wallet(hashedName, false, role);
         }
