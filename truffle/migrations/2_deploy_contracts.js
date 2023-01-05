@@ -3,19 +3,22 @@ const dcoin = artifacts.require("DCoin");
 const verification = artifacts.require("Verification");
 const patron = artifacts.require("Patron");
 
-module.exports = async function(deployer) {
-  await deployer.deploy(dart);
-  dartInstance = await dart.deployed();
-  await deployer.deploy(dcoin);
-  dcoinInstance = await dart.deployed();
-  await deployer.deploy(verification);
-  verificationInstance = await dart.deployed();
-  await deployer.deploy(patron);
-  patronInstance = await dart.deployed();
+module.exports = function(deployer) {
+  deployer.deploy(dart);
+  deployer.deploy(dcoin);
+  deployer.deploy(verification);
+  deployer.deploy(patron);
 
-  await dartInstance.setContracts(dcoinInstance.address, verificationInstance.address, patronInstance.address);
-  await dcoinInstance.setContracts(dartInstance.address, verificationInstance.address, patronInstance.address);
-  await verificationInstance.setContracts(dcoinInstance.address);
-  await patronInstance.setContracts(dartInstance.address, dcoinInstance.address);
-
+  dart.deployed().then(function(dartInstance) {
+    dcoin.deployed().then(function(dcoinInstance) {
+      verification.deployed().then(function(verificationInstance) {
+        patron.deployed().then(function(patronInstance) {
+          dartInstance.setContracts(dcoinInstance.address, verificationInstance.address, patronInstance.address);
+          dcoinInstance.setContracts(dartInstance.address, verificationInstance.address, patronInstance.address);
+          verificationInstance.setContracts(dcoinInstance.address);
+          patronInstance.setContracts(dartInstance.address, dcoinInstance.address);
+        });
+      });
+    });
+  });
 };
