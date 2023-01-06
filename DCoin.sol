@@ -9,20 +9,28 @@ contract DCoin {
     mapping (address => uint) public balance;
     uint public constant PRICE = 2 * 1e15; 
     uint public burned = 0;
+    uint[4] public costOfServices = [1, 1, 1, 1];
     // uint public constant PRICE = 2 finney; 
     // finney is no longer a supported denomination since Solidity v.0.7.0
 
     address public patronSmartcontract; 
     address public mainSmartcontract; 
+    address public verificationSmartcontract;
 
-    constructor(address main) {
+    constructor() {
         minter = msg.sender;
-        mainSmartcontract = main;
     }
 
-    function setContrats(address patron) external {
+    function setContrats(address main, address verification, address patron) external {
         assert(minter == msg.sender);
         patronSmartcontract = patron;
+        mainSmartcontract = main;
+        verificationSmartcontract = verification;
+    }
+
+    function  setCostOfServices(uint[4] memory cost) external {
+        assert(minter == msg.sender);
+        costOfServices = cost;
     }
 
     function mint() public payable {
@@ -31,15 +39,20 @@ contract DCoin {
         // Guess guess, where does the remainder of the msg.value end?
     }
 
-    function burn(uint amount, address wallet, bool pending) external {
-        assert(msg.sender == patronSmartcontract || msg.sender == mainSmartcontract);
+    function burn(uint costType, address wallet) external {
+        assert(msg.sender == mainSmartcontract || msg.sender == verificationSmartcontract);
+        uint amount = costOfServices[costType];
         require(balance[wallet] >= amount, "Not enough DCoins!");
         // Take the amount of HelloToken from the sender and give back the amount of ether
         balance[wallet] -= amount;
-        if(!pending) {
-            burned += amount;
-            } 
+        burned += amount;
         // Send the amount of ether to the sender
+    }
+
+    function lock(uint amount, address wallet) external {
+        assert(msg.sender == patronSmartcontract);
+        require(balance[wallet] >= amount, "Not enough DCoins!");
+        balance[wallet] -= amount;
     }
 
     function transfer(uint amount, address to) external {

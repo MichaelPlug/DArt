@@ -45,6 +45,10 @@ async function initialise() {
     x.style.display = "none";
     var x = document.getElementById("clickable");
     x.style.display = "block";
+    var x = document.getElementById("isShowRegistration");
+    x.style.display = "none";
+    var x = document.getElementById("isShowTokens");
+    x.style.display = "none";
     
     //hide(document.getElementById("#clickable"));
   }
@@ -54,6 +58,10 @@ async function initialise() {
     x.style.display = "block";
     var x = document.getElementById("clickable");
     x.style.display = "none";
+    var x = document.getElementById("isShowRegistration");
+    x.style.display = "block";
+    var x = document.getElementById("isShowTokens");
+    x.style.display = "block";
     
     //$("isShow").show();
     //$("#myaccountaddress").html("You Are Not Connected To MetaMask: Please Connect Clicking The Button and Press F5");

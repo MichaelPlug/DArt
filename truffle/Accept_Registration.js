@@ -1,9 +1,10 @@
 $("form").submit(function(e){e.preventDefault();});
 
 // Set the contract address
-var contractAddress = '0x521405d831d3E9c42Ec226acd5B6C5023637060d';
+//var contractAddress = '0x4f30966b63B30abB2bf78Da3A645609cc5f1D5ad'; // Giordano
+var contractAddress = '0x521405d831d3E9c42Ec226acd5B6C5023637060d'; // Michele
 // Set the relative URI of the contract’s skeleton (with ABI)
-var contractJSON = "./json/Verification.json"
+var contractJSON = "build/contracts/Verification.json"
 // Set the sending address
 var senderAddress = '0x0';
 // Set contract ABI and the contract
@@ -53,6 +54,17 @@ async function initialise(contractAddress) {
 	senderAddress = accounts[0]
 	console.log("Sender address set: " + senderAddress)
 
+  if (accounts == '') {
+    console.log("You Are Not Connected To MetaMask: Please Connect Clicking The Button");
+    
+  }
+  else {
+  
+    console.log("okay");
+    $("#myaccountaddress").html(senderAddress);
+    
+  }
+  
 	// Subscribe to all events by the contract
 	contract.events.allEvents(
 	callback=function(error, event){ // A "function object". Explained here: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions#The_function_expression_(function_expression)
@@ -61,28 +73,6 @@ async function initialise(contractAddress) {
       }
       console.log(event);
   });
-}
-
-function buy(){
-  console.log(contract)
-  var tokentobuy = $('#toketobuy').val();
-
-  if (tokentobuy < 1) {
-		alert("The given guess should be higher than 0");
-		return false;
-	}
-	// Add the log entry on the console
-	console.log("Buying " + tokentobuy + " dcoins");
-
-	contract.methods.mint().call({from:senderAddress, gas: 120000, value: 50000000000000000}).then(function(result) { // A promise in action
-      console.log("Guess buy: " + mint);
-  })
-  // Notice that call(…) has no side effect on the real contract, whereas send(…) does have a side-effect on the contract state
-  contract.methods.mint().send({from:senderAddress, gas: 120000, value: 50000000000000000}).on('receipt', function(receipt){
-      console.log("Hash?: " + receipt.transactionHash);
-  });
-
-	return false;
 }
 
 
@@ -122,6 +112,9 @@ function submit_for_verification() {
   
   console.log(senderAddress);
   
+  
+  
+  
   contract.methods.isVerified(senderAddress).call({from:senderAddress, gas: 120000}).then(function(result) { // A promise in action
       console.log("Element present in DArt: " + result);
       
@@ -159,5 +152,5 @@ function submit_for_verification() {
         
   })
   
-	  return false;
+  return false;
 }

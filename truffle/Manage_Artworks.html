@@ -6,9 +6,134 @@
 </head>
 <body>
 
-<h1>Page to Transfer Artworks for Property/Possession and Maybe Other..</h1>
+  <h1>Page to Transfer Artworks for Property/Possession and Maybe Other..</h1>
 
-<p><a href="./NOT_DONE.html">Click Here To Transfer</a></p>
+  <div id="museum_div">
+    
+    Perfect, this is your world, just to introduce you let think that you can manage totally your museum / private_gallery from this web-page: It's very very intuitive, it's only enough that you click on the right things and follow your instict, because all this is perfectly suitable for you !!
+    
+    
+    Create a New Artwork
+    
+      <form onsubmit="mintArtwork(); return false;">
+        <fieldset>
+          
+          <label for="amountinput">Name of New Artwork: (TO HASH)</label>
+          <input type="text" name="amount" id="artwork_name" required="required" placeholder="Vitruvian Man"/>
+          <br/>
+          <input type="submit" value="Submit">
+        </fieldset>
+      </form>
+    
+    Create a New Exhibition
+    
+      <form onsubmit="mintExhibition(); return false;">
+        <fieldset>
+          
+          <label for="amountinput">Name of New Exhibition: (TO HASH)</label>
+          <input type="text" name="amount" id="exhibition_name" required="required" placeholder="The Art Of Flowers"/>
+          <br/>
+          <select name="pets" id="active_exhibition" required>
+            <option value="">--Please choose an option--</option>
+            <option value=1>Yet Active</option>
+            <option value=0>Not Already Active</option>
+      
+          </select>
+          <button type="submit">Mint!</button>
+        </fieldset>
+      </form>
+    
+      
+    Manage Possession of ArtWork:
+    
+      
+      Give Some Permissions to Someone
+      
+        <form onsubmit="grantPermission(); return false;">
+          <fieldset>
+            
+            <label for="amountinput">Address to Who Give Possession:</label>
+            <input type="text" name="amount" id="artwork_to_give_possession" required="required" placeholder="Vitruvian Man"/>
+            <br/>
+            <label for="amountinput">For Which Artwork?</label>
+            <input type="text" name="amount" id="artwork_name_possession_give" required="required" placeholder="Vitruvian Man"/>
+            <br/>
+            <button type="submit">Give Possession!</button>
+          </fieldset>
+        </form>
+    
+      - Revoke Some Permissions to Someone
+      
+        <form onsubmit="revokePermission(); return false;">
+          <fieldset>
+            
+            <label for="amountinput">For Which Artwork?</label>
+            <input type="text" name="amount" id="artwork_to_revoke_possession" required="required" placeholder="Vitruvian Man"/>
+            <br/>
+            <button type="submit">Revoke Possession!</button>
+          </fieldset>
+        </form>
+        
+    Donate an Artwork
+    
+      <form onsubmit="donateArtwork(); return false;">
+        <fieldset>
+          
+          <label for="amountinput">Which Artwork You Want Donate?</label>
+          <input type="text" name="amount" id="artwork_to_donate" required="required" placeholder="Vitruvian Man"/>
+          <br/>
+          <label for="amountinput">Which Is The Lucky Entity?</label>
+          <input type="text" name="amount" id="to_address_donation" required="required" placeholder="Vitruvian Man"/>
+          <br/>
+          <button type="submit">Give Possession!</button>
+        </fieldset>
+      </form>
+    
+  </div>
+    
+  <div id="artist_div">
+  
+  </div>
+  
+  <div id="restorer_div">
+  
+    Create an Activity of Restoration
+    
+    <form onsubmit="createActivity(); return false;">
+      <fieldset>
+        
+        <label for="amountinput">Which Artwork Is Interested? (TO HASH)</label>
+        <input type="text" name="amount" id="artwork_to_restore" required="required" placeholder="Vitruvian Man"/>
+        <br/>
+        <label for="amountinput">Which Intervention?</label>
+        <select name="pets" id="intervention_id" required>
+          <option value="">--Please choose an option--</option>
+          <option value=0>Prevention</option>
+          <option value=1>Protection</option>
+          <option value=2>Maintanance</option>
+          <option value=3>Restoration</option>
+          <option value=4>Damage</option>
+          <option value=5>Update</option>
+        </select>
+        <br/>
+        <label for="amountinput">Extra Informations? (TO HASH)</label>
+        <input type="text" name="amount" id="extra_info" placeholder="Added Ink to Face and ..."/>
+        <br/>
+        <button type="submit">Give Possession!</button>
+      </fieldset>
+    </form>
+      
+      
+      
+  
+  </div>
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script src="dist/js/jquery.min.js"></script>
+  <script src="dist/js/bootstrap.min.js"></script>
+  <script src="dist/js/web3.min.js"></script>
+  
+  <script src="Manage_Artworks.js"></script>
+  
 </body>
 </html>
