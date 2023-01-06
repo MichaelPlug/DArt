@@ -12079,12 +12079,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x75C6Dcf634557Ed4bA45Ec3e17e9D4E923025d0d",
-      "transactionHash": "0x94c7f3e036e1d5662c71554a232000a9afbf46c04691dfd8b802d8f3f35a9684"
+      "address": "0xC18F91C4939fD4d2D87DA8EA396F58E09Af96e3e",
+      "transactionHash": "0xfd67d460482922fc1fe0a45f8160c487b54e3d64f02123feee9db4d43cd5e0c6"
     }
   },
   "schemaVersion": "3.4.11",
-  "updatedAt": "2023-01-05T23:49:50.783Z",
+  "updatedAt": "2023-01-06T10:35:52.588Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
