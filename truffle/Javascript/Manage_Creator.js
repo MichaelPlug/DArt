@@ -1,19 +1,19 @@
 $("form").submit(function(e){e.preventDefault();});
 
 // Set the contract address
-var contractAddressPatron = '0x9E17919922a8F54344792AC77a98D6E1612D2f1f';
+var contractAddressPatron = '0xdDF258dC86Bb4b484f2C0ddff7D6a8f11Ec9BE69';
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSONPatron = "../build/contracts/Patron.json"
 // Set the contract address
-var contractAddressMain = '0x4C041750C5352882A90f58b2e19E70DB91AA1791';
+var contractAddressMain = '0x725b0202D18f2062Adf4B286E1656B2ed630f49A';
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSONMain = "../build/contracts/DArt.json"
 // Set the contract address
-var contractAddressDCoin = '0xDdED9496cB974a779b3Bba2114F3cC8DAD25d505'; // Di Michele
+var contractAddressDCoin = '0x620219fDB4B91fc9CD894c013339c9D62e822CD8'; // Di Michele
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSONDCoin = "../build/contracts/DCoin.json"
 // Set the contract address
-var contractAddressVerification = '0x49A2Cc98fD54DC09CF990503D7a350B4e4b08ed1'; // Di Michele
+var contractAddressVerification = '0xE05Eb911EdE57cF4e6959Ef965B9Ce35C0EA0870'; // Di Michele
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSONVerification = "../build/contracts/Verification.json"
 // Set the sending address
@@ -131,7 +131,7 @@ async function initialise(contractAddressPatron,contractAddressMain, contractAdd
       console.log(event);
   });
   
-  VerifyCreator_FirstStep();
+  //VerifyCreator_FirstStep();
   
   VerifyCreator_SecondStep();
   
@@ -164,26 +164,78 @@ function VerifyCreator_FirstStep() {
 }
 
 function VerifyCreator_SecondStep(){
-
-  let sender = contractVerification.creator;
-  
-  console.log(sender);
-  
-  if (sender == senderAddress) {
-    console.log("YOU ARE MY CREATOR !!");
-  }
-  
-  else {
-    console.log("You Are Not My Creator!!");
-    alert("You Are Not The Creator, Not Possible To Do Anithing Here");
-      // Simulate a mouse click:
-      window.location.href = "../index.html";
-    
-  }
-  
+  console.log(contractMain);
+  contractMain.methods.creator().call().then(function(res) {
+    console.log(res)
+    if (res == senderAddress) {
+      console.log("YOU ARE MY CREATOR !!");
+    }
+    else {
+      console.log("You Are Not My Creator!!");
+      alert("You Are Not The Creator, Not Possible To Do Anithing Here");
+        // Simulate a mouse click:
+        window.location.href = "../index.html";
+    }
+  });  
 }
 
+function setContracts(){
+  var contractAddressMain = $('#mainAddress').val();
+  var contractAddressPatron = $('#patronAddress').val();
+  var contractAddressVerification = $('#verificationAddress').val();
+  var contractAddressDcoin = $('#dcoinAddress').val();
 
+
+  contractMain.methods.setContracts(contractAddressDcoin, contractAddressVerification, contractAddressPatron).call({from:senderAddress}).then(function(res) {
+    contractMain.methods.setContracts(contractAddressDcoin, contractAddressVerification, contractAddressPatron).send({from:senderAddress}).on('receipt', function(receipt){
+      console.log("Dart bridge setted");
+    });
+  });
+
+  console.log(contractPatron)
+  //typo nello smartcontract
+  contractPatron.methods.setContrats(contractAddressMain, contractAddressDcoin).call({from:senderAddress}).then(function(res) {
+    contractPatron.methods.setContrats(contractAddressMain, contractAddressDcoin).send({from:senderAddress}).on('receipt', function(receipt){
+      console.log("Patron bridge setted");
+    });
+  });
+
+  contractVerification.methods.setContracts(contractAddressDcoin).call({from:senderAddress}).then(function(res) {
+    contractVerification.methods.setContracts(contractAddressDcoin).send({from:senderAddress}).on('receipt', function(receipt){
+      console.log("Verification bridge setted");
+    });
+  });
+    //typo nello smartcontract
+  contractDCoin.methods.setContrats(contractAddressMain, contractAddressVerification, contractAddressPatron).call({from:senderAddress}).then(function(res) {
+    contractDCoin.methods.setContrats(contractAddressMain, contractAddressVerification, contractAddressPatron).send({from:senderAddress}).on('receipt', function(receipt){
+      console.log("Dcoin bridge setted");
+    });
+  });
+  return false;
+}
+
+function setPrices(){
+  var artworkPrice = $('#ArtworkPrice').val();
+  var exibithionPrice = $('#ExibithionPrice').val();
+  var activityPrice = $('#ActivityPrice').val();
+  var verificationPrice = $('#VerificationPrice').val();
+  console.log(artworkPrice)
+  if (artworkPrice == "" || exibithionPrice < ""  || activityPrice < "" || verificationPrice < "") {
+    alert("prices cannot be void");
+    return false;
+};
+  if (artworkPrice < 0 || exibithionPrice < 0  || activityPrice < 0 || verificationPrice < 0) {
+      alert("prices cannot be negatives");
+      return false;
+  };
+  console.log(artworkPrice);
+  contractDCoin.methods.setCostOfServices([artworkPrice, exibithionPrice, activityPrice, verificationPrice]).call({from:senderAddress}).then(function(res) {
+    contractDCoin.methods.setCostOfServices([artworkPrice, exibithionPrice, activityPrice, verificationPrice]).send({from:senderAddress}).on('receipt', function(receipt){
+      console.log("Prices setted");
+    });
+  });
+  return false;
+}
 
 function museumCreation(){
 
