@@ -51,6 +51,8 @@ async function initialise() {
     x.style.display = "none";
     var x = document.getElementById("isShowManagement");
     x.style.display = "none";
+    var x = document.getElementById("isShowCrowdfounding");
+    x.style.display = "none";
     
     //hide(document.getElementById("#clickable"));
   }
@@ -65,6 +67,8 @@ async function initialise() {
     var x = document.getElementById("isShowTokens");
     x.style.display = "block";
     var x = document.getElementById("isShowManagement");
+    x.style.display = "block";
+    var x = document.getElementById("isShowCrowdfounding");
     x.style.display = "block";
     
     //$("isShow").show();
