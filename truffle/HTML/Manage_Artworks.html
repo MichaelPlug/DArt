@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Manage Artworks</title>
+    <link rel="icon" type="image/x-icon" href="../Images/logoD.png">
+  </head>
+  <body>
+    <nav class="navbar navbar-dark" style="background-color: #013220;">
+      <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #013220;">
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <img src="../Images/logoD.png" width="40" height="40" alt="">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="../index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="Accept_Registration.html">Register<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item" id="isShowTokens">
+              <a class="nav-link" href="Buy_Tokens.html">Tokens</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="Manage_Artworks.html">Management</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="About_Us.html">About Us</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <div style="color: white;">
+        <img class="rounded" src="../Images/cuteKitty.jpeg" height="40" width="40" alt="">
+        <span id="myaccountaddress"></span>
+        
+      </div>
+    </nav>
+    
+    <div id="museum">
+      <div class="card-group">
+        <div class="card bg-light mb-3" style="max-width: 30%; padding: 10px">
+          <div class="card"> 
+            <center>
+              <img src="../Images/management.jpg" width="70%" alt="Card image cap">
+            </center>
+            <div class="card-body">
+              <h5 class="card-title">Welcome, This Is The Page to Total Manage Everything About Artworks and Your Activity</h5>
+              <p class="card-text"><small class="text-muted">Last updated 22 mins ago</small></p>  
+              <p class="card-text">It's very important to Manage everything about your work and the artoworks. Here You can easily navigate to find all the answers for your questions !! According to your role you can see different things regarding your possibilities to do actions !! So Perfect, this is your world, just to introduce you let think that you can manage totally your museum / private_gallery / laboratory from this web-page: It's very very intuitive, it's only enough that you click on the right things and follow your instict, because all this is perfectly suitable for you !!</p>
+            </div>
+          </div>
+      
+        </div>
+      
+        <div class="card bg-light" style="max-width: 23%">
+        
+          <div class="card" style="padding: 10px; margin: 10px">
+            <h1>Let's Create !!</h1>
+          
+            <div class="card-body">
+              <center>
+                <img src="../Images/creation.png" width="60%" alt="Card image cap">
+              </center>
+              
+              <h3 class="card-title">Create a New Artwork!!</h3>
+              <form onsubmit="mintArtwork(); return false;">
+                <fieldset>
+                  
+                  <label for="amountinput">Name of New Artwork:</label>
+                  <br/>
+                  <input type="text" name="amount" id="artwork_name" required="required" placeholder="Vitruvian Man"/>
+                  <br/>
+                  <br/>
+                  <input style="background-color:#7B68EE	" class="btn btn-primary btn-lg btn-block" type="submit" value="Mint!">
+                </fieldset>
+              </form>
+              
+            </div>
+            <div class="card-body">
+              
+              <h3 class="card-title">Create a New Exhibition !!</h3>
+      
+                <form onsubmit="mintExhibition(); return false;">
+                  <fieldset>
+                    
+                    <label for="amountinput">Name of New Exhibition:</label>
+                    <br/>
+                    <input type="text" name="amount" id="exhibition_name" required="required" placeholder="The Art Of Flowers"/>
+                    <br/>
+                    <label for="amountinput">Status of Exhibition:</label>
+                    <select name="pets" id="active_exhibition" required>
+                      <option value="">--Please choose an option--</option>
+                      <option value=1>Yet Active</option>
+                      <option value=0>Not Already Active</option>
+                
+                    </select>
+                    <br/>
+                    <br/>
+                    <button style="background-color:#7B68EE	" class="btn btn-primary btn-lg btn-block" type="submit">Create!</button>
+                  </fieldset>
+                </form>
+      
+        
+            </div>
+          </div>
+        </div>
+        
+        
+        
+        <div class="card bg-light" style="max-width: 23%">
+        
+          <div class="card" style="padding: 10px; margin: 10px">
+            <h1>Who Has?</h1>
+          
+            <div class="card-body">
+              <center>
+                <img src="../Images/possession.jpeg" width="60%" alt="Card image cap">
+              </center>
+              
+              <h3 class="card-title">Give Permissions !!</h3>  
+      
+              <form onsubmit="grantPermission(); return false;">
+                <fieldset>
+                  
+                  <label for="amountinput">Address to Who Give Possession:</label>
+                  <br/>
+                  <input type="text" name="amount" id="artwork_to_give_possession" required="required" placeholder="0x.."/>
+                  <br/>
+                  <label for="amountinput">For Which Artwork?</label>
+                  <br/>
+                  <input type="text" name="amount" id="artwork_name_possession_give" required="required" placeholder="Gioconda"/>
+                  <br/>
+                  <br/>
+                  <button style="background-color:#228B22" class="btn btn-primary btn-lg btn-block" type="submit">Give Possession!</button>
+                </fieldset>
+              </form>
+            </div>
+            <div class="card-body">
+              
+              <h3 class="card-title">Revoke Possession !!</h3>
+      
+              
+        
+              <form onsubmit="revokePermission(); return false;">
+                <fieldset>
+                  
+                  <label for="amountinput">For Which Artwork?</label>
+                  <br/>
+                  <input type="text" name="amount" id="artwork_to_revoke_possession" required="required" placeholder="The Kiss"/>
+                  <br/>
+                  <br/>
+                  <button style="background-color:#B22222" class="btn btn-primary btn-lg btn-block" type="submit">Revoke Possession!</button>
+                </fieldset>
+              </form>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card bg-light mb-3" style="max-width: 23%;">
+          <div class="card" style="padding: 10px; margin: 10px">
+          
+            <div class="card-body">
+              <h1>Let's Donate!!</h1>
+              
+              <center>
+                <img src="../Images/donation.png" width="60%" alt="Card image cap">
+              </center>
+              <h3 class="card-title">Donate an Artwork</h3>
+      
+              <form onsubmit="donateArtwork(); return false;">
+                <fieldset>
+                  
+                  <label for="amountinput">Which Artwork You Want Donate?</label>
+                  <br/>
+                  <input type="text" name="amount" id="artwork_to_donate" required="required" placeholder="Mont Sainte-Victoir"/>
+                  <br/>
+                  <label for="amountinput">Which Is The Lucky Entity?</label>
+                  <br/>
+                  <input type="text" name="amount" id="to_address_donation" required="required" placeholder="0x.."/>
+                  <br/>
+                  <br/>
+                  <button style="background-color:#228B22" class="btn btn-primary btn-lg btn-block" type="submit">Donate!</button>
+                </fieldset>
+              </form>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    
+    </div>
+    
+    <div id="artist">
+      
+      <div class="card-group">
+        <div class="card bg-light mb-3" style="max-width: 30%; padding: 10px">
+          <div class="card"> 
+            <center>
+              <img src="../Images/artist_div.png" width="70%" alt="Card image cap">
+            </center>
+            <div class="card-body">
+              <h5 class="card-title">Welcome, This Is The Page to Total Manage Everything About Artworks and Your Activity</h5>
+              <p class="card-text"><small class="text-muted">Last updated 22 mins ago</small></p>  
+              <p class="card-text">It's very important to Manage everything about your work and the artoworks. Here You can easily navigate to find all the answers for your questions !! According to your role you can see different things regarding your possibilities to do actions !! So Perfect, this is your world, just to introduce you let think that you can manage totally your museum / private_gallery / laboratory from this web-page: It's very very intuitive, it's only enough that you click on the right things and follow your instict, because all this is perfectly suitable for you !!</p>
+            </div>
+          </div>
+      
+        </div>
+      
+        <div class="card bg-light mb-3" style="max-width: 30%; padding: 10px">
+          <div class="card"> 
+            <h1>Let's Create !!</h1>
+            <center>
+              <img src="../Images/creation_artist.jpg" width="70%" alt="Card image cap">
+            </center>
+            <div class="card-body">
+            
+              <h3 class="card-title">Create a New Artwork!!</h3>
+              <center>
+                <form onsubmit="mintArtwork(); return false;">
+                  <fieldset>
+                    
+                    <label for="amountinput">Name of New Artwork:</label>
+                    <input type="text" name="amount" id="artwork_name" required="required" placeholder="Vitruvian Man"/>
+                    <br/>
+                    <br/>
+                    <input style="background-color:#7B68EE	" class="btn btn-primary btn-lg btn-block" type="submit" value="Mint!">
+                  </fieldset>
+                </form>
+              </center>
+              
+              
+            </div>
+          </div>
+      
+        </div>
+      </div>
+    </div>
+      
+    
+    <div id="restorer">
+      
+      <div class="card-group">
+        <div class="card bg-light mb-3" style="max-width: 30%; padding: 10px">
+          <div class="card"> 
+            <center>
+              <img src="../Images/restoration.png" width="70%" alt="Card image cap">
+            </center>
+            <div class="card-body">
+              <h5 class="card-title">Welcome, This Is The Page to Total Manage Everything About Artworks and Your Activity</h5>
+              <p class="card-text"><small class="text-muted">Last updated 22 mins ago</small></p>  
+              <p class="card-text">It's very important to Manage everything about your work and the artoworks. Here You can easily navigate to find all the answers for your questions !! According to your role you can see different things regarding your possibilities to do actions !! So Perfect, this is your world, just to introduce you let think that you can manage totally your museum / private_gallery / laboratory from this web-page: It's very very intuitive, it's only enough that you click on the right things and follow your instict, because all this is perfectly suitable for you !!</p>
+            </div>
+          </div>
+      
+        </div>
+      
+        <div class="card bg-light mb-3" style="max-width: 30%; padding: 10px">
+          <div class="card"> 
+            <h1>Let's Create !!</h1>
+            <center>
+              <img src="../Images/fix_damage.jpg" width="70%" alt="Card image cap">
+            </center>
+            <div class="card-body">
+            
+              <h3 class="card-title">Create a New Activity!!</h3>
+              <center>
+                <form onsubmit="createActivity(); return false;">
+                  <fieldset>
+                    <table>
+                      <tr>
+                        <td>
+                          <label for="amountinput">Which Artwork Is Interested?</label>
+                        </td>
+                        <td>
+                          <input type="text" name="amount" id="artwork_to_restore" required="required" placeholder="Vitruvian Man"/>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <label for="amountinput">Which Intervention?</label>
+                        </td>
+                        <td>
+                          <select name="pets" id="intervention_id" required>
+                            <option value="">--Please choose an option--</option>
+                            <option value=0>Prevention</option>
+                            <option value=1>Protection</option>
+                            <option value=2>Maintanance</option>
+                            <option value=3>Restoration</option>
+                            <option value=4>Damage</option>
+                            <option value=5>Update</option>
+                          </select>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <label for="amountinput">Extra Informations?</label>
+                        </td>
+                        <td>
+                          <input type="text" name="amount" id="extra_info" placeholder="Added Ink to Face and ..."/>
+                        </td>
+                      </tr>
+                    </table>
+                    <br/>
+                    <button style="background-color:#7B68EE	" class="btn btn-primary btn-lg btn-block" type="submit">Create!</button>
+                  </fieldset>
+                </form>
+                
+              </center>
+              
+              
+            </div>
+          </div>
+      
+        </div>
+      </div>
+    </div>
+      
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="../dist/js/jquery.min.js"></script>
+    <script src="../dist/js/bootstrap.min.js"></script>
+    <script src="../dist/js/web3.min.js"></script>
+    <script src="../Javascript/Manage_Artworks.js"></script>
+    
+    
+  </body>
+</html>

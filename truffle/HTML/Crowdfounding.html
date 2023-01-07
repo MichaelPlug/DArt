@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Crowfunding </title>
+  <meta charset="UTF-8">
+</head>
+<body>
+
+<h1>Explore & Crowdfounding</h1>
+
+<p id="balance"><i>Loading your balance...</i></p>
+
+<p> Buy Tokens: </p>
+
+<button class="enableEthereumButton">Enable Ethereum</button>
+<h2>Account: <span class="showAccount"></span></h2>
+
+<form onsubmit="searchArtwork(); return false;" id="searchArtwork">
+<fieldset>
+  <div style="float:left" heigth="50px">
+    <legend>Search an Artwork:</legend>
+      <label for="amountinput">Artwork: </label>
+      <input type="text" name="amount" id="artworkid" required="required" placeholder="artworkid"/>
+      <button type="submit">Search</button>
+  </div>
+  <div id="artworkinfo" style="float:right";>
+      ID: <span id="artworkid"> ID </span><br/>
+      Name: <span id="artworkname"> Judith Beheading Holofernes </span><br/>
+      Artist: <span id="artist">Caravaggio</span><br/>
+      Minter: <span id="minter">Palazzio Barberini</span><br/>
+      Property: <span id="property">Gallerie nazionali d'arte antica</span><br/>
+      Possession: <span id="possession">Istituto Restauro Roma</span><br/>
+      Exhibition: <span id="exhibition">Caravaggio e Artemisia: la sfida di Giuditta</span><br/>
+      Protection activity: <span id="protectionactivity"></span><br/>
+      <form onsubmit="donate(); return false;" id="donate">
+        <fieldset>
+          <legend>Donate</legend>
+          <label for="amountinput">Donation amount: </label>
+          <input type="number" name="amount" id="toketodonate" required="required" placeholder="1" min="1"/>
+          <br/>
+          <button type="submit">Donate</button>
+        </fieldset>
+      </form>
+    </div>
+</fieldset>
+</form>
+
+<form onsubmit="getPatronCredit(); return false;" id="searchArtwork">
+  <fieldset>
+    <legend>Check you PatronCredits:</legend>
+    <label for="amountinput">Museum or Art Gallery: </label>
+    <input type="text" name="amount" id="musuemid" required="required" placeholder="museumid"/>
+    <button type="submit">Check</button>
+    <div id="patroninfo" style="float:right">
+      Museum Name: <span id="MuseumID"> Musei Capitolini </span><br/>
+      PatronCredits: <span id="patroncredit"> 0 </span>
+  </fieldset>
+  </form>
+
+
+
+</body>
+<script src="../dist/js/jquery.min.js"></script>
+<script src="../dist/js/bootstrap.min.js"></script>
+<script src="../dist/js/web3.min.js"></script>
+<!-- To make our code tidier, we separate the JS script from the HTML file -->
+<script src="../Javascript/Crowdfounding.js"></script>
+</html>
