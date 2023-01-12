@@ -1,8 +1,7 @@
 //for compability reasons, we work only with these versions
 pragma solidity >=0.7.0 < 0.9.0;
 
-import "./Verification.sol";
-import "./Patron.sol";
+import "./DArt.sol";
 import "./DCoin.sol";
 
 contract Patron {
@@ -16,7 +15,7 @@ contract Patron {
     
     DCoin public dcoinSmartcontract;
     //address public dcoinSmartcontract; 
-    address public mainSmartcontract; 
+    DArt public mainSmartcontract; 
     
 
     constructor(){
@@ -26,17 +25,15 @@ contract Patron {
 
     function setContrats(address main, address dcoin) external {
         assert(msg.sender == minter);
-        mainSmartcontract = main;
+        mainSmartcontract = DArt(main);
         dcoinSmartcontract = DCoin(dcoin);
     }
 
     function crowfunding(bytes32 artwork, uint amount) external {
+        address museum  = mainSmartcontract.getProperty(artwork);
+        require(museum != 0x0, "Artwork does not exist");
         dcoinSmartcontract.lock(amount, msg.sender);
         funds[artwork] += amount;
-        (bool success_b, bytes memory result_b) = mainSmartcontract.call(abi.encodeWithSignature("getProperty(bytes32)", artwork));
-        require(success_b, "DArt failed to get the property");
-        address museum = abi.decode(result_b, (address));
-
         patronCredit[hashAddressAndAddress(msg.sender, museum)] += amount;
     }
 

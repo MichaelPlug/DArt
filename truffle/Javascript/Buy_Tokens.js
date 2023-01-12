@@ -1,7 +1,7 @@
 $("form").submit(function(e){e.preventDefault();});
 
 // Set the contract address
-var contractAddress = '0x41af7E8707fCDDc71ff7eb3dffb844B5659CeB10'; // Di Michele
+var contractAddress = '0x969129fF2D473C2aDB67EBfbed3Ba4DBb07867b2'; // Di Michele
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSON = "../build/contracts/DCoin.json"
 // Set the sending address
@@ -20,14 +20,6 @@ console.log(window.ethereum);
 if (typeof window.ethereum !== 'undefined') {
   console.log('MetaMask is installed!');
 }
-const ethereumButton = document.querySelector('.enableEthereumButton');
-
-ethereumButton.addEventListener('click', () => {
-  //Will Start the metamask extension
-  console.log("clicked")
-  ethereum.request({ method: 'eth_requestAccounts' });
-});
-
 
 // Asynchronous function (to work with modules loaded on the go)
 // For further info: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/async_function

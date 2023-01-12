@@ -1,13 +1,13 @@
 $("form").submit(function(e){e.preventDefault();});
 
 // Set the contract address
-var contractAddress = '0xa6e692171f02C483BBf240D4b4d0a3fa3Cfb7B13';
+var contractAddress = '0xD8487F918c94066d5aDe9D0383463626aB538577';
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSON = "../build/contracts/DArt.json"
 
 
 // Set the contract address
-var contractAddressVerification = '0xC1fCd1E662437132dd4fd8A7c79eF3b0e2f2C1aC'; // Di Michele
+var contractAddressVerification = '0xC7494fb5a356ac0Cc46Dad13e8aacBFEffbF3993'; // Di Michele
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSONVerification = "../build/contracts/Verification.json"
 
@@ -198,7 +198,7 @@ function mintArtwork() {
         
       });
       
-  })
+  });
   
   return false;
 }

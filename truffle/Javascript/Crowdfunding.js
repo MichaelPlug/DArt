@@ -1,17 +1,17 @@
 $("form").submit(function(e){e.preventDefault();});
 
 // Set the contract address
-var contractAddressPatron = '0x56029A5F12A2D88fF2A79Cd383B52A596163A160';
+var contractAddressPatron = '0xcd7a9261875DFcc68221d0a93de50fDEB8f3340d';
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSONPatron = "../build/contracts/Patron.json"
 // Set the contract address
-var contractAddressMain = '0xa6e692171f02C483BBf240D4b4d0a3fa3Cfb7B13';
+var contractAddressMain = '0xD8487F918c94066d5aDe9D0383463626aB538577';
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSONMain = "../build/contracts/DArt.json"
 // Set the contract address
-var contractAddressDCoin = '0x4dA2b543F96FE9Db2Df1733fb8BA9b1eb8683EaC'; // Di Michele
+var contractAddressDCoin = '0x969129fF2D473C2aDB67EBfbed3Ba4DBb07867b2'; // Di Michele
 // Set the relative URI of the contract’s skeleton (with ABI)
-var contractJSONDCoin = "../build/contracts/DCoin.json"
+var contractJSONDCoin = "../build/contracts/DCoin.json"// Set 
 
 var searchedArtwork = "";
 
@@ -32,14 +32,6 @@ console.log(window.ethereum);
 if (typeof window.ethereum !== 'undefined') {
   console.log('MetaMask is installed!');
 }
-const ethereumButton = document.querySelector('.enableEthereumButton');
-
-ethereumButton.addEventListener('click', () => {
-  //Will Start the metamask extension
-  console.log("clicked")
-  ethereum.request({ method: 'eth_requestAccounts' });
-});
-
 
 // Asynchronous function (to work with modules loaded on the go)
 // For further info: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/async_function
@@ -118,7 +110,7 @@ async function initialise(contractAddressPatron, contractAddressDCoin) {
 
 function searchArtwork(){
   var artwork = $('#artworkname').val();
-  var minterArt = $('#minter').val(); 
+  var minterArt = $('#minterid').val(); 
   console.log("Loading your artwork");
   //console.log(web3.utils.keccak256(artwork));
   var hashart = web3.utils.keccak256(artwork);
@@ -156,8 +148,10 @@ function donate(){
 
 function getPatronCredit(){
   var museumAddress = $('#musuemid').val(); 
-  contractPatron.methods.patronCredit(museumAddress).call().then(function(credit) {
-    document.getElementById("patroncredit").innerHTML = credit;
+  contractPatron.methods.hashAddressAndAddress(senderAddress,museumAddress).call().then(function(credit) {
+    contractPatron.methods.patronCredit(museumAddress).call().then(function(credit) {
+      document.getElementById("patroncredit").innerHTML = credit;
+    });
   });
 }
 
