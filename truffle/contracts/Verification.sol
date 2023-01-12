@@ -3,8 +3,6 @@ pragma solidity >=0.7.0 < 0.9.0;
 
 //error Unauthorized(address caller);
 
-import "./Verification.sol";
-import "./Patron.sol";
 import "./DCoin.sol";
 
 contract Verification {
@@ -68,7 +66,6 @@ contract Verification {
         }
     }
 
-    //called by a smart contract, given a specificc address
     function museumCreation(bytes32 hashedName, Actors role, address museum) external {
         // veryf the sender is the creator/owner of the smart contract and that there is a pendig reques to register the wallet
         assert(msg.sender == creator);

@@ -31,7 +31,7 @@ contract Patron {
 
     function crowfunding(bytes32 artwork, uint amount) external {
         address museum  = mainSmartcontract.getProperty(artwork);
-        require(museum != 0x0, "Artwork does not exist");
+        require(museum != address(0x0), "Artwork does not exist");
         dcoinSmartcontract.lock(amount, msg.sender);
         funds[artwork] += amount;
         patronCredit[hashAddressAndAddress(msg.sender, museum)] += amount;

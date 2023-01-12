@@ -152,7 +152,7 @@ function transfer(){
 function showBalance(){ 
   console.log("Loading your balance");
   contract.methods.balance(senderAddress).call().then(function(res) {
-    document.getElementById("balance").innerHTML = "<h5><b><i>Your balance is " + res + " DCoins</b></i></h5>";
+    document.getElementById("balance").innerHTML = "<b><i>Your balance is " + res + " DCoins</b></i>";
     balance = res;
   });
   return false;

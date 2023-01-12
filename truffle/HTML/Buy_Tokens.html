@@ -47,58 +47,40 @@
     
     <div class="card-group">
       
-      <div class="card bg-light mb-3" style="max-width: 60%; padding: 10px">
+      <div class="card bg-light mb-3" style="max-width: 100%; padding: 10px">
         
         <div class="card">
         
           <div class="card-body">
-            <center>
-            <h3 class="card-title">FIRST: Are You Rich???</h3>
-              
-              <h4> It's very important to understand how DCoins you have, because with this thing you can do really whatever you wnat !!</h4>
-              
-              <p id="balance" class="card-text"><i><b>Loading your fantastic amount of DCoins (Strange if you read all this thing means that you are really very rich, wow)...</i></b></p>
-              <p class="card-text"><small class="text-muted">Last updated now</small></p> 
+          <center>
+              <h1 id="balance" class="card-text"><i><b>Loading your balance.</i></b></p>
             </center>
             
           </div>
           
         </div>
       </div>
-      
-      <div class="card bg-light mb-3" style="max-width: 40%; padding: 10px">
-        
-        <div class="card">
-        
-          <div class="card-body">
-            <center>
-              <img src="../Images/rich_person.png" width="30%" alt="Card image cap">
-            </center>
-          </div>
-        </div>
-      </div>
     </div>
     
     <div class="card-group">
-      <div class="card bg-light mb-3" style="max-width: 30%; padding: 10px">
+      <div class="card bg-light mb-3" style="max-width: 33%; padding: 10px">
       <div class="card"> 
         <center>
           <img src="../Images/buy.png" width="70%" alt="Card image cap">
         </center>
         <div class="card-body">
-          
-          
-          <h5 class="card-title">Come On.. A lot Of Advantages.. BUY OUR TOKENSSS</h5>
-          
+                    
           <center>
             <form onsubmit="buy(); return false;" id="playform">
               <fieldset>
-              
-                <legend>Buy DCOINSSSS!!</legend>
+                <br/>
+
                 <label for="amountinput">Amount: </label>
                 <input type="number" name="amount" id="toketobuy" required="required" placeholder="1000" min="1"/>
                 <br/>
-                <button style="background-color:#228B22" class="btn btn-primary btn-lg btn-block" type="submit">Buy!</button>
+                <br/>
+
+                <button style="background-color:#228B22" class="btn btn-primary btn-lg btn-block" type="submit">BUY</button>
               </fieldset>
             </form>
           </center>
@@ -107,8 +89,8 @@
       </div>
       
       </div>
-      <div class="card bg-light" style="max-width: 45%">
-        <div class="card" style="padding: 10px; margin: 10px">
+      <div class="card bg-light" style="max-width: 33%; padding:10px;">
+        <div class="card">
           <!--
           <div class="card-header">
             Reasume
@@ -119,17 +101,18 @@
             <img src="../Images/sell.jpeg" width="50%" alt="Card image cap">
           </center>
           
-          <h5 class="card-title">.. Are You Sure.. Come On Don't Sell.. Please.. Don't Go Away -.- .. Okay Do You.. No No COME ONNN Remain With Us.. Okay Stop, Are You The Responsible.. :((</h5>
+          <h5 class="card-title"></h5>
             
             <center>
             <form onsubmit="sell(); return false;" id="playform">
               <fieldset>
-              
-                <legend>Sell.. I Can't Tell This Word.. ;(</legend>
-                <label for="amountinput">Amou.. </label>
-                <input type="number" name="amount" id="toketosell" required="required" placeholder="0.. Come On Not Sell.." min="1"/>
                 <br/>
-                <button style="background-color:#8B0000" class="btn btn-primary btn-lg btn-block" type="submit">Sel.. It's To Difficult To Write.. :(</button>
+
+                <label for="amountinput">Amount: </label>
+                <input type="number" name="amount" id="toketosell" required="required" placeholder="0" min="1"/>
+                <br/>
+                <br/>
+                <button style="background-color:#8B0000" class="btn btn-primary btn-lg btn-block" type="submit">Convert DCoins to Ether</button>
               </fieldset>
             </form>
           </center>
@@ -137,20 +120,17 @@
         </div>
       </div>
 
-      <div class="card bg-light mb-3" style="max-width: 30%; padding: 10px">
+      <div class="card bg-light mb-3" style="max-width: 33%; padding: 10px">
       <div class="card">
         <center>
         <img src="../Images/generous.jpeg" width="80%" alt="Card image cap">
         </center>
         
-        <div class="card-body">
-          <h5 class="card-title">You Are Very Generous Person !!</h5>
-            
+        <div class="card-body">            
           <center>
             <form onsubmit="transfer(); return false;" id="playform">
               <fieldset>
               
-                <legend>Transfer DCOINSSSSSSSS !!</legend>
                 
                 <table>
                 
@@ -164,7 +144,7 @@
                   </tr>
                   <tr>
                     <td>
-                      <label for="to_address">Address of Luckier: </label>
+                      <label for="to_address">Address of the recipient: </label>
                     </td>
                     <td>
                       <input type="text" name="to" id="receiver_address" placeholder="0x..." required="required"/>
@@ -174,7 +154,7 @@
                 <br/>
                 
                 
-                <button style="background-color:#7B68EE	" class="btn btn-primary btn-lg btn-block" type="submit">Transfer DCOINSSSSSSSSSS !!</button>
+                <button style="background-color:#7B68EE	" class="btn btn-primary btn-lg btn-block" type="submit">Transfer DCoins</button>
               </fieldset>
             </form>
           </center>
