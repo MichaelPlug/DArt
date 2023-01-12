@@ -1,13 +1,13 @@
 $("form").submit(function(e){e.preventDefault();});
 
 // Set the contract address
-var contractAddress = '0x4C041750C5352882A90f58b2e19E70DB91AA1791';
+var contractAddress = '0xa6e692171f02C483BBf240D4b4d0a3fa3Cfb7B13';
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSON = "../build/contracts/DArt.json"
 
 
 // Set the contract address
-var contractAddressVerification = '0x49A2Cc98fD54DC09CF990503D7a350B4e4b08ed1'; // Di Michele
+var contractAddressVerification = '0xC1fCd1E662437132dd4fd8A7c79eF3b0e2f2C1aC'; // Di Michele
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSONVerification = "../build/contracts/Verification.json"
 
@@ -179,7 +179,6 @@ function Role() {
 
 
 
-
 function mintArtwork() {
   var artwork_name = $('#artwork_name').val();
   console.log(artwork_name);
@@ -192,7 +191,7 @@ function mintArtwork() {
   contract.methods.mintArtworkNFT(hash_artwork_name).call({from:senderAddress, gas: 120000}).then(function(_) { // A promise in action
       console.log("okay first send");
       
-      contract.methods.montArtworkNFT(hash_artwork_name).send({from:senderAddress, gas: 120000}).on('receipt', function(_){
+      contract.methods.mintArtworkNFT(hash_artwork_name).send({from:senderAddress, gas: 120000}).on('receipt', function(_){
           console.log("All Good, Insertion of Artwork Done")
       
           alert("All Good, Artwork Inserted");
@@ -225,12 +224,11 @@ function mintExhibition() {
   
   console.log(hash_exhibition_name);
   
-  
-  
-  contract.methods.mintArtworkNFT(hash_exhibition_name, status).call({from:senderAddress, gas: 120000}).then(function(_) { // A promise in action
+    
+  contract.methods.mintExibitionNFT(hash_exhibition_name, status).call({from:senderAddress, gas: 120000}).then(function(_) { // A promise in action
       console.log("okay first send");
       
-      contract.methods.montArtworkNFT(hash_exhibition_name, status).send({from:senderAddress, gas: 120000}).on('receipt', function(_){
+      contract.methods.mintExibitionNFT(hash_exhibition_name, status).send({from:senderAddress, gas: 120000}).on('receipt', function(_){
           console.log("All Good, Insertion of Exhibition Done")
       
           alert("All Good, Exhibition Inserted");
@@ -241,6 +239,68 @@ function mintExhibition() {
   return false;
 }
 
+
+function removeExhibition() {
+  var exhibition_name = $('#exhibition_to_eliminate').val();
+  
+  
+  return false;
+}
+
+function putExhibition() {
+  
+  var artwork_name = $('#artwork_to_exhibit').val();
+  
+  var exhibition_name = $('#exhibition_for_artwork').val();
+  
+  const hash_artwork_name = web3.utils.keccak256(artwork_name);
+  
+  const hash_exhibition_name = web3.utils.keccak256(exhibition_name);
+  contract.methods.hashTextAndAddress(hash_artwork_name).call({from: senderAddress}).then(function(artwork_id) {
+    contract.methods.hashTextAndAddress(hash_exhibition_name).call({from: senderAddress}).then(function(exhibition_id) {
+      console.log(exhibition_id);
+      contract.methods.exposeArtwork(artwork_id, exhibition_id).call({from: senderAddress}).then(function(_) {
+        console.log("okay first send");
+        contract.methods.exposeArtwork(artwork_id, exhibition_id).send({from: senderAddress}).on('receipt', function(_){
+          console.log("All Good, Insertion of Exhibition Done")
+        });
+      });
+    }); 
+  });
+  
+  console.log(hash_artwork_name);
+  
+  
+  return false;
+  
+}
+
+function toggleExhibition() {
+ 
+  var artwork_name = $('#artwork_to_delete_from_exhibition').val();
+  
+  const hash_artwork_name = web3.utils.keccak256(artwork_name);
+  
+  console.log(hash_artwork_name);
+  
+  //removeArtworkFromExibition
+  
+   contract.methods.removeArtworkFromExibition(hash_artwork_name).call({from:senderAddress, gas: 120000}).then(function(_) { // A promise in action
+      console.log("okay first send");
+      
+      contract.methods.removeArtworkFromExibition(hash_artwork_name).send({from:senderAddress, gas: 120000}).on('receipt', function(_){
+          console.log("All Good, Insertion of Exhibition Done")
+      
+          alert("All Good, Artwork Removed From Exhibition");
+        
+      });
+      
+  })
+   
+  return false;
+}
+
+  
 
 function grantPermission() {
   var address_to = $('#artwork_to_give_possession').val();

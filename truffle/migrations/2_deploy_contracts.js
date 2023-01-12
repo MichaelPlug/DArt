@@ -8,8 +8,7 @@ module.exports = function(deployer) {
   deployer.deploy(dcoin);
   deployer.deploy(verification);
   deployer.deploy(patron);
-
-  /*
+/*
   dart.deployed().then(function(dartInstance) {
     dcoin.deployed().then(function(dcoinInstance) {
       verification.deployed().then(function(verificationInstance) {

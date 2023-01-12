@@ -1,6 +1,10 @@
 //for compability reasons, we work only with these versions
 pragma solidity >=0.7.0 < 0.9.0;
 
+import "./Verification.sol";
+import "./Patron.sol";
+import "./DCoin.sol";
+
 contract Patron {
 
     mapping (bytes32 => uint) public patronCredit;
@@ -10,15 +14,12 @@ contract Patron {
     address public minter;
     //address public constant verificatioSmartcontract; 
     
-    address public dcoinSmartcontract;
+    DCoin public dcoinSmartcontract;
     //address public dcoinSmartcontract; 
     address public mainSmartcontract; 
     
 
     constructor(){
-     //   verification = verificatioSmartcontract;  
-        //mainSmartcontract = main ;
-        //dcoinSmartcontract = dcoin;
         minter = msg.sender;
     }
 
@@ -26,25 +27,21 @@ contract Patron {
     function setContrats(address main, address dcoin) external {
         assert(msg.sender == minter);
         mainSmartcontract = main;
-        dcoinSmartcontract = dcoin;
+        dcoinSmartcontract = DCoin(dcoin);
     }
 
     function crowfunding(bytes32 artwork, uint amount) external {
-        //require(registeredArtworks[artwork].minter == 0x0, "This artwork is not registered");
-        (bool success, ) = dcoinSmartcontract.call(
-            abi.encodeWithSignature("lock(uint, address)", amount, msg.sender)
-        );
-        require(success, "Dcoin failed to lock the amount");
-
-        //dcoinSmartcontract.burn(amount, msg.sender, true);
-        //dcoinSmartcontract.call(abi.encodingWithSignature("burn(uint,address,bool)", amount, msg.sender, true));
+        dcoinSmartcontract.lock(amount, msg.sender);
         funds[artwork] += amount;
         (bool success_b, bytes memory result_b) = mainSmartcontract.call(abi.encodeWithSignature("getProperty(bytes32)", artwork));
         require(success_b, "DArt failed to get the property");
         address museum = abi.decode(result_b, (address));
-        //address museum = mainSmartcontract.getProperty(artwork);
-        //address museum = mainSmartcontract.call(abi.encodingWithSignature("getProperty(bytes32)", artwork));
-        patronCredit[keccak256(abi.encodePacked(msg.sender,museum))] += amount;
+
+        patronCredit[hashAddressAndAddress(msg.sender, museum)] += amount;
+    }
+
+    function hashAddressAndAddress(address first, address second) public pure returns(bytes32) {
+        return keccak256(abi.encodePacked(first, second));
     }
 
     function viewFunds(bytes32 artwork) external view returns(uint){
@@ -59,10 +56,13 @@ contract Patron {
         assert(msg.sender == address(mainSmartcontract));
         uint fund = funds[artwork];
         if (fund != 0) {
+            dcoinSmartcontract.magicMint(_to, fund);
+            /*
             (bool success, ) = dcoinSmartcontract.call(
                 abi.encodeWithSignature("magicMint(address, uint)", _to, fund)
             );
             require(success, "Dcoin failed to mint the amount");
+            */
 //            dcoinSmartcontract.magicMint(_to, fund);
             //dcoinSmartcontract.call(abi.encodingWithSignature("magicMint(address,amount)",_to,funds[bytes32]));
             funds[artwork] = 0;

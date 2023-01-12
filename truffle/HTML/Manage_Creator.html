@@ -30,7 +30,7 @@
           <li class="nav-item">
             <a class="nav-link" href="Manage_Artworks.html">Management</a>
           </li>
-            <a class="nav-link" href="Crowdfounding.html">Crowdounfing</a>
+            <a class="nav-link" href="Crowdfunding.html">Crowdfunding</a>
           </li>
           <li class="nav-item">
           <li class="nav-item">
@@ -40,132 +40,145 @@
       </div>
     </nav>
     
-    
-    
     <div style="color: white;">
       <img class="rounded" src="../Images/cuteKitty.jpeg" height="40" width="40" alt="">
       <span id="myaccountaddress"></span>
     </div>
   </nav>
-<div id="goAway" style="visibility: hidden;">You cannot access to this webpage</div>
+  <div id="goAway" style="visibility: hidden;">You cannot access to this webpage</div>
 
-<div id="div_creator">
+    <div id="div_creator">
 
-<div id="youArMyLord" style="margin-left: 50px; margin-right: 50px; margin-top: 10px;">
-  <nav>
-    <div class="nav nav-tabs" id="nav-tab" role="tablist" style="color: #013220;">
-      <a class="nav-item nav-link active" style="color: #013220;" id="nav-home-tab" data-toggle="tab" href="#nav-accept" role="tab" aria-controls="nav-home" aria-selected="true">Accept requests</a>
-      <a class="nav-item nav-link" id="nav-profile-tab" style="color: #013220;" data-toggle="tab" href="#nav-price" role="tab" aria-controls="nav-profile" aria-selected="false">Set prices</a>
-      <a class="nav-item nav-link" id="nav-profile-tab" style="color: #013220;" data-toggle="tab" href="#nav-contract" role="tab" aria-controls="nav-profile" aria-selected="false">Contracts Addresses</a>
-      <a class="nav-item nav-link" id="nav-profile-tab" style="color: #013220;" data-toggle="tab" href="#nav-withdraw" role="tab" aria-controls="nav-profile" aria-selected="false">Withdraw</a>
-    </div>
-  </nav>
-  <div class="tab-content" id="nav-tabContent">
-    <div class="tab-pane fade show active" style="margin-top:10px; margin-left: 50px; margin-right: 50px;" id="nav-accept" role="tabpanel" aria-labelledby="nav-home-tab">
-      <form onsubmit="museumCreation(); return false;" id="createMuseumForm">
-        <div class="form-group row" style="padding: 10px;  margin: auto; width: 80%;">
-          <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Name</label>
-          <div class="col-sm-10">
-            <input class="form-control form-control-lg" id="nameRequester" placeholder="Name of the requester">
-          </div>  
+      <div id="youArMyLord" style="margin-left: 50px; margin-right: 50px; margin-top: 10px;">
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist" style="color: #013220;">
+            <a class="nav-item nav-link active" style="color: #013220;" id="nav-home-tab" data-toggle="tab" href="#nav-accept" role="tab" aria-controls="nav-home" aria-selected="true">Accept requests</a>
+            <a class="nav-item nav-link" id="nav-profile-tab" style="color: #013220;" data-toggle="tab" href="#nav-price" role="tab" aria-controls="nav-profile" aria-selected="false">Set prices</a>
+            <a class="nav-item nav-link" id="nav-profile-tab" style="color: #013220;" data-toggle="tab" href="#nav-contract" role="tab" aria-controls="nav-profile" aria-selected="false">Contracts Addresses</a>
+            <a class="nav-item nav-link" id="nav-profile-tab" style="color: #013220;" data-toggle="tab" href="#nav-withdraw" role="tab" aria-controls="nav-profile" aria-selected="false">Withdraw</a>
           </div>
-          <div class="form-group row" style="padding: 10px; margin: auto; width: 80%;">
-            <label for="museumAddress" class="col-sm-2 col-form-label col-form-label-lg">Wallet</label>
-            <div class="col-sm-10">
-              <input class="form-control form-control-lg" id="museumAddress" placeholder="Address of the requester">
-            </div>
-        </div>
-        <div class="form-group row" style="padding: 10px; margin: auto; width: 80%;">
-          <label for="ROLE" class="col-sm-2 col-form-label col-form-label-lg">Role</label>
-          <div class="col-sm-10">
-            <select class="form-control form-control-lg" name="pets" id="ROLE" required>
-              <option value="">--Please choose an option--</option>
-              <option value=0>Museum</option>
-              <option value=1>Private Gallery</option>
-              <option value=2>Private Collector</option>
-              <option value=3>Artist</option>
-              <option value=4>Protection Lab</option>
-            </select>
+        </nav>
+        
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" style="margin-top:10px; margin-left: 50px; margin-right: 50px;" id="nav-accept" role="tabpanel" aria-labelledby="nav-home-tab">
+            <form onsubmit="museumCreation(); return false;" id="createMuseumForm">
+              <div class="form-group row" style="padding: 10px;  margin: auto; width: 80%;">
+                <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Name</label>
+                <div class="col-sm-10">
+                  <input class="form-control form-control-lg" id="nameRequester" placeholder="Name of the requester">
+                </div>  
+              </div>
+              <div class="form-group row" style="padding: 10px; margin: auto; width: 80%;">
+                <label for="museumAddress" class="col-sm-2 col-form-label col-form-label-lg">Wallet</label>
+                <div class="col-sm-10">
+                  <input class="form-control form-control-lg" id="museumAddress" placeholder="Address of the requester">
+                </div>
+              </div>
+              
+              <div class="form-group row" style="padding: 10px; margin: auto; width: 80%;">
+                <label for="ROLE" class="col-sm-2 col-form-label col-form-label-lg">Role</label>
+                <div class="col-sm-10">
+                  <select class="form-control form-control-lg" name="pets" id="ROLE" required>
+                    <option value="">--Please choose an option--</option>
+                    <option value=0>Museum</option>
+                    <option value=1>Private Gallery</option>
+                    <option value=2>Private Collector</option>
+                    <option value=3>Artist</option>
+                    <option value=4>Protection Lab</option>
+                  </select>
+                </div>
+              </div>
+              
+                
+              <div class="form-group row" style="padding: 10px">
+                <button type="submit" class="btn btn-primary" style="background-color: #013220; height: 60px; margin: auto; width: 35%;">Accept</button>
+              </div>
+            </form>
           </div>
-      </div>
-      <div class="form-group row" style="padding: 10px">
-        <button type="submit" class="btn btn-primary" style="background-color: #013220; height: 60px; margin: auto; width: 35%;">Accept</button>
-      </div>
-    </form>
-    </div>
-    <div class="tab-pane fade" id="nav-contract" style="margin-top:10px; margin-left: 50px; margin-right: 50px;" role="tabpanel" aria-labelledby="nav-profile-tab">    
-      <form onsubmit="setContracts(); return false;" id="createMuseumForm">
-        <div class="form-group row" style="padding: 10px;  margin: auto; width: 80%;">
-          <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">DArt (Main)</label>
-          <div class="col-sm-10">
-            <input class="form-control form-control-lg" id="mainAddress" placeholder="Main contract">
-          </div>  
+          
+          
+          <div class="tab-pane fade" id="nav-contract" style="margin-top:10px; margin-left: 50px; margin-right: 50px;" role="tabpanel" aria-labelledby="nav-profile-tab">    
+            <form onsubmit="setContracts(); return false;" id="createMuseumForm">
+              <div class="form-group row" style="padding: 10px;  margin: auto; width: 80%;">
+                <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">DArt (Main)</label>
+                <div class="col-sm-10">
+                  <input class="form-control form-control-lg" id="mainAddress" placeholder="Main contract">
+                </div>  
+              </div>
+              
+              <div class="form-group row" style="padding: 10px; margin: auto; width: 80%;">
+                <label for="museumAddress" class="col-sm-2 col-form-label col-form-label-lg">Verification</label>
+                <div class="col-sm-10">
+                  <input class="form-control form-control-lg" id="verificationAddress" placeholder="Verification contract">
+                </div>
+              </div>
+            
+              <div class="form-group row" style="padding: 10px; margin: auto; width: 80%;">
+                <label for="museumAddress" class="col-sm-2 col-form-label col-form-label-lg">Patron</label>
+                <div class="col-sm-10">
+                  <input class="form-control form-control-lg" id="patronAddress" placeholder="Patron contract">
+                </div>
+              </div>
+              
+              <div class="form-group row" style="padding: 10px; margin: auto; width: 80%;">
+                <label for="museumAddress" class="col-sm-2 col-form-label col-form-label-lg">DCoin</label>
+                <div class="col-sm-10">
+                  <input class="form-control form-control-lg" id="dcoinAddress" placeholder="Dcoin contract">
+                </div>
+              </div>
+              
+              <div class="form-group row" style="padding: 10px">
+                <button type="submit" class="btn btn-primary" style="background-color: #013220; height: 60px; margin: auto; width: 35%;">Set Contracts</button>
+              </div>
+            </form>
           </div>
-          <div class="form-group row" style="padding: 10px; margin: auto; width: 80%;">
-            <label for="museumAddress" class="col-sm-2 col-form-label col-form-label-lg">Verification</label>
-            <div class="col-sm-10">
-              <input class="form-control form-control-lg" id="verificationAddress" placeholder="Verification contract">
-            </div>
-        </div>
-        <div class="form-group row" style="padding: 10px; margin: auto; width: 80%;">
-          <label for="museumAddress" class="col-sm-2 col-form-label col-form-label-lg">Patron</label>
-          <div class="col-sm-10">
-            <input class="form-control form-control-lg" id="patronAddress" placeholder="Patron contract">
-          </div>
-        </div>
-          <div class="form-group row" style="padding: 10px; margin: auto; width: 80%;">
-            <label for="museumAddress" class="col-sm-2 col-form-label col-form-label-lg">DCoin</label>
-            <div class="col-sm-10">
-              <input class="form-control form-control-lg" id="dcoinAddress" placeholder="Dcoin contract">
-            </div>
-      </div>
-      <div class="form-group row" style="padding: 10px">
-        <button type="submit" class="btn btn-primary" style="background-color: #013220; height: 60px; margin: auto; width: 35%;">Set Contracts</button>
-    </div>
-      </form>
-    </div>
 
-    <div class="tab-pane fade" id="nav-price" style="margin-top:10px; margin-left: 50px; margin-right: 50px;" role="tabpanel" aria-labelledby="nav-profile-tab">    
-      <form onsubmit="setPrices(); return false;" id="createMuseumForm">
-        <div class="form-group row" style="padding: 10px;  margin: auto; width: 80%;">
-          <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Mint Artwork NFT</label>
-          <div class="col-sm-10">
-            <input type="number" class="form-control form-control-lg" id="ArtworkPrice" placeholder="1">
-          </div>  
+          <div class="tab-pane fade" id="nav-price" style="margin-top:10px; margin-left: 50px; margin-right: 50px;" role="tabpanel" aria-labelledby="nav-profile-tab">    
+            <form onsubmit="setPrices(); return false;" id="createMuseumForm">
+              <div class="form-group row" style="padding: 10px;  margin: auto; width: 80%;">
+                <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Mint Artwork NFT</label>
+                <div class="col-sm-10">
+                  <input type="number" class="form-control form-control-lg" id="ArtworkPrice" placeholder="1">
+                </div>  
+              </div>
+                
+              <div class="form-group row" style="padding: 10px; margin: auto; width: 80%;">
+                <label for="museumAddress" class="col-sm-2 col-form-label col-form-label-lg">Mint Exibithion NFT</label>
+                <div class="col-sm-10">
+                  <input type="number" class="form-control form-control-lg" id="ExibithionPrice" placeholder="1">
+                </div>
+              </div>
+            
+              <div class="form-group row" style="padding: 10px; margin: auto; width: 80%;">
+                <label for="ActivityPrice" class="col-sm-2 col-form-label col-form-label-lg">Mint Activity NFT</label>
+                <div class="col-sm-10">
+                  <input type="number" class="form-control form-control-lg" id="ActivityPrice" placeholder="1">
+                </div>
+              </div>
+              
+              <div class="form-group row" style="padding: 10px; margin: auto; width: 80%;">
+                <label for="museumAddress" class="col-sm-2 col-form-label col-form-label-lg">Verification</label>
+                <div class="col-sm-10">
+                  <input type="number" class="form-control form-control-lg" id="VerificationPrice" placeholder="1">
+                </div>
+              </div>
+              
+              <div class="form-group row" style="padding: 10px">
+                <button type="submit" class="btn btn-primary" style="background-color: #013220; height: 60px; margin: auto; width: 35%;">Set Prices</button>
+              </div>
+            </form>
           </div>
-          <div class="form-group row" style="padding: 10px; margin: auto; width: 80%;">
-            <label for="museumAddress" class="col-sm-2 col-form-label col-form-label-lg">Mint Exibithion NFT</label>
-            <div class="col-sm-10">
-              <input type="number" class="form-control form-control-lg" id="ExibithionPrice" placeholder="1">
-            </div>
-        </div>
-        <div class="form-group row" style="padding: 10px; margin: auto; width: 80%;">
-          <label for="ActivityPrice" class="col-sm-2 col-form-label col-form-label-lg">Mint Activity NFT</label>
-          <div class="col-sm-10">
-            <input type="number" class="form-control form-control-lg" id="ActivityPrice" placeholder="1">
-          </div>
-        </div>
-          <div class="form-group row" style="padding: 10px; margin: auto; width: 80%;">
-            <label for="museumAddress" class="col-sm-2 col-form-label col-form-label-lg">Verification</label>
-            <div class="col-sm-10">
-              <input type="number" class="form-control form-control-lg" id="VerificationPrice" placeholder="1">
-            </div>
-      </div>
-      <div class="form-group row" style="padding: 10px">
-        <button type="submit" class="btn btn-primary" style="background-color: #013220; height: 60px; margin: auto; width: 35%;">Set Prices</button>
-    </div>
-      </form>
-    </div>
 
-    <div class="tab-pane fade" id="nav-withdraw" style="margin-top:10px; margin-left: 50px; margin-right: 50px;" role="tabpanel" aria-labelledby="nav-profile-tab">    
-        <br/>
-      <button type="submit" class="btn btn-primary btn-lg btn-block" style="background-color: #013220; height: 60px; margin: auto; width: 50%;">Withdraw burned DCoins</button>
-      <br/>
-      <button type="submit" class="btn btn-secondary btn-lg btn-block" style="background-color: red; height: 60px; margin: auto; width: 50%;">Terminate Contract</button>
+          <div class="tab-pane fade" id="nav-withdraw" style="margin-top:10px; margin-left: 50px; margin-right: 50px;" role="tabpanel" aria-labelledby="nav-profile-tab">    
+            <br/>
+            <button type="submit" class="btn btn-primary btn-lg btn-block" style="background-color: #013220; height: 60px; margin: auto; width: 50%;">Withdraw burned DCoins</button>
+            <br/>
+            <button type="submit" class="btn btn-secondary btn-lg btn-block" style="background-color: red; height: 60px; margin: auto; width: 50%;">Terminate Contract</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-</div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

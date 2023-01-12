@@ -1,7 +1,7 @@
 $("form").submit(function(e){e.preventDefault();});
 
 // Set the contract address
-var contractAddress = '0xDdED9496cB974a779b3Bba2114F3cC8DAD25d505'; // Di Michele
+var contractAddress = '0x41af7E8707fCDDc71ff7eb3dffb844B5659CeB10'; // Di Michele
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSON = "../build/contracts/DCoin.json"
 // Set the sending address

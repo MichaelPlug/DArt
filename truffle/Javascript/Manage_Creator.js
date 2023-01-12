@@ -1,22 +1,24 @@
 $("form").submit(function(e){e.preventDefault();});
 
 // Set the contract address
-var contractAddressPatron = '0xdDF258dC86Bb4b484f2C0ddff7D6a8f11Ec9BE69';
+var contractAddressPatron = '0xf370ffDE3D68AE35CBe0412723711b5A8C9915A1';
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSONPatron = "../build/contracts/Patron.json"
 // Set the contract address
-var contractAddressMain = '0x725b0202D18f2062Adf4B286E1656B2ed630f49A';
+var contractAddressMain = '0x63875D59364704B83af485051208e6aEdDF03607';
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSONMain = "../build/contracts/DArt.json"
 // Set the contract address
-var contractAddressDCoin = '0x620219fDB4B91fc9CD894c013339c9D62e822CD8'; // Di Michele
+var contractAddressDCoin = '0x41af7E8707fCDDc71ff7eb3dffb844B5659CeB10'; // Di Michele
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSONDCoin = "../build/contracts/DCoin.json"
 // Set the contract address
-var contractAddressVerification = '0xE05Eb911EdE57cF4e6959Ef965B9Ce35C0EA0870'; // Di Michele
+var contractAddressVerification = '0x0e4585576A20ddFF7e42a6c5A379607aa2d8A83B'; // Di Michele
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSONVerification = "../build/contracts/Verification.json"
 // Set the sending address
+
+
 var senderAddress = '0x0';
 // Set contract ABI and the contract
 var contractPatron = null;
@@ -134,9 +136,6 @@ async function initialise(contractAddressPatron,contractAddressMain, contractAdd
   //VerifyCreator_FirstStep();
   
   VerifyCreator_SecondStep();
-  
-  var x = document.getElementById("div_creator");
-      x.style.display = "block";
 
 }
 
@@ -169,6 +168,9 @@ function VerifyCreator_SecondStep(){
     console.log(res)
     if (res == senderAddress) {
       console.log("YOU ARE MY CREATOR !!");
+      
+      var x = document.getElementById("div_creator");
+      x.style.display = "block";
     }
     else {
       console.log("You Are Not My Creator!!");
