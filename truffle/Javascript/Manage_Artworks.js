@@ -1,13 +1,13 @@
 $("form").submit(function(e){e.preventDefault();});
 
 // Set the contract address
-var contractAddress = '0xD8487F918c94066d5aDe9D0383463626aB538577';
+var contractAddress = '0xD16739F53FbB7530Cfe2B9068e155c682Ae8B676';
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSON = "../build/contracts/DArt.json"
 
 
 // Set the contract address
-var contractAddressVerification = '0xC7494fb5a356ac0Cc46Dad13e8aacBFEffbF3993'; // Di Michele
+var contractAddressVerification = '0x60e1FFB72b18e485c6d31E9934B4F62090478faE'; // Di Michele
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSONVerification = "../build/contracts/Verification.json"
 
@@ -187,11 +187,34 @@ function mintArtwork() {
   
   console.log(hash_artwork_name);
   
-  
-  contract.methods.mintArtworkNFT(hash_artwork_name).call({from:senderAddress, gas: 120000}).then(function(_) { // A promise in action
+  contract.methods.mintArtworkNFT(hash_artwork_name).call({from:senderAddress}).then(function(_) { // A promise in action
       console.log("okay first send");
       
-      contract.methods.mintArtworkNFT(hash_artwork_name).send({from:senderAddress, gas: 120000}).on('receipt', function(_){
+      contract.methods.mintArtworkNFT(hash_artwork_name).send({from:senderAddress}).on('receipt', function(_){
+          console.log("All Good, Insertion of Artwork Done")
+      
+          alert("All Good, Artwork Inserted");
+        
+      });
+      
+  });
+  
+  return false;
+}
+
+function mintArtworkArtist() {
+  var artwork_name = $('#artwork_name_Art').val();
+  console.log(artwork_name);
+  
+  const hash_artwork_name = web3.utils.keccak256(artwork_name);
+  
+  console.log(hash_artwork_name);
+  
+  
+  contract.methods.mintArtworkNFT(hash_artwork_name).call({from:senderAddress}).then(function(_) { // A promise in action
+      console.log("okay first send");
+      
+      contract.methods.mintArtworkNFT(hash_artwork_name).send({from:senderAddress}).on('receipt', function(_){
           console.log("All Good, Insertion of Artwork Done")
       
           alert("All Good, Artwork Inserted");

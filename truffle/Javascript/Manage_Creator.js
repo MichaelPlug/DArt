@@ -1,19 +1,19 @@
 $("form").submit(function(e){e.preventDefault();});
 
 // Set the contract address
-var contractAddressPatron = '0x3DEB5Da551aBFa09f6CC07cA7145Fde8482530ea';
+var contractAddressPatron = '0x1E13d16F6ee9B5b6a6723d52ce2E68217a520898';
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSONPatron = "../build/contracts/Patron.json"
 // Set the contract address
-var contractAddressMain = '0xE7FE4fA8A495193dBcA84334F8dc65D68D11085a';
+var contractAddressMain = '0xD16739F53FbB7530Cfe2B9068e155c682Ae8B676';
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSONMain = "../build/contracts/DArt.json"
 // Set the contract address
-var contractAddressDCoin = '0x43D3985B9B22668140DE82218bE053c645B9d825'; // Di Michele
+var contractAddressDCoin = '0x7E188dC9283ddCA327c935e7bAA5b554C1EF7144'; // Di Michele
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSONDCoin = "../build/contracts/DCoin.json"
 // Set the contract address
-var contractAddressVerification = '0x01cE35c1F575460C07FEcE81494dD3F4C494ed99'; // Di Michele
+var contractAddressVerification = '0x60e1FFB72b18e485c6d31E9934B4F62090478faE'; // Di Michele
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSONVerification = "../build/contracts/Verification.json"
 // Set the sending address

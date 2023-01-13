@@ -6,6 +6,9 @@ import "./DCoin.sol";
 
 contract Patron {
 
+    event Donation(address sender, address indexed receiver, bytes32 artwork, string message);
+    event UnlockedFunds(address indexed receiver, bytes32 artwork, string message);
+
     mapping (bytes32 => uint) public patronCredit;
     mapping (bytes32 => uint) public funds;
 
@@ -35,6 +38,7 @@ contract Patron {
         dcoinSmartcontract.lock(amount, msg.sender);
         funds[artwork] += amount;
         patronCredit[hashAddressAndAddress(msg.sender, museum)] += amount;
+        emit Donation(msg.sender, museum, artwork, "Donation for artwork");
     }
 
     function hashAddressAndAddress(address first, address second) public pure returns(bytes32) {
@@ -63,6 +67,7 @@ contract Patron {
 //            dcoinSmartcontract.magicMint(_to, fund);
             //dcoinSmartcontract.call(abi.encodingWithSignature("magicMint(address,amount)",_to,funds[bytes32]));
             funds[artwork] = 0;
+            emit UnlockedFunds(_to, artwork, "Funds unlocked");
         }
     }
     

@@ -6,7 +6,7 @@
     "dev": "lite-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Giordano Dionisi",
+  "author": "Michele Spina",
   "license": "ISC",
   "devDependencies": {
     "lite-server": "^2.6.1"
