@@ -1,7 +1,8 @@
 $("form").submit(function(e){e.preventDefault();});
 
 // Set the contract address
-var contractAddress = '0x49A2Cc98fD54DC09CF990503D7a350B4e4b08ed1';//di Giordano
+//var contractAddress = '0x49A2Cc98fD54DC09CF990503D7a350B4e4b08ed1';//di Giordano
+var contractAddress = '0x60e1FFB72b18e485c6d31E9934B4F62090478faE';//di Michele
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSON = "../build/contracts/Verification.json"
 // Set the sending address
@@ -76,7 +77,7 @@ async function initialise(contractAddress) {
 
 
 function submit_for_verification() {
-	
+	var wallet = $('#wallet_id').val();
   var name = $('#name_id').val();
   var role = $('#role_id').val();
   var role_int = 0;

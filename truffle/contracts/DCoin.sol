@@ -2,6 +2,11 @@
 pragma solidity >=0.7.0 < 0.9.0;
 
 //error Unauthorized(address caller);
+/*
+import "./Verification.sol";
+import "./Patron.sol";
+import "./DCoin.sol";
+*/
 
 //we have objects to work with
 contract DCoin {
@@ -51,12 +56,14 @@ contract DCoin {
 
     function lock(uint amount, address wallet) external {
         assert(msg.sender == patronSmartcontract);
+        assert(amount > 0);
         require(balance[wallet] >= amount, "Not enough DCoins!");
         balance[wallet] -= amount;
     }
 
     function transfer(uint amount, address to) external {
         require(balance[msg.sender] >= amount, "Not enough DCoins!");
+        require(amount > 0, "Transfer amount canno be less than 1 Dcoin");
         balance[msg.sender] -= amount;
         balance[to] += amount;
     }
@@ -68,6 +75,7 @@ contract DCoin {
 
     function withdraw(uint amount) external {
         require(balance[msg.sender] >= amount, "Not enough DCoins!");
+        require(amount > 0, "Withdraw amount canno be less than 1 Dcoin");
         balance[msg.sender] -= amount;
         payable(msg.sender).transfer(amount * PRICE);  
     } 

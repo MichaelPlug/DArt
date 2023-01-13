@@ -30,6 +30,9 @@
               <a class="nav-link" href="Manage_Artworks.html">Management</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="Crowdfunding.html">Crowdfunding</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link disabled" href="About_Us.html">About Us</a>
             </li>
           </ul>
@@ -55,151 +58,276 @@
               <p class="card-text">It's very important to Manage everything about your work and the artoworks. Here You can easily navigate to find all the answers for your questions !! According to your role you can see different things regarding your possibilities to do actions !! So Perfect, this is your world, just to introduce you let think that you can manage totally your museum / private_gallery / laboratory from this web-page: It's very very intuitive, it's only enough that you click on the right things and follow your instict, because all this is perfectly suitable for you !!</p>
             </div>
           </div>
-      
         </div>
-      
-        <div class="card bg-light" style="max-width: 23%">
         
-          <div class="card" style="padding: 10px; margin: 10px">
-            <h1>Let's Create !!</h1>
-          
-            <div class="card-body">
-              <center>
-                <img src="../Images/creation.png" width="60%" alt="Card image cap">
-              </center>
-              
-              <h3 class="card-title">Create a New Artwork!!</h3>
-              <form onsubmit="mintArtwork(); return false;">
-                <fieldset>
-                  
-                  <label for="amountinput">Name of New Artwork:</label>
-                  <br/>
-                  <input type="text" name="amount" id="artwork_name" required="required" placeholder="Vitruvian Man"/>
-                  <br/>
-                  <br/>
-                  <input style="background-color:#7B68EE	" class="btn btn-primary btn-lg btn-block" type="submit" value="Mint!">
-                </fieldset>
-              </form>
-              
-            </div>
-            <div class="card-body">
-              
-              <h3 class="card-title">Create a New Exhibition !!</h3>
-      
-                <form onsubmit="mintExhibition(); return false;">
-                  <fieldset>
-                    
-                    <label for="amountinput">Name of New Exhibition:</label>
-                    <br/>
-                    <input type="text" name="amount" id="exhibition_name" required="required" placeholder="The Art Of Flowers"/>
-                    <br/>
-                    <label for="amountinput">Status of Exhibition:</label>
-                    <select name="pets" id="active_exhibition" required>
-                      <option value="">--Please choose an option--</option>
-                      <option value=1>Yet Active</option>
-                      <option value=0>Not Already Active</option>
+        <div class="card bg-light" style="max-width: 23%">
+          <div id="accordion4">
+            <div class="card" style="margin: 10px;">
+              <div class="card-header" id="headingOne4">
+                <h5 class="mb-0" style="color:#013220">
+                  <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne4" aria-expanded="true" aria-controls="collapseOne" style="color:#013220">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-images" viewBox="0 0 16 16">
+                      <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                      <path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2zM14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1zM2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1h-10z"/>
+                    </svg>
+                    <b>Let's Create !!</b>
+                    <center>
+                      <img src="../Images/creation.png" width="60%" alt="Card image cap">
+                    </center>
+                  </button>
+                </h5>
+              </div>
+            
+              <div id="collapseOne4" width="" class="collapse hide" aria-labelledby="headingOne4" data-parent="#accordion4">
+                <div class="card" style="padding: 10px; margin: 10px">
+                  <div class="card-body">
+                    <h3 class="card-title">Create a New Artwork!!</h3>
+                    <form onsubmit="mintArtworkArtist(); return false;">
+                      <fieldset>
+                        <label for="amountinput">Name of New Artwork:</label>
+                        <br/>
+                        <input type="text" name="amount" id="artwork_nameArtist" required="required" placeholder="Vitruvian Man"/>
+                        <br/>
+                        <br/>
+                        <input style="background-color:#7B68EE	" class="btn btn-primary btn-lg btn-block" type="submit" value="Mint!">
+                      </fieldset>
+                    </form>
+                  </div>
+                </div>
                 
-                    </select>
-                    <br/>
-                    <br/>
-                    <button style="background-color:#7B68EE	" class="btn btn-primary btn-lg btn-block" type="submit">Create!</button>
-                  </fieldset>
-                </form>
-      
-        
+                <div class="card-body">
+                  <h3 class="card-title">Create a New Exhibition !!</h3>
+                  <form onsubmit="mintExhibition(); return false;">
+                    <fieldset>
+                      <label for="amountinput">Name of New Exhibition:</label>
+                      <br/>
+                      <input type="text" name="amount" id="exhibition_name" required="required" placeholder="The Art Of Flowers"/>
+                      <br/>
+                      <label for="amountinput">Status of Exhibition:</label>
+                      <select name="pets" id="active_exhibition" required>
+                        <option value="">--Please choose an option--</option>
+                        <option value=1>Yet Active</option>
+                        <option value=0>Not Already Active</option>
+                      </select>
+                      <br/>
+                      <br/>
+                      <button style="background-color:#7B68EE	" class="btn btn-primary btn-lg btn-block" type="submit">Create!</button>
+                    </fieldset>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          
+          <div id="accordion">
+            <div class="card" style="margin: 10px;">
+              <div class="card-header" id="headingOne">
+                <h5 class="mb-0" style="color:#013220">
+                  <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="color:#013220">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-images" viewBox="0 0 16 16">
+                      <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                      <path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2zM14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1zM2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1h-10z"/>
+                    </svg>
+                    <b>Remove !!</b>
+                    <center>
+                      <img src="../Images/remove.png" width="60%" alt="Card image cap">
+                    </center>
+                  </button>
+                </h5>
+              </div>
+              
+              <div id="collapseOne" width="" class="collapse hide" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                  <h3 class="card-title">Remove an Exhibition :(</h3>
+                  <form onsubmit="removeExhibition(); return false;">
+                    <fieldset>
+                      <label for="amountinput">Which is the Name of Exhibition that you want Delete?</label>
+                      <br/>
+                      <input type="text" name="amount" id="exhibition_to_eliminate" required="required" placeholder="Van Gogh's Collection"/>
+                      <br/>
+                      <br/>
+                      <button style="background-color:#B22222" class="btn btn-primary btn-lg btn-block" type="submit">Delete!</button>
+                    </fieldset>
+                  </form>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+          
+        <div class="card bg-light" style="max-width: 23%">
+          <div id="accordion3">
+            <div class="card" style="margin: 10px;">
+              <div class="card-header" id="headingOne3">
+                <h5 class="mb-0" style="color:#013220">
+                  <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne3" aria-expanded="true" aria-controls="collapseOne" style="color:#013220">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-images" viewBox="0 0 16 16">
+                      <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                      <path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2zM14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1zM2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1h-10z"/>
+                    </svg>
+                    <b>Who Has?</b>
+                    <center>
+                      <img src="../Images/possession.jpeg" width="60%" alt="Card image cap">
+                    </center>
+                  </button>
+                </h5>
+              </div>
+              
+              
+              <div id="collapseOne3" width="" class="collapse hide" aria-labelledby="headingOne3" data-parent="#accordion3">
+                <div class="card">
+                  <div class="card-body">
+                    <h3 class="card-title">Give Permissions !!</h3>  
+                    <form onsubmit="grantPermission(); return false;">
+                      <fieldset>
+                        <label for="amountinput">Address to Who Give Possession:</label>
+                        <br/>
+                        <input type="text" name="amount" id="artwork_to_give_possession" required="required" placeholder="0x.."/>
+                        <br/>
+                        <label for="amountinput">For Which Artwork?</label>
+                        <br/>
+                        <input type="text" name="amount" id="artwork_name_possession_give" required="required" placeholder="Gioconda"/>
+                        <br/>
+                        <label for="amountinput">Which is the address of the minter?</label>
+                        <br/>
+                        <input type="text" name="amount" id="artwork_minter_possession_give" required="required" placeholder="ArtWork Minter"/>
+                        <br/>
+                        <br/>
+                        <button style="background-color:#228B22" class="btn btn-primary btn-lg btn-block" type="submit">Give Possession!</button>
+                      </fieldset>
+                    </form>
+                  </div>
+                  
+                  <div class="card-body">
+                    <h3 class="card-title">Revoke Possession !!</h3>
+                    <form onsubmit="revokePermission(); return false;">
+                      <fieldset>
+                        <label for="amountinput">For Which Artwork?</label>
+                        <br/>
+                        <input type="text" name="amount" id="artwork_to_revoke_possession" required="required" placeholder="The Kiss"/>
+                        <br/>
+                        <label for="amountinput">Which is the address of the minter?</label>
+                        <br/>
+                        <input type="text" name="amount" id="artwork_minter_revoke_possession" required="required" placeholder="ArtWork Minter"/>
+                        <br/>
+                        <br/>
+                        <button style="background-color:#B22222" class="btn btn-primary btn-lg btn-block" type="submit">Revoke Possession!</button>
+                      </fieldset>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+                    
+                    
         
-        
+          <div id="accordion2">
+            <div class="card" style="margin: 10px;">
+              <div class="card-header" id="headingOne2">
+                <h5 class="mb-0" style="color:#013220">
+                  <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne2" aria-expanded="true" aria-controls="collapseOne" style="color:#013220">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-images" viewBox="0 0 16 16">
+                      <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                      <path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2zM14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1zM2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1h-10z"/>
+                    </svg>
+                    <b>Let's Exhibittttt!!</b>
+                    <center>
+                      <img src="../Images/put_exhibition.png" width="60%" alt="Card image cap">
+                    </center>
+                  
+                  </button>
+                </h5>
+              </div>
+              
+              <div id="collapseOne2" width="" class="collapse hide" aria-labelledby="headingOne2" data-parent="#accordion2">
+                <div class="card-body">
+                  <h3 class="card-title">Exhibit an Artwork!!</h3>
+                  <form onsubmit="putExhibition(); return false;">
+                    <fieldset>
+                      <label for="amountinput">Name of Artwork?</label>
+                      <br/>
+                      <input type="text" name="amount" id="artwork_to_exhibit" required="required" placeholder="Les Coquelicots"/>
+                      <br/>
+                      <br/>
+                      <label for="amountinput">Name of Exhibition?</label>
+                      <br/>
+                      <input type="text" name="amount" id="exhibition_for_artwork" required="required" placeholder="Monet's Forever"/>
+                      <br/>
+                      <button style="background-color:#BA55D3" class="btn btn-primary btn-lg btn-block" type="submit">Expose!</button>
+                    </fieldset>
+                  </form>
+                </div>
+              
+                <div class="card-body">
+                  <h3 class="card-title">Toggle from Exhibition !!</h3>
+                  <form onsubmit="toggleExhibition(); return false;">
+                    <fieldset>
+                      <label for="amountinput">For Which Artwork?</label>
+                      <br/>
+                      <input type="text" name="amount" id="artwork_to_delete_from_exhibition" required="required" placeholder="Las Meninas"/>
+                      <br/>
+                      <br/>
+                      <button style="background-color:#B22222" class="btn btn-primary btn-lg btn-block" type="submit">Revoke Possession!</button>
+                    </fieldset>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
         
         <div class="card bg-light" style="max-width: 23%">
-        
-          <div class="card" style="padding: 10px; margin: 10px">
-            <h1>Who Has?</h1>
-          
-            <div class="card-body">
-              <center>
-                <img src="../Images/possession.jpeg" width="60%" alt="Card image cap">
-              </center>
+          <div id="accordion5">
+            <div class="card" style="margin: 10px;">
+              <div class="card-header" id="headingOne5">
+                <h5 class="mb-0" style="color:#013220">
+                  <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne5" aria-expanded="true" aria-controls="collapseOne" style="color:#013220">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-images" viewBox="0 0 16 16">
+                      <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                      <path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2zM14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1zM2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1h-10z"/>
+                    </svg>
+                    <b>Let's Donate!!</b>
+                    <center>
+                      <img src="../Images/donation.png" width="60%" alt="Card image cap">
+                    </center>
+                  </button>
+                </h5>
+              </div>
               
-              <h3 class="card-title">Give Permissions !!</h3>  
-      
-              <form onsubmit="grantPermission(); return false;">
-                <fieldset>
-                  
-                  <label for="amountinput">Address to Who Give Possession:</label>
-                  <br/>
-                  <input type="text" name="amount" id="artwork_to_give_possession" required="required" placeholder="0x.."/>
-                  <br/>
-                  <label for="amountinput">For Which Artwork?</label>
-                  <br/>
-                  <input type="text" name="amount" id="artwork_name_possession_give" required="required" placeholder="Gioconda"/>
-                  <br/>
-                  <br/>
-                  <button style="background-color:#228B22" class="btn btn-primary btn-lg btn-block" type="submit">Give Possession!</button>
-                </fieldset>
-              </form>
-            </div>
-            <div class="card-body">
-              
-              <h3 class="card-title">Revoke Possession !!</h3>
-      
-              
-        
-              <form onsubmit="revokePermission(); return false;">
-                <fieldset>
-                  
-                  <label for="amountinput">For Which Artwork?</label>
-                  <br/>
-                  <input type="text" name="amount" id="artwork_to_revoke_possession" required="required" placeholder="The Kiss"/>
-                  <br/>
-                  <br/>
-                  <button style="background-color:#B22222" class="btn btn-primary btn-lg btn-block" type="submit">Revoke Possession!</button>
-                </fieldset>
-              </form>
+              <div id="collapseOne5" width="" class="collapse hide" aria-labelledby="headingOne5" data-parent="#accordion5">
+                <div class="card">
+                  <div class="card-body">
+                    <h3 class="card-title">Donate an Artwork</h3>
+                    <form onsubmit="donateArtwork(); return false;">
+                      <fieldset>
+                        <label for="amountinput">Which Artwork You Want Donate?</label>
+                        <br/>
+                        <input type="text" name="amount" id="artwork_to_donate" required="required" placeholder="Mont Sainte-Victoir"/>
+                        <br/>
+                        <label for="amountinput">Which Is The Lucky Entity?</label>
+                        <br/>
+                        <input type="text" name="amount" id="to_address_donation" required="required" placeholder="0x.."/>
+                        <br/>
+                        <br/>
+                        <button style="background-color:#228B22" class="btn btn-primary btn-lg btn-block" type="submit">Donate!</button>
+                      </fieldset>
+                    </form>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        
-        <div class="card bg-light mb-3" style="max-width: 23%;">
-          <div class="card" style="padding: 10px; margin: 10px">
-          
-            <div class="card-body">
-              <h1>Let's Donate!!</h1>
-              
-              <center>
-                <img src="../Images/donation.png" width="60%" alt="Card image cap">
-              </center>
-              <h3 class="card-title">Donate an Artwork</h3>
-      
-              <form onsubmit="donateArtwork(); return false;">
-                <fieldset>
-                  
-                  <label for="amountinput">Which Artwork You Want Donate?</label>
-                  <br/>
-                  <input type="text" name="amount" id="artwork_to_donate" required="required" placeholder="Mont Sainte-Victoir"/>
-                  <br/>
-                  <label for="amountinput">Which Is The Lucky Entity?</label>
-                  <br/>
-                  <input type="text" name="amount" id="to_address_donation" required="required" placeholder="0x.."/>
-                  <br/>
-                  <br/>
-                  <button style="background-color:#228B22" class="btn btn-primary btn-lg btn-block" type="submit">Donate!</button>
-                </fieldset>
-              </form>
-            </div>
-          </div>
-        </div>
-        
-      </div>
-    
+      </div>    
     </div>
     
+    
     <div id="artist">
-      
       <div class="card-group">
-        <div class="card bg-light mb-3" style="max-width: 30%; padding: 10px">
+        <div class="card bg-light mb-3" style="max-width: 40%; padding: 10px">
           <div class="card"> 
             <center>
               <img src="../Images/artist_div.png" width="70%" alt="Card image cap">
@@ -210,17 +338,15 @@
               <p class="card-text">It's very important to Manage everything about your work and the artoworks. Here You can easily navigate to find all the answers for your questions !! According to your role you can see different things regarding your possibilities to do actions !! So Perfect, this is your world, just to introduce you let think that you can manage totally your museum / private_gallery / laboratory from this web-page: It's very very intuitive, it's only enough that you click on the right things and follow your instict, because all this is perfectly suitable for you !!</p>
             </div>
           </div>
-      
         </div>
       
-        <div class="card bg-light mb-3" style="max-width: 30%; padding: 10px">
+        <div class="card bg-light mb-3" style="max-width: 60%; padding: 10px">
           <div class="card"> 
             <h1>Let's Create !!</h1>
             <center>
-              <img src="../Images/creation_artist.jpg" width="70%" alt="Card image cap">
+              <img src="../Images/creation_artist.jpg" width="50%" alt="Card image cap">
             </center>
             <div class="card-body">
-            
               <h3 class="card-title">Create a New Artwork!!</h3>
               <center>
                 <form onsubmit="mintArtwork(); return false;">
@@ -234,20 +360,16 @@
                   </fieldset>
                 </form>
               </center>
-              
-              
             </div>
           </div>
-      
         </div>
       </div>
     </div>
-      
     
+  
     <div id="restorer">
-      
       <div class="card-group">
-        <div class="card bg-light mb-3" style="max-width: 30%; padding: 10px">
+        <div class="card bg-light mb-3" style="max-width: 40%; padding: 10px">
           <div class="card"> 
             <center>
               <img src="../Images/restoration.png" width="70%" alt="Card image cap">
@@ -258,14 +380,13 @@
               <p class="card-text">It's very important to Manage everything about your work and the artoworks. Here You can easily navigate to find all the answers for your questions !! According to your role you can see different things regarding your possibilities to do actions !! So Perfect, this is your world, just to introduce you let think that you can manage totally your museum / private_gallery / laboratory from this web-page: It's very very intuitive, it's only enough that you click on the right things and follow your instict, because all this is perfectly suitable for you !!</p>
             </div>
           </div>
-      
         </div>
       
-        <div class="card bg-light mb-3" style="max-width: 30%; padding: 10px">
+        <div class="card bg-light mb-3" style="max-width: 60%; padding: 10px">
           <div class="card"> 
             <h1>Let's Create !!</h1>
             <center>
-              <img src="../Images/fix_damage.jpg" width="70%" alt="Card image cap">
+              <img src="../Images/fix_damage.jpg" width="40%" alt="Card image cap">
             </center>
             <div class="card-body">
             
@@ -311,17 +432,15 @@
                     <button style="background-color:#7B68EE	" class="btn btn-primary btn-lg btn-block" type="submit">Create!</button>
                   </fieldset>
                 </form>
-                
+            
               </center>
-              
-              
             </div>
           </div>
-      
         </div>
       </div>
     </div>
-      
+    
+    
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
