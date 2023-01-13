@@ -9,7 +9,7 @@ var contractAddressMain = '0xD16739F53FbB7530Cfe2B9068e155c682Ae8B676';
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSONMain = "../build/contracts/DArt.json"
 // Set the contract address
-var contractAddressDCoin = '0x7E188dC9283ddCA327c935e7bAA5b554C1EF7144'; // Di Michele
+var contractAddressDCoin = '-'; // Di Michele
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSONDCoin = "../build/contracts/DCoin.json"
 // Set the contract address

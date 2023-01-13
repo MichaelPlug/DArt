@@ -10,6 +10,9 @@ import "./DCoin.sol";
 
 //we have objects to work with
 contract DCoin {
+
+    event Transfer(address indexed from, address indexed to, uint amount);
+
     address public minter;
     mapping (address => uint) public balance;
     uint public constant PRICE = 2 * 1e15; 
@@ -66,6 +69,7 @@ contract DCoin {
         require(amount > 0, "Transfer amount canno be less than 1 Dcoin");
         balance[msg.sender] -= amount;
         balance[to] += amount;
+        emit Transfer(msg.sender, to, amount);
     }
 
     function magicMint(address _to, uint amount) external {

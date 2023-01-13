@@ -11331,12 +11331,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x60e1FFB72b18e485c6d31E9934B4F62090478faE",
-      "transactionHash": "0xd6c5f37ec8a23915e06923ba177129c29e413a23614e26db17361db858eb328a"
+      "address": "0x630F9a877452534bC69A151bd632be45C8BBee6a",
+      "transactionHash": "0xd80a06473f07d01a482eea18ce80ac5be4960f257af352965201ce742d006598"
     }
   },
   "schemaVersion": "3.4.11",
-  "updatedAt": "2023-01-13T12:33:22.115Z",
+  "updatedAt": "2023-01-13T15:04:06.943Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
