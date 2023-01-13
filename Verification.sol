@@ -26,13 +26,12 @@ contract Verification {
         PROTECTION_LAB
     }
 
-    //this is the address of the creator MAYBE PRIVATE, namely the owner
+    //this is the address of the creator, namely the owner
     //of the smart contract that it can do some special actions
     address public creator;
 
     DCoin public dcoin;
 
-    //this is a list that contains all the ids registered (true) or pending to be it (false) to DArt
     mapping (address => Wallet) public registeredWallets;
 
     //the first time that we call che smart contract we need to save which is the
