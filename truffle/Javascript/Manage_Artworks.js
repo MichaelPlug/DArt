@@ -361,10 +361,58 @@ function grantPermission() {
   return false;
 }
 
+function grantPermissionArtist() {
+  var address_to = $('#artwork_to_give_possession_artist').val();
+  var artwork_name = $('#artwork_name_possession_give_artist').val();
+  var artwork_minter = $('#artwork_minter_possession_give_artist').val();
+
+  const hash_artwork_name = web3.utils.keccak256(artwork_name);
+  
+  console.log(hash_artwork_name);
+
+  contract.methods.hashTextAndAddress(hash_artwork_name).call({from: artwork_minter}).then(function(artwork_id) {
+    contract.methods.allowAccessToArtwork(address_to, artwork_id).call({from:senderAddress, gas: 120000}).then(function(_) { // A promise in action
+      console.log("okay first send");
+      
+      contract.methods.allowAccessToArtwork(address_to, artwork_id).send({from:senderAddress, gas: 120000}).on('receipt', function(_){
+          console.log("All Good, Insertion of Exhibition Done")
+      
+          alert("All Good, Exhibition Inserted");
+        
+      });
+    });
+  });
+  return false;
+}
+
 
 function revokePermission() {
   var artwork_name = $('#artwork_to_revoke_possession').val();
   var artwork_minter = $('#artwork_minter_revoke_possession').val();
+  
+  
+  const hash_artwork_name = web3.utils.keccak256(artwork_name);
+  
+  console.log(hash_artwork_name);
+  
+  contract.methods.hashTextAndAddress(hash_artwork_name).call({from: artwork_minter}).then(function(artwork_id) {
+    contract.methods.revokeAccessToArtwork(artwork_id).call({from:senderAddress, gas: 120000}).then(function(_) { // A promise in action
+      console.log("okay first send");
+      
+      contract.methods.revokeAccessToArtwork(artwork_id).send({from:senderAddress, gas: 120000}).on('receipt', function(_){
+          console.log("All Good, Revokation of Artwork Done")
+      
+          alert("All Good, The Possession of Artwork is Revoked");
+        
+      });
+    });
+  });
+  return false;
+}
+
+function revokePermissionArtist() {
+  var artwork_name = $('#artwork_to_revoke_possession_artist').val();
+  var artwork_minter = $('#artwork_minter_revoke_possession_artist').val();
   
   
   const hash_artwork_name = web3.utils.keccak256(artwork_name);
@@ -391,6 +439,30 @@ function donateArtwork() {
   var artwork_name = $('#artwork_to_donate').val();
   var artwork_minter = $('#artwork_minter_to_donate').val();
   var address_to = $('#to_address_donation').val();
+  
+  const hash_artwork_name = web3.utils.keccak256(artwork_name);
+  
+  console.log(hash_artwork_name);
+
+  contract.methods.hashTextAndAddress(hash_artwork_name).call({from: artwork_minter}).then(function(artwork_id) {  
+    contract.methods.donateWorkOfArt(hash_artwork_name, address_to).call({from:senderAddress, gas: 120000}).then(function(_) { // A promise in action
+      console.log("okay first send");
+      
+      contract.methods.donateWorkOfArt(hash_artwork_name, address_to).send({from:senderAddress, gas: 120000}).on('receipt', function(_){
+          console.log("All Good, Donation of Artwork Done")
+      
+          alert("All Good, The Artwork is Donated. Thanks :)");
+        
+      }); 
+    });
+  });
+  return false;
+}
+
+function donateArtworkArtist() {
+  var artwork_name = $('#artwork_to_donate_artist').val();
+  var artwork_minter = $('#artwork_minter_to_donate_artist').val();
+  var address_to = $('#to_address_donation_artist').val();
   
   const hash_artwork_name = web3.utils.keccak256(artwork_name);
   
