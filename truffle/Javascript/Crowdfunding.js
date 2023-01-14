@@ -1,17 +1,17 @@
 $("form").submit(function(e){e.preventDefault();});
 
 // Set the contract address
-var contractAddressPatron = '0xcd7a9261875DFcc68221d0a93de50fDEB8f3340d';
+var contractAddressPatron = '0xD0D9d551D60A89820a0BEb3E0880e09cD0c7C524';
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSONPatron = "../build/contracts/Patron.json"
 // Set the contract address
-var contractAddressMain = '0xD8487F918c94066d5aDe9D0383463626aB538577';
+var contractAddressMain = '0x943038A744b4b3f988b1daF11DAe56eb3327bC31';
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSONMain = "../build/contracts/DArt.json"
 // Set the contract address
-var contractAddressDCoin = '0x969129fF2D473C2aDB67EBfbed3Ba4DBb07867b2'; // Di Michele
+var contractAddressDCoin = '0x4D7583f9b9d69D3F4BbB4F6e35dBA3f03a855a93'; // Di Michele
 // Set the relative URI of the contract’s skeleton (with ABI)
-var contractJSONDCoin = "../build/contracts/DCoin.json"// Set 
+var contractJSONDCoin = "../build/contracts/DCoin.json"
 
 var searchedArtwork = "";
 
@@ -148,8 +148,8 @@ function donate(){
 
 function getPatronCredit(){
   var museumAddress = $('#musuemid').val(); 
-  contractPatron.methods.hashAddressAndAddress(senderAddress,museumAddress).call().then(function(credit) {
-    contractPatron.methods.patronCredit(museumAddress).call().then(function(credit) {
+  contractPatron.methods.hashAddressAndAddress(senderAddress,museumAddress).call().then(function(key) {
+    contractPatron.methods.patronCredit(key).call().then(function(credit) {
       document.getElementById("patroncredit").innerHTML = credit;
     });
   });

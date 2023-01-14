@@ -1,13 +1,13 @@
 $("form").submit(function(e){e.preventDefault();});
 
 // Set the contract address
-var contractAddress = '0xD16739F53FbB7530Cfe2B9068e155c682Ae8B676';
+var contractAddress = '0x943038A744b4b3f988b1daF11DAe56eb3327bC31';
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSON = "../build/contracts/DArt.json"
 
 
 // Set the contract address
-var contractAddressVerification = '0x60e1FFB72b18e485c6d31E9934B4F62090478faE'; // Di Michele
+var contractAddressVerification = '0xc5f92355177CdD0e07ef4317b5C8Cb83b4B2f3b4'; // Di Michele
 // Set the relative URI of the contract’s skeleton (with ABI)
 var contractJSONVerification = "../build/contracts/Verification.json"
 
@@ -203,7 +203,7 @@ function mintArtwork() {
 }
 
 function mintArtworkArtist() {
-  var artwork_name = $('#artwork_name_Art').val();
+  var artwork_name = $('#artwork_nameArtist').val();
   console.log(artwork_name);
   
   const hash_artwork_name = web3.utils.keccak256(artwork_name);
@@ -345,11 +345,12 @@ function grantPermission() {
   const hash_artwork_name = web3.utils.keccak256(artwork_name);
   
   console.log(hash_artwork_name);
+
   contract.methods.hashTextAndAddress(hash_artwork_name).call({from: artwork_minter}).then(function(artwork_id) {
-    contract.methods.allowAccessToArtwork(address_to, artwork_name).call({from:senderAddress, gas: 120000}).then(function(_) { // A promise in action
+    contract.methods.allowAccessToArtwork(address_to, artwork_id).call({from:senderAddress, gas: 120000}).then(function(_) { // A promise in action
       console.log("okay first send");
       
-      contract.methods.allowAccessToArtwork(address_to, artwork_name).send({from:senderAddress, gas: 120000}).on('receipt', function(_){
+      contract.methods.allowAccessToArtwork(address_to, artwork_id).send({from:senderAddress, gas: 120000}).on('receipt', function(_){
           console.log("All Good, Insertion of Exhibition Done")
       
           alert("All Good, Exhibition Inserted");
@@ -371,10 +372,10 @@ function revokePermission() {
   console.log(hash_artwork_name);
   
   contract.methods.hashTextAndAddress(hash_artwork_name).call({from: artwork_minter}).then(function(artwork_id) {
-    contract.methods.revokeAccessToArtwork(hash_artwork_name).call({from:senderAddress, gas: 120000}).then(function(_) { // A promise in action
+    contract.methods.revokeAccessToArtwork(artwork_id).call({from:senderAddress, gas: 120000}).then(function(_) { // A promise in action
       console.log("okay first send");
       
-      contract.methods.revokeAccessToArtwork(hash_artwork_name).send({from:senderAddress, gas: 120000}).on('receipt', function(_){
+      contract.methods.revokeAccessToArtwork(artwork_id).send({from:senderAddress, gas: 120000}).on('receipt', function(_){
           console.log("All Good, Revokation of Artwork Done")
       
           alert("All Good, The Possession of Artwork is Revoked");
@@ -413,7 +414,7 @@ function donateArtwork() {
 
 function createActivity() {
   var artwork_name = $('#artwork_to_restore').val();
-  var artwork_name = $('#artwork_minter_to_restore').val();
+  var artwork_minter = $('#artwork_minter_to_restore').val();
   var intervention = $('#intervention_id').val();
   
   var extra_info = $('#extra_info').val();
@@ -428,10 +429,10 @@ function createActivity() {
   console.log(hash_extra_info);
   
   contract.methods.hashTextAndAddress(hash_artwork_name).call({from: artwork_minter}).then(function(artwork_id) {
-    contract.methods.mintActivity(hash_artwork_name, intervention, hash_extra_info).call({from:senderAddress, gas: 120000}).then(function(_) { // A promise in action
+    contract.methods.mintActivity(artwork_id, intervention, hash_extra_info).call({from:senderAddress}).then(function(_) { // A promise in action
       console.log("okay first send");
       
-      contract.methods.mintActivity(hash_artwork_name, intervention, hash_extra_info).send({from:senderAddress, gas: 120000}).on('receipt', function(_){
+      contract.methods.mintActivity(artwork_id, intervention, hash_extra_info).send({from:senderAddress}).on('receipt', function(_){
           console.log("All Good, Creation of Activity Done")
       
           alert("All Good, The Creation of Artwork is Done!");
