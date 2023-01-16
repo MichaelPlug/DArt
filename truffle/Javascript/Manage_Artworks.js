@@ -267,8 +267,8 @@ function removeExhibition() {
   var exhibition_name = $('#exhibition_to_eliminate').val();
   const hash_exhibition_name = web3.utils.keccak256(exhibition_name);
   contract.methods.hashTextAndAddress(hash_exhibition_name).call({from: senderAddress}).then(function(exhibition_id) {
-    contract.methods.endExibition().call({from: senderAddress}).then(function(_) {
-      contract.methods.endExibition().send({from: senderAddress}).on('receipt', function(_){
+    contract.methods.endExibition(exhibition_id).call({from: senderAddress}).then(function(_) {
+      contract.methods.endExibition(exhibition_id).send({from: senderAddress}).on('receipt', function(_){
         console.log("Exhibition concluded");
       });
     });
@@ -445,10 +445,10 @@ function donateArtwork() {
   console.log(hash_artwork_name);
 
   contract.methods.hashTextAndAddress(hash_artwork_name).call({from: artwork_minter}).then(function(artwork_id) {  
-    contract.methods.donateWorkOfArt(hash_artwork_name, address_to).call({from:senderAddress, gas: 120000}).then(function(_) { // A promise in action
+    contract.methods.donateWorkOfArt(artwork_id, address_to).call({from:senderAddress, gas: 120000}).then(function(_) { // A promise in action
       console.log("okay first send");
       
-      contract.methods.donateWorkOfArt(hash_artwork_name, address_to).send({from:senderAddress, gas: 120000}).on('receipt', function(_){
+      contract.methods.donateWorkOfArt(artwork_id, address_to).send({from:senderAddress, gas: 120000}).on('receipt', function(_){
           console.log("All Good, Donation of Artwork Done")
       
           alert("All Good, The Artwork is Donated. Thanks :)");
@@ -469,10 +469,10 @@ function donateArtworkArtist() {
   console.log(hash_artwork_name);
 
   contract.methods.hashTextAndAddress(hash_artwork_name).call({from: artwork_minter}).then(function(artwork_id) {  
-    contract.methods.donateWorkOfArt(hash_artwork_name, address_to).call({from:senderAddress, gas: 120000}).then(function(_) { // A promise in action
+    contract.methods.donateWorkOfArt(artwork_id, address_to).call({from:senderAddress, gas: 120000}).then(function(_) { // A promise in action
       console.log("okay first send");
       
-      contract.methods.donateWorkOfArt(hash_artwork_name, address_to).send({from:senderAddress, gas: 120000}).on('receipt', function(_){
+      contract.methods.donateWorkOfArt(artwork_id, address_to).send({from:senderAddress, gas: 120000}).on('receipt', function(_){
           console.log("All Good, Donation of Artwork Done")
       
           alert("All Good, The Artwork is Donated. Thanks :)");
