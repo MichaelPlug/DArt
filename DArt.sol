@@ -9,6 +9,10 @@ import "./DCoin.sol";
 //we have objects to work with
 contract DArt {
 
+    event allowedAccessToArtwork(bytes32 indexed artwork, address indexed user);
+    event deniedAccessToArtwork(bytes32 indexed artwork, address indexed user);
+    event donatedArtwork(bytes32 indexed artwork, address indexed user);
+
     //event ProtectionActivityStarted(Artwork indexed artwork);
 
     //we have a struct to store the data about artworks
@@ -168,10 +172,12 @@ contract DArt {
         //assert(museums[target].verified);
         assert(registeredArtworks[artwork].property == msg.sender);
         registeredArtworks[artwork].possession = target;
+        emit allowedAccessToArtwork(artwork, target);
     }
 
     function revokeAccessToArtwork(bytes32 artwork) external {
         assert(registeredArtworks[artwork].property == msg.sender);
+        emit deniedAccessToArtwork(artwork, registeredArtworks[artwork].possession);
         registeredArtworks[artwork].possession = msg.sender;
     }
 
@@ -179,6 +185,7 @@ contract DArt {
         require(registeredArtworks[artwork].property == msg.sender, "You are not the owner of the selected artowork");
         //require is verified
         registeredArtworks[artwork].property = _to;
+        emit donatedArtwork(artwork, _to);
     }
 
     function getProperty(bytes32 artwork) external view returns(address){

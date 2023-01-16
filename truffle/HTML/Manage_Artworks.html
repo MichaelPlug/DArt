@@ -82,11 +82,11 @@
                 <div class="card" style="padding: 10px; margin: 10px">
                   <div class="card-body">
                     <h3 class="card-title">Create a New Artwork!!</h3>
-                    <form onsubmit="mintArtworkArtist(); return false;">
+                    <form onsubmit="mintArtwork(); return false;">
                       <fieldset>
                         <label for="amountinput">Name of New Artwork:</label>
                         <br/>
-                        <input type="text" name="amount" id="artwork_nameArtist" required="required" placeholder="Vitruvian Man"/>
+                        <input type="text" name="amount" id="artwork_name" required="required" placeholder="Vitruvian Man"/>
                         <br/>
                         <br/>
                         <input style="background-color:#7B68EE	" class="btn btn-primary btn-lg btn-block" type="submit" value="Mint!">
@@ -250,10 +250,14 @@
                       <br/>
                       <input type="text" name="amount" id="artwork_to_exhibit" required="required" placeholder="Les Coquelicots"/>
                       <br/>
+                      <label for="amountinput">Which is the address of the minter?</label>
+                      <br/>
+                      <input type="text" name="amount" id="artwork_minter_to_exhibit" required="required" placeholder="ArtWork Minter"/>
                       <br/>
                       <label for="amountinput">Name of Exhibition?</label>
                       <br/>
                       <input type="text" name="amount" id="exhibition_for_artwork" required="required" placeholder="Monet's Forever"/>
+                      <br/>
                       <br/>
                       <button style="background-color:#BA55D3" class="btn btn-primary btn-lg btn-block" type="submit">Expose!</button>
                     </fieldset>
@@ -267,6 +271,10 @@
                       <label for="amountinput">For Which Artwork?</label>
                       <br/>
                       <input type="text" name="amount" id="artwork_to_delete_from_exhibition" required="required" placeholder="Las Meninas"/>
+                      <br/>
+                      <label for="amountinput">Which is the address of the minter?</label>
+                      <br/>
+                      <input type="text" name="amount" id="artwork_minter_to_delete_from_exhibition" required="required" placeholder="ArtWork Minter"/>
                       <br/>
                       <br/>
                       <button style="background-color:#B22222" class="btn btn-primary btn-lg btn-block" type="submit">Revoke Possession!</button>
@@ -306,6 +314,10 @@
                         <label for="amountinput">Which Artwork You Want Donate?</label>
                         <br/>
                         <input type="text" name="amount" id="artwork_to_donate" required="required" placeholder="Mont Sainte-Victoir"/>
+                        <br/>
+                        <label for="amountinput">Which is the address of the minter?</label>
+                        <br/>
+                        <input type="text" name="amount" id="artwork_minter_to_donate" required="required" placeholder="ArtWork Minter"/>
                         <br/>
                         <label for="amountinput">Which Is The Lucky Entity?</label>
                         <br/>
@@ -349,17 +361,89 @@
             <div class="card-body">
               <h3 class="card-title">Create a New Artwork!!</h3>
               <center>
-                <form onsubmit="mintArtwork(); return false;">
+                <form onsubmit="mintArtworkArtist(); return false;">
                   <fieldset>
                     
                     <label for="amountinput">Name of New Artwork:</label>
-                    <input type="text" name="amount" id="artwork_name" required="required" placeholder="Vitruvian Man"/>
+                    <input type="text" name="amount" id="artwork_nameArtist" required="required" placeholder="Vitruvian Man"/>
                     <br/>
                     <br/>
                     <input style="background-color:#7B68EE	" class="btn btn-primary btn-lg btn-block" type="submit" value="Mint!">
                   </fieldset>
                 </form>
               </center>
+            </div>
+          </div>
+        </div>
+
+        <div class="card bg-light mb-3" style="max-width: 60%; padding: 10px">
+          <div class="card">
+            <div class="card-body">
+              <h3 class="card-title">Give Permissions !!</h3>  
+              <form onsubmit="grantPermissionArtist(); return false;">
+                <fieldset>
+                  <label for="amountinput">Address to Who Give Possession:</label>
+                  <br/>
+                  <input type="text" name="amount" id="artwork_to_give_possession_artist" required="required" placeholder="0x.."/>
+                  <br/>
+                  <label for="amountinput">For Which Artwork?</label>
+                  <br/>
+                  <input type="text" name="amount" id="artwork_name_possession_give_artist" required="required" placeholder="Gioconda"/>
+                  <br/>
+                  <label for="amountinput">Which is the address of the minter?</label>
+                  <br/>
+                  <input type="text" name="amount" id="artwork_minter_possession_give_artist" required="required" placeholder="ArtWork Minter"/>
+                  <br/>
+                  <br/>
+                  <button style="background-color:#228B22" class="btn btn-primary btn-lg btn-block" type="submit">Give Possession!</button>
+                </fieldset>
+              </form>
+            </div>
+            
+            <div class="card-body">
+              <h3 class="card-title">Revoke Possession !!</h3>
+              <form onsubmit="revokePermissionArtist(); return false;">
+                <fieldset>
+                  <label for="amountinput">For Which Artwork?</label>
+                  <br/>
+                  <input type="text" name="amount" id="artwork_to_revoke_possession_artist" required="required" placeholder="The Kiss"/>
+                  <br/>
+                  <label for="amountinput">Which is the address of the minter?</label>
+                  <br/>
+                  <input type="text" name="amount" id="artwork_minter_revoke_possession_artist" required="required" placeholder="ArtWork Minter"/>
+                  <br/>
+                  <br/>
+                  <button style="background-color:#B22222" class="btn btn-primary btn-lg btn-block" type="submit">Revoke Possession!</button>
+                </fieldset>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="card bg-light mb-3" style="max-width: 60%; padding: 10px">
+          
+          
+          <div class="card">
+            <div class="card-body">
+              <h3 class="card-title">Donate an Artwork</h3>
+              <form onsubmit="donateArtworkArtist(); return false;">
+                <fieldset>
+                  <label for="amountinput">Which Artwork You Want Donate?</label>
+                  <br/>
+                  <input type="text" name="amount" id="artwork_to_donate_artist" required="required" placeholder="Mont Sainte-Victoir"/>
+                  <br/>
+                  <label for="amountinput">Which is the address of the minter?</label>
+                  <br/>
+                  <input type="text" name="amount" id="artwork_minter_to_donate_artist" required="required" placeholder="ArtWork Minter"/>
+                  <br/>
+                  <label for="amountinput">Which Is The Lucky Entity?</label>
+                  <br/>
+                  <input type="text" name="amount" id="to_address_donation_artist" required="required" placeholder="0x.."/>
+                  <br/>
+                  <br/>
+                  <button style="background-color:#228B22" class="btn btn-primary btn-lg btn-block" type="submit">Donate!</button>
+                </fieldset>
+              </form>
             </div>
           </div>
         </div>
@@ -401,6 +485,14 @@
                         </td>
                         <td>
                           <input type="text" name="amount" id="artwork_to_restore" required="required" placeholder="Vitruvian Man"/>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <label for="amountinput">Who is the minter?</label>
+                        </td>
+                        <td>
+                          <input type="text" name="amount" id="artwork_minter_to_restore" required="required" placeholder="Vitruvian Man"/>
                         </td>
                       </tr>
                       <tr>

@@ -7,6 +7,8 @@ import "./DCoin.sol";
 
 contract Verification {
 
+    event walletVerified(address indexed wallet);
+
     /// @notice A collection of informations about a wallet that operate with the contact
     struct Wallet{
         //we have to hash also the address?
@@ -55,12 +57,6 @@ contract Verification {
      */
     function museumRequestCreation(bytes32 hashedName, Actors role) external {
         dcoin.burn(3, msg.sender);
-        /*
-        (bool success_b, ) = dcoin.call(
-            abi.encodeWithSignature("burn(uint, address)", 3, msg.sender)
-        );
-        require(success_b, "Dcoin failed");
-        */
         if (registeredWallets[msg.sender].verified == false){
             registeredWallets[msg.sender] = Wallet(hashedName, false, role);
         }
@@ -77,6 +73,7 @@ contract Verification {
          else {
             revert();
         }
+        emit walletVerified(museum);
     }
 
     // Verify if a wallet is registered in the blockchain as an verified actor
