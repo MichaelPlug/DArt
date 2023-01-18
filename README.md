@@ -52,7 +52,7 @@ Final chapter
 # Build repository
 Truffle directory contains all necessary files to run the project, like javascript, css and html code.
 
-#Demos
+# Demos
 It's possible to access to some demos on this drive: https://drive.google.com/drive/folders/1wUrOleFD8OxoLhBgasw1UJjqbR_2C9MS
 
 ## Authors
